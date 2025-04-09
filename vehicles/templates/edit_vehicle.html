@@ -1,0 +1,65 @@
+{% extends 'page.html' %}
+
+{% block title %}Edit details – {{ vehicle }} – bustimes.org{% endblock %}
+
+{% block head %}
+    {% if form and livery %}
+        <style>{% for css in livery.get_styles %}{{ css|safe }}{% endfor %}</style>
+    {% endif %}
+{% endblock head %}
+
+{% block bodyclass %}narrow{% endblock %}
+
+{% block content %}
+
+{% if not form %}
+
+    <h1>Thank you</h1>
+
+    {% if revision.pending %}
+        <p>Your changes:</p>
+    {% else %}
+        <p>Details updated, and recorded in <a href="/vehicles/edits?status=approved">the changelog for all to see</a>:</p>
+    {% endif %}
+
+    {% include "vehicle_revision_changes.html" %}
+
+{% else %}
+
+    {% if pending_edits %}
+        <p class="message">❗ This vehicle has already been edited recently:</p>
+        {% include 'vehicle_revisions.html' with revisions=pending_edits %}
+    {% endif %}
+
+    <h1>Edit vehicle details</h1>
+
+    <p>
+        Ticket machine code:<br>
+        {% if vehicle_unique_id and vehicle_unique_id != vehicle.code %}
+            <code>{{ vehicle_unique_id }}</code> /
+        {% endif %}
+        <code>{{ vehicle.code }}</code>
+    </p>
+
+    <form action="{{ vehicle.get_edit_url }}" method="POST">
+        <div class="edit-vehicle">
+            {{ form.as_p }}
+        </div>
+
+        {% csrf_token %}
+
+        <input type="submit" value="Save changes">
+    </form>
+
+    {{ form.media }}
+{% endif %}
+
+{% if previous %}
+    <p class="previous"><a href="{{ previous.get_edit_url }}">&larr; {{ previous }}</a></p>
+{% endif %}
+
+{% if next %}
+    <p class="next"><a href="{{ next.get_edit_url }}">{{ next }} &rarr;</a></p>
+{% endif %}
+
+{% endblock content %}

@@ -1,0 +1,67 @@
+{% extends 'page.html' %}
+
+{% block title %}Map – timesbus{% endblock %}
+
+{% block head %}
+    <meta property="og:title" content="Map | TimesBus">
+{% endblock head %}
+
+{% block bodyclass %}no-scroll{% endblock %}
+
+{% block header %}
+   <header class="site-header">
+        <a href="/" class="site-name{% if object.mode == 'ferry' %} ferry{% endif %}">
+                {% if object.mode == 'ferry' %}<img src="https://files.totl.sh/timesferry.svg" height="28px" />{% endif %}
+                {% if object.mode == 'taxi' %}<img src="https://files.totl.sh/timestaxi.svg" height="28px" />{% endif %}
+                {% if object.mode == 'bus' %}<img src="https://files.totl.sh/timesbus.svg" height="28px" />{% endif %}
+                {% if object.mode == 'tram' %}<img src="https://files.totl.sh/timestram.svg" height="28px" />{% endif %}
+                {% if not object.mode %}<img src="https://files.totl.sh/timesbus.svg" height="28px" />{% endif %}
+        </a>
+        <ul>
+            <li><a href="/map{% if object.latlong %}#16/{{ object.latlong.y|floatformat:4 }}/{{ object.latlong.x|floatformat:4 }}{% endif %}">Map</a></li>
+        </ul>
+        <form method="GET" action="/search" class="search">
+            <label>
+                Search
+                <input name="q" placeholder="Search" type="search" value="{{ query }}" required>
+            </label>
+            <input type="submit" value="Search">
+        </form>
+    </header>
+{% endblock header %}
+
+{% block breadcrumb %}{% endblock %}
+
+{% block content %}
+    <div id="hugemap">
+        <noscript class="sorry">Sorry, the map requires JavaScript. You can still use most of the rest of the website.</noscript>
+    </div>
+{% endblock content %}
+
+{% load static %}
+
+{% block footer %}
+    <script>
+        INITIAL_VIEW_STATE = {
+        {% if request.headers.cf_ipcountry == "IE" %}
+            latitude: 53.45,
+            longitude: -7.5,
+        {% else %}
+            latitude: 54,
+            longitude: -2.9,
+        {% endif %}
+            zoom: 5,
+        };
+        OLD_JS = [
+            "{% static 'js/reqwest.min.js' %}",
+            "{% static 'dist/js/bigmap-classic.css' %}",
+            "{% static 'dist/js/bigmap-classic.js' %}"
+        ];
+        NEW_JS = [
+            "{% static 'dist/js/app.css' %}",
+            "{% static 'dist/js/app.js' %}",
+        ];
+    </script>
+    <script src="{% static 'dist/js/bigmap.js' %}"></script>
+    <link rel="stylesheet" media="print" href="/liveries.{{ liveries_css_version }}.css" onload="this.onload=null;this.removeAttribute('media')">
+{% endblock footer %}

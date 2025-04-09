@@ -1,0 +1,71 @@
+{% extends 'page.html' %}
+
+{% block content %}
+
+<h1>{{ stoppoint.get_long_name }}</h1>
+
+{% if text %}
+    <p>{{ text }}</p>
+{% endif %}
+
+{% if stoppoint.bearing %}
+    <p>Buses point {{ stoppoint.get_bearing_display }}</p>
+{% endif %}
+
+{% if stoppoint.latlong %}
+    <ul class="horizontal">
+        <li><a href="/map#16/{{ object.latlong.y|floatformat:6 }}/{{ object.latlong.x|floatformat:6 }}">Map</a></li>
+        <li>
+            <a href="https://www.google.com/maps?layer=c&cbll={{ object.latlong.y|floatformat:7 }},{{ object.latlong.x|floatformat:7 }}{% if object.heading or object.bearing %}&cbp=0,{{ object.get_heading|add:'-90' }},,,{% endif %}">Street View</a>
+        </li>
+        {% if stoppoint.naptan_code and stoppoint.naptan_code != stoppoint.atco_code %}
+            <li title="NaPTAN code">{{ stoppoint.naptan_code }}</li>
+        {% endif %}
+        <li title="ATCO code">{{ stoppoint.atco_code }}</li>
+    </ul>
+{% endif %}
+
+{% if services %}
+    <div class="ad-wrapper">
+        <div id="AFM_inContentTop_ad"></div>
+    </div>
+{% endif %}
+
+{% include 'situations.html' %}
+
+<div class="asides">
+
+{% if services %}
+    {% include 'departures.html' with departures=departures %}
+
+    <div class="aside">
+        <h2>{% include 'modes.html' with modes=modes noun='services' %}</h2>
+        {% include 'service_list.html' with services=services class="has-smalls" %}
+    </div>
+{% endif %}
+
+{% if nearby %}
+    <section class="aside">
+        <header>
+            <h2>Nearby stops</h2>
+            {% if object.latlong %}
+                <a href="/map#16/{{ object.latlong.y|floatformat:4 }}/{{ object.latlong.x|floatformat:4 }}">Map</a>
+            {% endif %}
+        </header>
+        {% include 'stops.html' with stops=nearby %}
+    </section>
+{% endif %}
+
+</div>
+
+{% endblock content %}
+
+{% block foot %}
+    {% load static %}
+    {% if services and when %}
+        <script>
+            STOP_CODE = "{{ object.atco_code }}";
+        </script>
+        <script async src="{% static 'js/departures.js' %}"></script>
+    {% endif %}
+{% endblock foot %}

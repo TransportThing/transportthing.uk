@@ -1,0 +1,191 @@
+{% extends 'page.html' %}
+
+{% block title %}{% if not vehicle %}Vehicles – {{ object.get_line_name_and_brand }}{% else %}{{ title }}{% if vehicle.operator %} – {{ vehicle.operator }}{% endif %}{% endif %} – bustimes.org{% endblock %}
+
+{% block canonical %}
+    {% if vehicle and not request.GET.date %}
+        {{ block.super }}
+        {% if vehicle.reg %}<meta name="keywords" content="{{ vehicle.reg }}">{% endif %}
+    {% else %}
+        <meta name="robots" content="noindex,noarchive">
+    {% endif %}
+{% endblock canonical %}
+
+{% block head %}
+    {% if vehicle %}
+        <meta property="og:title" content="{{ object }}">
+        <meta property="og:description" content="{% firstof object.vehicle_type object.operator %}{% if object.name %}
+
+{{ object.name }}{% endif %}">
+
+    {% endif %}
+{% endblock head %}
+
+{% block bodyclass %}narrow{% endblock %}
+
+{% block content %}
+
+{% if vehicle %}
+    <h1>
+        {% if vehicle.reg %}
+            {% if vehicle.fleet_code or vehicle.fleet_number %}
+                {% if vehicle.withdrawn %}<del>{% endif %}
+                {% firstof vehicle.fleet_code vehicle.fleet_number %}
+                {% if vehicle.withdrawn %}</del>{% endif %}
+            {% endif %}
+            {% if vehicle.withdrawn %}
+                <del class="reg">{{ vehicle.get_reg }}</del>
+            {% else %}
+                 <span class="reg">{{ vehicle.get_reg }}</span>
+            {% endif %}
+        {% elif vehicle.withdrawn %}
+            <del>{{ vehicle }}</del>
+        {% else %}
+            {{ vehicle }}
+        {% endif %}
+    </h1>
+
+    {% include 'vehicle_info.html' %}
+{% else %}
+    <h1>{{ object }}</h1>
+
+    {% if garages %}
+        <p>{% for garage in garages %}{{ garage }}{% if not forloop.last %}/{% endif %}{% endfor %}</p>
+    {% endif %}
+
+    <ul class="tabs">
+        <li><a href="{{ object.get_absolute_url }}">Timetable</a></li>
+        <li>Vehicles</li>
+    </ul>
+{% endif %}
+
+{% if tracking %}
+    <p><a href="{{ tracking }}" class="button">Track this bus</a></p>
+{% endif %}
+
+{% load static %}
+
+<div id="journeys" hx-history="false">
+
+{% if date %}
+    <script src="{% static 'js/htmx.org/htmx.min.js' %}"></script>
+
+    <form class="timetable-date" autocomplete="off" hx-trigger="change" hx-get="{{ request.path }}" hx-select="#journeys" hx-target="#journeys" hx-indicator="#journeys" hx-swap="outerHTML" hx-push-url="true">
+        {% if dates %}
+            <select name="date" aria-label="Date">
+                {% for option in dates %}
+                    <option{% if option == date %} selected{% endif %} value="{{ option.isoformat }}">{{ option|date:"l j F Y" }}</option>
+                {% endfor %}
+            </select>
+        {% else %}
+            <input type="date" name="date" aria-label="Date" value="{{ date.isoformat }}">
+        {% endif %}
+        <noscript><input type="submit" value="Go"></noscript>
+    </form>
+{% endif %}
+
+{% if journeys %}
+    <div class="table-wrapper">
+    <table>
+    <thead>
+        <tr>
+            {% if object.line_names|length > 1 %}<th scope="col"></th>{% endif %}
+             <th scope="col">{% if not vehicle %}Vehicle{% else %}Route{% endif %}</th>
+            <th scope="col" colspan="2">Trip</th>
+            <th scope="col">To</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for journey in journeys %}
+        <tr>
+            {% if object.line_names|length > 1 %}
+                <td>
+                    {{ journey.route_name }}
+                </td>
+            {% endif %}
+            <td class="link">
+                {% if not vehicle %}
+                    {% if journey.vehicle %}
+                        <a href="{{ journey.vehicle.get_absolute_url }}?date={{ date.isoformat }}">{{ journey.vehicle }}</a>
+                    {% endif %}
+                {% elif journey.service %}
+                    <a href="{{ journey.service.get_absolute_url }}/vehicles?date={{ date.isoformat }}">{{ journey.line_name }}</a>
+                {% else %}
+                    {{ journey.line_name }}
+                {% endif %}
+            </td>
+            <td class="tabular">{% if journey.code|length < 20 %}{{ journey.code }}{% endif %}</td>
+            {% if journey.trip_id %}
+                <td class="link tabular">
+                    <a href="{% if journey.locations is not False %}#journeys/{{ journey.id }}{% else %}{{ journey.trip.get_absolute_url }}{% endif %}">{{ journey.datetime|time:"H:i" }}</a>
+                </td>
+            {% else %}
+                <td class="tabular">{{ journey.datetime|time:"H:i" }}</td>
+            {% endif %}
+            <td>{% firstof journey.destination journey.direction %}</td>
+            {% if journey.locations is not False %}
+                <td class="link"><a href="#journeys/{{ journey.id }}">Map</a></td>
+            {% endif %}
+            {% if request.user.is_superuser %}
+                <td class="link">
+                    <a href="{% url 'admin:vehicles_vehiclejourney_change' journey.pk %}">✎</a>
+                </td>
+            {% endif %}
+            {% if journey.trip.block %}
+                <td class="link">
+                    <a href="{{ journey.get_trip_block_url }}">{{ journey.trip.block }}</a>
+                </td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    {% for trip in predictions %}
+        <tr class="prediction">
+            <td>{{ trip.line_name }}</td>
+            <td></td>
+            <td class="link tabular"><a href="{{ trip.get_absolute_url }}">{{ trip }}</a></td>
+            <td>{{ trip.destination_name }}</td>
+        </tr>
+    {% endfor %}
+    </tbody></table></div>
+{% endif %}
+
+{% if garage %}
+    <p>{{ garage }}</p>
+{% endif %}
+
+</div>
+
+<div id="history"></div>
+
+{% if vehicle and request.user.is_superuser %}
+    <p><a href="{% url 'latest_journey_debug' vehicle.pk %}">Debug</a></p>
+{% endif %}
+
+{% if next or previous %}
+    <nav>
+        {% if previous %}
+            <p class="previous"><a href="{{ previous.get_absolute_url }}">&larr; {{ previous }}</a></p>
+        {% endif %}
+
+        {% if next %}
+            <p class="next"><a href="{{ next.get_absolute_url }}">{{ next }} &rarr;</a></p>
+        {% endif %}
+    </nav>
+{% endif %}
+
+{% endblock content %}
+
+{% block foot %}
+    {% if journeys or date %}
+        <script>
+            {% if vehicle %}VEHICLE_ID{% else %}SERVICE_ID{% endif %} = {{ object.id }};
+            {% if not vehicle %}LIVERIES_CSS_URL = "/liveries.{{ liveries_css_version }}.css";{% endif %}
+        </script>
+        <link rel="stylesheet" href="{% static 'dist/js/app.css' %}">
+        <script async src="{% static 'dist/js/app.js' %}"></script>
+        {% if vehicle.livery %}
+        <style>{% for css in vehicle.livery.get_styles %}{{ css|safe }}{% endfor %}</style>
+        {% endif %}
+
+    {% endif %}
+{% endblock foot %}

@@ -1,0 +1,36 @@
+{% extends 'page.html' %}
+
+{% block content %}
+
+<h1>{{ adminarea }}</h1>
+
+{% if districts %}
+    <h2>Districts in {{ adminarea }}</h2>
+
+    {% include 'list.html' with list=districts %}
+{% endif %}
+
+<div class="ad-wrapper">
+    <div id="AFM_inContentTop_ad"></div>
+</div>
+
+{% if localities %}
+    <h2>Places in {{ adminarea }}</h2>
+
+    {% include 'list.html' with list=localities %}
+{% endif %}
+
+{% if operators %}
+    <h2>Operators in {{ adminarea }}</h2>
+
+    {% include 'list.html' with list=operators %}
+{% endif %}
+
+
+{% if services %}
+    <h2>{% include 'modes.html' with modes=modes noun='services' %} in {{ adminarea }}</h2>
+
+    {% include 'services.html' with services=services %}
+{% endif %}
+
+{% endblock content %}

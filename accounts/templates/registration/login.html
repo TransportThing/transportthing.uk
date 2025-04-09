@@ -1,0 +1,30 @@
+{% extends 'page.html' %}
+
+{% block title %}Log in to bustimes.org{% endblock %}
+
+{% block canonical %}<meta name="robots" content="noindex,noarchive">{% endblock %}
+
+{% block bodyclass %}narrow{% endblock %}
+
+{% block content %}
+
+<h1>Log in</h1>
+
+<form method="post" action="{% url 'login' %}">
+
+    {{ form.as_p }}
+
+    <input type="submit" value="Log in">
+
+    <input type="hidden" name="next" value="{{ next }}">
+
+    {% csrf_token %}
+
+</form>
+
+<ul class="horizontal">
+    <li><a href="{% url 'register' %}?next={{ next }}">Create an account</a></li>
+    <li><a href="{% url 'password_reset' %}?next={{ next }}">Lost password?</a></li>
+</ul>
+
+{% endblock content %}

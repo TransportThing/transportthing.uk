@@ -1,0 +1,88 @@
+{% extends 'page.html' %}
+
+{% block canonical %}
+    <link rel="canonical" href="https://bustimes.org">
+{% endblock canonical %}
+
+{% block bodyclass %}narrow{% endblock %}
+
+{% block breadcrumb %}{% endblock %}
+
+{% block content %}
+
+<p>
+    <!-- turning open data into <a href="/map">real-time maps</a>, timetables and more</p> -->
+    maps, timetables and more
+</p>
+
+<div class="panes">
+    <div class="pane">
+        <form method="get" action="/search" class="search">
+            <h2><label for="q">Search</label></h2>
+
+            <p><label for="q">Search for places, operators or routes</label></p>
+            <p>
+                <input id="q" name="q" type="search" required>
+                <input type="submit" value="Search">
+            </p>
+        </form>
+    </div>
+
+    <div class="pane">
+        <h2>Map</h2>
+
+        <p><a href="/map" class="button">Track buses and find bus stops nearby</a></p>
+    </div>
+</div>
+
+<div class="ad-wrapper">
+    <div id="AFM_inContentTop_ad"></div>
+</div>
+
+<h2>Regions</h2>
+
+<ul class="regions">
+    {% if request.headers.cf_ipcountry == "IE" %}
+    <li>Ireland
+        <ul class="long">
+            <li><a href="/regions/CO">Connacht</a></li>
+            <li><a href="/regions/LE">Leinster</a></li>
+            <li><a href="/regions/MU">Munster</a></li>
+            <li><a href="/regions/UL">Ulster</a></li>
+        </ul>
+    </li>
+    <li><a href="/regions/NI">Northern Ireland</a></li>
+    {% endif %}
+    <li>England
+        <ul class="long">
+            <li><a href="/regions/EA">East Anglia</a></li>
+            <li><a href="/regions/EM">East Midlands</a></li>
+            <li><a href="/regions/L">London</a></li>
+            <li><a href="/regions/NE">North East</a></li>
+            <li><a href="/regions/NW">North West</a></li>
+            <li><a href="/regions/SE">South East</a></li>
+            <li><a href="/regions/SW">South West</a></li>
+            <li><a href="/regions/WM">West Midlands</a></li>
+            <li><a href="/regions/Y">Yorkshire</a></li>
+        </ul>
+    </li>
+    <li><a href="/regions/W">Wales</a></li>
+    <li><a href="/regions/S">Scotland</a></li>
+    <li><a href="/regions/GB">Great Britain</a></li>
+    {% if request.headers.cf_ipcountry != "IE" %}
+    <li><a href="/regions/NI">Northern Ireland</a></li>
+    <li>Ireland
+        <ul class="long">
+            <li><a href="/regions/CO">Connacht</a></li>
+            <li><a href="/regions/LE">Leinster</a></li>
+            <li><a href="/regions/MU">Munster</a></li>
+            <li><a href="/regions/UL">Ulster</a></li>
+        </ul>
+    </li>
+    {% endif %}
+    <!-- <li><a href="/regions/IM">Isle of Man</a></li> -->
+    <!-- <li><a href="/regions/GG">Guernsey</a></li> -->
+    <!-- <li><a href="/regions/JE">Jersey</a></li> -->
+</ul>
+
+{% endblock content %}

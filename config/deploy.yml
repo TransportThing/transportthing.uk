@@ -1,0 +1,61 @@
+# Name of your application. Used to uniquely configure containers.
+service: bustimes
+
+# Name of the container image.
+image: jclgoodwin/bustimes-org
+
+# Deploy to these servers.
+servers:
+  web:
+    hosts:
+      - 10.131.0.24
+      - 10.131.29.248
+    env:
+      clear:
+        WEB_CONCURRENCY: 12
+        ALLOWED_HOSTS: "bustimes.org"
+        EMAIL_HOST: email-smtp.eu-west-1.amazonaws.com
+        DISABLE_EDITING: ""
+        DISABLE_REGISTRATION: yes
+      secret:
+        - SECRET_KEY
+        - DATABASE_URL
+        - REDIS_URL
+        - SENTRY_DSN
+        - TURNSTILE_SECRET
+        - EMAIL_HOST_USER
+        - EMAIL_HOST_PASSWORD
+        - TFL_APP_ID
+        - TFL_APP_KEY
+        - NTA_API_KEY
+        - AWS_ACCESS_KEY_ID
+        - AWS_SECRET_ACCESS_KEY
+
+builder:
+  arch: amd64
+  cache:
+    type: registry
+    options: mode=max
+
+# Credentials for your image host.
+registry:
+  # Specify the registry server, if you're not using Docker Hub
+  server: registry.digitalocean.com/hobsbawm
+  # see https://github.com/settings/tokens
+  username:
+    - KAMAL_REGISTRY_PASSWORD
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+asset_path: /staticfiles
+
+proxy:
+  app_port: 8000
+  healthcheck:
+    path: /version
+  buffering:
+    responses: false
+  logging:
+    request_headers:
+      - Referer
+    response_headers: []

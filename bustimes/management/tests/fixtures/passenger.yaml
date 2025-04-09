@@ -1,0 +1,347 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/603.3.8 (KHTML,
+        like Gecko) Version/10.1.2 Safari/603.3.8
+    method: GET
+    uri: https://data.discoverpassenger.com/operator/unilink
+  response:
+    body:
+      string: "<!doctype html>\n<!--[if lt IE 9]><html class=\"no-js ie lt-ie9 lt-ie8
+        lt-ie7\" lang=\"en-GB\"> <![endif]-->\n<!--[if IE 9]><html class=\"no-js ie
+        ie9 lt-ie9 lt-ie8\" lang=\"en-GB\"> <![endif]-->\n<!--[if gt IE 9]><!--><html
+        class=\"no-js\" lang=\"en-GB\"> <!--<![endif]-->\n    <head>\n                <!--
+        _31C926B6_ -->\n        <meta charset=\"UTF-8\">\n        <meta name=\"viewport\"
+        content=\"width=device-width, initial-scale=1\">\n        <title>\n            Open
+        data from Unilink - Passenger Open Data Hub        </title>\n        <link
+        rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/build/images/favicon/apple-touch-icon.37a02611.png\">\n
+        \       <link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"/build/images/favicon/favicon-32x32.65f6481c.png\">\n
+        \       <link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"/build/images/favicon/favicon-16x16.2f7f9e56.png\">\n
+        \       <link rel=\"mask-icon\" href=\"/build/images/favicon/safari-pinned-tab.cd71fae7.svg\"
+        color=\"#20303b\">\n        <link href=\"https://fonts.googleapis.com/css?family=Merriweather:300,400,700%7CRoboto:400,400i,700,700i&display=fallback\"
+        rel=\"stylesheet\">\n        <script>document.documentElement.className =
+        document.documentElement.className.replace(\"no-js\",\"js\");</script>\n        <meta
+        name=\"theme-color\" content=\"#20303b\">\n                <link rel=\"stylesheet\"
+        href=\"/build/app.a459bda2.css\" integrity=\"sha384-wOS6bKHjJ758SPFegMufXaKcRHCNTQnQDpeuXc+d5EoHZUFK3zTgVW14q4bRgvjL\">\n
+        \       \n        <meta property=\"og:site_name\" content=\"Open data from
+        Passenger\">\n        <meta property=\"og:type\" content=\"website\">\n        <meta
+        property=\"og:image\" content=\"http://data.discoverpassenger.com/build/images/opengraph.19a90345.png\">\n
+        \           <meta property=\"og:title\" content=\"Open data from Unilink\">\n
+        \   <meta property=\"og:url\" content=\"http://data.discoverpassenger.com/operator/unilink\">\n
+        \   <meta property=\"og:description\" content=\"Download open data from Unilink,
+        used across their digital services.\">\n    </head>\n    <body class=\"body--operator\">\n
+        \       <a class=\"sr-only sr-only-focusable\" href=\"#content\">Skip to content</a>\n
+        \       <header id=\"header\">\n            <!--[if lt IE 9]> <div class=\"alert
+        alert-danger mb-0\"> <strong>Warning!</strong> You're using an older, unsupported
+        browser, which means your experience using this site will be limited. <a href=\"https://browsehappy.com/\"
+        class=\"text-success\"\n            target=\"_blank\">See suggested browsers</a>.
+        </div> <![endif]-->\n\n                <div class=\"billboard-wrapper billboard-wrapper--normal\">\n
+        \   <div class=\"billboard-wrapper__background\"></div>\n\n    <nav class=\"navbar
+        navbar-expand\">\n    <div class=\"container\">\n        <a class=\"navbar-brand\"
+        href=\"https://www.discoverpassenger.com/\"><span class=\"sr-only\">Passenger</span></a>\n
+        \       <ul class=\"navbar-nav\">\n                    </ul>\n    </div>\n</nav>\n\n
+        \   <div class=\"billboard\">\n        <div class=\"billboard-nav-spacer\"></div>\n
+        \       <div class=\"container billboard__container\">\n                        <div
+        class=\"row\">\n                <div class=\"col-lg-8\">\n                    <h1
+        class=\"display-1\"><strong>Open data</strong> from Unilink</h1>\n                </div>\n
+        \           </div>\n                </div>\n    </div>\n</div>\n        </header>\n
+        \               <section id=\"content\" role=\"main\" class=\"content-wrapper\">\n
+        \           <div class=\"container\">\n                    <div class=\"row\">\n
+        \       <div class=\"col-lg order-lg-1\">\n            <div class=\"after-billboard-content\">\n
+        \               <div class=\"card-ticket card-ticket--normal\">\n    <div
+        class=\"card-ticket__wrap\">\n        <div class=\"card-ticket__content\">\n
+        \                                                                                       <div\n
+        \                               class=\"operator-preview__logo mb-4\"\n                                style=\"background-image:
+        url(/build/images/tenants/unilink.40cc6992.svg);\"\n                            >\n
+        \                           </div>\n                                                <div
+        class=\"prose\">\n                            <h2 class=\"h3\">Background</h2>\n
+        \                           <p>Welcome to our open data portal, where you
+        can download the source data that we use in operator digital services. 'Open
+        data' is data that has been made available to the public, for personal, educational
+        or commercial use.</p>\n\n                            <p>The data on this
+        page is updated automatically when Unilink updates Passenger Cloud, our digital
+        service platform, for example when they make a change to their timetables
+        or network. Downloads are currently available as either .CSV or .XML files.</p>\n\n
+        \                           <p>If you have any questions about the data, please
+        drop us a line at <a href=\"/cdn-cgi/l/email-protection#761e131a06360617050513181113040213171b5815191b\"><span
+        class=\"__cf_email__\" data-cfemail=\"acc4c9c0dcecdccddfdfc9c2cbc9ded8c9cdc182cfc3c1\">[email&#160;protected]</span></a>.</p>\n
+        \                       </div>\n                            </div>\n    </div>\n
+        \   <div class=\"card-ticket__stub\"></div>\n</div>\n            </div>\n
+        \       </div>\n        <div class=\"col-lg-8 prose mt-3\">\n                <h2
+        class=\"h3\">Network Data</h2>\n\n    <ul>\n        <li>Describes the network
+        in terms of stops, lines, journeys, and schedules.</li>\n        <li>Used
+        to generate timetable information, and used in journey planning.</li>\n                    <li>Available
+        in two different formats, TXC (xml or zip) and GTFS.</li>\n            </ul>\n\n
+        \   <h3 class=\"h5\">Current Data (2022-03-27 to 2022-04-24)</h3>\n    <p>\n
+        \                   <a class=\"btn btn-rounded btn--empty mb-2\" href=\"/operator/unilink/dataset/current/download/txc\"
+        title=\"unilink_1648047602\">Download TransXChange</a>\n        \n                    <a
+        class=\"btn btn-rounded btn--empty mb-2\" href=\"/operator/unilink/dataset/current/download/gtfs\"
+        title=\"unilink_1648047602\">Download GTFS</a>\n            </p>\n\n                        <h3
+        class=\"h5\">2022-04-24 to 2022-06-19</h3>\n\n            <p>\n                                    <a
+        class=\"btn btn-rounded btn--empty mb-2\" href=\"https://s3-eu-west-1.amazonaws.com/passenger-sources/unilink/txc/unilink_1648047686.zip\"
+        title=\"unilink_1648047686\">Download TransXChange</a>\n                \n
+        \                                   <a class=\"btn btn-rounded btn--empty
+        mb-2\" href=\"https://s3-eu-west-1.amazonaws.com/passenger-sources/unilink/gtfs/unilink_1648047686.zip\"
+        title=\"unilink_1648047686\">Download GTFS</a>\n                            </p>\n
+        \                       \n\n    <h2 class=\"h3\">Mobile Products</h2>\n\n
+        \   <ul>\n        <li>Describes the products available for sale through the
+        Unilink mobile app</li>\n        <li>Available in CSV format</li>\n    </ul>\n\n
+        \   <a class=\"btn btn-rounded btn--empty\" href=\"/operator/unilink/topups\">Download
+        CSV</a>\n\n<h2 class=\"h3\">Open Street Map</h2>\n\n<ul>\n    <li>A slice
+        of Open Street Map data surrounding our network.</li>\n    <li>Converted to
+        XML from the original PBF format.</li>\n    <li>Used in places search and
+        journey planning.</li>\n</ul>\n\n<a class=\"btn btn-rounded btn--empty mb-2\"
+        href=\"https://s3-eu-west-1.amazonaws.com/passenger-osm/search/unilink.xml.gz\">Download
+        XML</a>\n<a class=\"btn btn-rounded btn--empty mb-2\" href=\"https://s3-eu-west-1.amazonaws.com/passenger-osm/plans/unilink.pbf\">Download
+        PBF</a>\n\n\n    <h2 class=\"h3\">Stop Data</h2>\n\n    <ul>\n        <li>Taken
+        from the <a href=\"https://www.gov.uk/government/publications/national-public-transport-access-node-schema\">NaPTAN
+        dataset</a></li>\n        <li>Used in map views</li>\n    </ul>\n\n    <p>\n
+        \       <small>\n            Stop data is &copy; 2022 Unilink and Department
+        for Transport and is licensed under the Open Government License Version 3.0.\n
+        \       </small>\n    </p>\n\n    <p class=\"mt-5\">\n        <small>\n            Network
+        data is &copy; 2022 Unilink and is licensed under the Open Government License
+        Version 3.0.\n        </small>\n    </p>\n\n    <p class=\"mt-5\">\n        <small>\n
+        \           Mobile products data is &copy; 2022 Unilink and is licensed under
+        the Open Government License Version 3.0.\n        </small>\n    </p>\n\n        </div>\n
+        \   </div>\n            </div>\n        </section>\n        <div class=\"pre-footer\">\n
+        \   <div class=\"container\">\n        <div class=\"row\">\n            <div
+        class=\"col text-center\">\n                <p class=\"h2 mb-1\">Start your
+        journey with Passenger today</p>\n                <p class=\"my-3 small\">Drop
+        us a line to find out more about how we can help.</p>\n                <a
+        href=\"https://www.discoverpassenger.com/contact\" target=\"_blank\" class=\"btn
+        btn-rounded btn--brand mt-2\">Get in touch</a>\n            </div>\n        </div>\n
+        \   </div>\n</div>\n        <footer id=\"footer\">\n    <div class=\"footer\">\n
+        \       <div class=\"container\">\n            <div class=\"footer__logo\"></div>\n
+        \           <div class=\"footer__lower\">\n                <ul class=\"list-inline\">\n
+        \                   <li>&copy; Passenger Technology Group Ltd 2022</li>\n
+        \                   <li>\n                        <a href=\"https://www.google.com/maps/place/Passenger+Technology+Group/@50.7226587,-1.9065694,17z/data=!3m1!4b1!4m5!3m4!1s0x4873a1a11a7ceb27:0x6c39f6a74eb6754b!8m2!3d50.7226553!4d-1.9043807\">65
+        Seamoor Road, Bournemouth, Dorset, BH4 9AE</a>\n                    </li>\n
+        \               </ul>\n            </div>\n        </div>\n    </div>\n</footer>\n
+        \               <script data-cfasync=\"false\" src=\"/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js\"></script><script
+        src=\"/build/runtime.d94b3b43.js\" integrity=\"sha384-/Zh0hTCgqMfXwZfeMIiueZzsKiHkvtqEOzKpZAuznIbgqg1DQpUQAwwNlO/9ToVH\"></script><script
+        src=\"/build/app.3f41568c.js\" integrity=\"sha384-GyG8PdgpEbnfHWQFixRJTa8ElkIbmiEgdg3H1uHYlENj/9Nj+uz8/nBSwtgey2Gr\"></script>\n
+        \   </body>\n</html>\n"
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 6fb3fd0c3c667695-LHR
+      Cache-Control:
+      - max-age=0, must-revalidate, private
+      Connection:
+      - keep-alive
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Wed, 13 Apr 2022 11:51:12 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Expires:
+      - Wed, 13 Apr 2022 11:51:12 GMT
+      NEL:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=VyZt4Amvfxt7PyG8Hzaz%2Fl1oPxmUe%2BV1CexeUDX5AZ03EUGJRFoPWnZRBCuCAYTiprkvPezLpCiv6%2F%2BS3koHPX4t7fIN%2FD67lyPrtAOOyP%2FSkNM2iVeSLOvp40akQGRyaJbjcLMsrdefVA37ig%3D%3D"}],"group":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400
+      content-length:
+      - '9742'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/603.3.8 (KHTML,
+        like Gecko) Version/10.1.2 Safari/603.3.8
+    method: HEAD
+    uri: https://data.discoverpassenger.com/operator/unilink/dataset/current/download/txc
+  response:
+    body:
+      string: ''
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 6fb3fd0eaff97695-LHR
+      Cache-Control:
+      - max-age=0, must-revalidate, private
+      Connection:
+      - keep-alive
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Wed, 13 Apr 2022 11:51:12 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Expires:
+      - Wed, 13 Apr 2022 11:51:12 GMT
+      Location:
+      - https://s3-eu-west-1.amazonaws.com/passenger-sources/unilink/txc/unilink_1648047602.zip
+      NEL:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=ESJKmmy4WhEGYuHS%2FjCKmT9tHH8Rp2%2FGLBYYSsA7HBX6FvG7LGeNvH%2BTAC%2FX2ughrBZ1pj0xNmn7qq62WY6f7DMMscX2AtN61pRmCtIvRiyDI1QDMixGd3hHOj0t2XiY1V5TzcoHJn3cS36gmg%3D%3D"}],"group":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400
+    status:
+      code: 302
+      message: Found
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://data.discoverpassenger.com/operator/unilink/dataset/current/download/txc
+  response:
+    body:
+      string: "<!DOCTYPE html>\n<html>\n    <head>\n        <meta charset=\"UTF-8\"
+        />\n        <meta http-equiv=\"refresh\" content=\"0;url='https://s3-eu-west-1.amazonaws.com/passenger-sources/unilink/txc/unilink_1648047602.zip'\"
+        />\n\n        <title>Redirecting to https://s3-eu-west-1.amazonaws.com/passenger-sources/unilink/txc/unilink_1648047602.zip</title>\n
+        \   </head>\n    <body>\n        Redirecting to <a href=\"https://s3-eu-west-1.amazonaws.com/passenger-sources/unilink/txc/unilink_1648047602.zip\">https://s3-eu-west-1.amazonaws.com/passenger-sources/unilink/txc/unilink_1648047602.zip</a>.\n
+        \   </body>\n</html>"
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 6fb3fd100dae7702-LHR
+      Cache-Control:
+      - max-age=0, must-revalidate, private
+      Connection:
+      - keep-alive
+      Content-Type:
+      - text/html; charset=UTF-8
+      Date:
+      - Wed, 13 Apr 2022 11:51:12 GMT
+      Expect-CT:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Expires:
+      - Wed, 13 Apr 2022 11:51:12 GMT
+      Location:
+      - https://s3-eu-west-1.amazonaws.com/passenger-sources/unilink/txc/unilink_1648047602.zip
+      NEL:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=fsBtdocCg7RngSyqiBn2gVhbE3YktlaH6Wzw%2B8zMLqPVhUSMkiFlUHFhrU4769oaFVeX95NGnulFHA0DDPl%2BN5CtxQW%2Fm7xnv0JayYYTbGA8Cf%2BV0JaTElhvhiUpDqOiA1jr5vZY4oYm%2FVcoeQ%3D%3D"}],"group":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400
+    status:
+      code: 302
+      message: Found
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://s3-eu-west-1.amazonaws.com/passenger-sources/unilink/txc/unilink_1648047602.zip
+  response:
+    body:
+      string: ''
+    headers:
+      Accept-Ranges:
+      - bytes
+      Content-Length:
+      - '491109'
+      Content-Type:
+      - application/zip
+      Date:
+      - Wed, 13 Apr 2022 11:51:14 GMT
+      ETag:
+      - '"19401caab7c81f6087bba98caedd6746"'
+      Last-Modified:
+      - Wed, 23 Mar 2022 15:01:36 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - fAFIyCVBoJP1eRBIPqwADwvSZUk0BBNIqrHEK8FMKKow27uuPfWO9Vjkv4BOHiIRbIJDIiWPU14=
+      x-amz-request-id:
+      - F5X05B64K9YC6758
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://s3-eu-west-1.amazonaws.com/passenger-sources/unilink/txc/unilink_1648047686.zip
+  response:
+    body:
+      string: ''
+    headers:
+      Accept-Ranges:
+      - bytes
+      Content-Length:
+      - '491109'
+      Content-Type:
+      - application/zip
+      Date:
+      - Wed, 13 Apr 2022 11:53:29 GMT
+      ETag:
+      - '"19401caab7c81f6087bba98caedd6746"'
+      Last-Modified:
+      - Wed, 23 Mar 2022 15:01:36 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - HPwx7XUHBO3igKiqZ5SEfb/MdugNbZybjMNb1o/Z351czlwWd2voqObKzJWo22Gp258GYIPtcn4=
+      x-amz-request-id:
+      - ZE8T26P37NFBY5J0
+    status:
+      code: 200
+      message: OK
+version: 1

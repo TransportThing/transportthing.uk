@@ -1,0 +1,14 @@
+<h2 id="fares">Fares</h2>
+
+<form action="{{ self.object.get_absolute_url }}#fares" autocomplete="off">
+    {{ form.as_p }}
+
+    <input type="submit" value="Find fare">
+</form>
+
+{% if form.is_valid %}
+    {% for result in form.get_results %}
+        {% ifchanged result.start_zone %}<h3>{{ result.start_zone }} to {{ result.end_zone }}</h3>{% endifchanged %}
+        <p>{{ result.html }}</p>
+    {% endfor %}
+{% endif %}

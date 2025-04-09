@@ -1,0 +1,42 @@
+{% extends 'page.html' %}
+
+{% block fuse %}{% endblock %}
+
+{% block bodyclass %}narrow{% endblock %}
+
+{% load date_range %}
+
+{% block content %}
+
+    <h1>{{ object }}</h1>
+
+    {{ object.credit }}
+
+    {{ object.description|linebreaks }}
+
+    {% if form.fields.origin.choices %}
+        <form>
+            {{ form.as_p }}
+
+            <input type="submit" value="Find fare">
+        </form>
+
+        {% for result in results %}
+            {% ifchanged result.start_zone %}<h3>{{ result.start_zone }} to {{ result.end_zone }}</h3>{% endifchanged %}
+            <p>{{ result.html }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <h2>Tariffs</h2>
+
+    {% for tariff in object.tariff_set.all %}
+        <p>
+            <a href="{{ tariff.get_absolute_url }}">
+                {{ tariff }}
+                {% if tariff.user_profile_id %} ({{ tariff.user_profile }} {{ tariff.trip_type }}){% endif %}
+                {% ifchanged tariff.valid_between %} ({{ tariff.valid_between|date_range }}){% endifchanged %}
+            </a>
+        </p>
+    {% endfor %}
+
+{% endblock content %}

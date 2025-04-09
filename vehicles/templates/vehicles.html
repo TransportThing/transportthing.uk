@@ -1,0 +1,57 @@
+{% extends 'page.html' %}
+
+{% block title %}Vehicles – bustimes.org{% endblock %}
+
+{% block canonical %}
+    <link rel="canonical" href="https://bustimes.org/vehicles">
+{% endblock canonical %}
+
+{% block bodyclass %}narrow{% endblock %}
+
+{% block content %}
+
+<script>
+    if (window.location.hash) {
+        window.location.href = '/map' + window.location.hash;
+    }
+</script>
+
+<h1>Vehicles</h1>
+
+<p>It’s not the main point of bustimes.org, but we do have some unofficial fleet lists and things – a by-product of the <a href="/map">live bus tracking map</a>, with additional information provided by our wonderful users.</p>
+
+<p>There’s also <a href="/api/vehicles/">a vehicle information API</a>.</p>
+
+<h2>Operators</h2>
+
+<h3>Recently added</h3>
+
+<ul class="long">
+    {% for operator in new_operators %}
+        <li><a href="{{ operator.get_absolute_url }}/vehicles">{{ operator }}</a></li>
+    {% endfor %}
+</ul>
+
+<h3>Not tracking</h3>
+
+<table>
+    <thead><th scope="col"></th><th scope="col">Last seen</th></thead>
+    <tbody>
+    {% for operator in status %}
+        <tr>
+            <td class="link"><a href="{{ operator.get_absolute_url }}/vehicles">{{ operator }}</a></td>
+            <td>{{ operator.last_seen }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<h3>All</h3>
+
+<ul class="long">
+    {% for operator in operators %}
+        <li><a href="{{ operator.get_absolute_url }}/vehicles">{{ operator }}</a></li>
+    {% endfor %}
+</ul>
+
+{% endblock content %}

@@ -1,0 +1,32 @@
+{% extends 'page.html' %}
+
+{% block title %}Tickets – {{ operator }} – bustimes.org{% endblock %}
+
+{% block bodyclass %}narrow{% endblock %}
+
+{% block content %}
+
+<h1>Tickets</h1>
+
+<p>You can buy certain tickets in advance on <a href="https://mytrip.today/">the MyTrip app</a>.
+A wider range (singles, returns etc.) may be available from your driver.</p>
+
+{% for grouping in groupings %}
+    {% if grouping.categories %}
+        <h2>{{ grouping.title }}</h2>
+
+        {% for category in grouping.categories %}
+
+            <a href="tickets/{{ category.id }}" class="ticket">
+                <h3>{{ category.title }}</h3>
+
+                {% if category.description.strip %}
+                    <p>{{ category.description }}</p>
+                {% endif %}
+            </a>
+
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+
+{% endblock content %}

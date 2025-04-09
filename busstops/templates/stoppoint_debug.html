@@ -1,0 +1,27 @@
+{% extends 'page.html' %}
+
+{% block canonical %}<meta name="robots" content="noindex,noarchive">{% endblock %}
+
+{% block bodyclass %}{% endblock %}
+
+{% block content %}
+
+<h1>{{ object.get_long_name }}</h1>
+
+<style>{{ css }}</style>
+
+{% for response in responses %}
+
+    {% if response %}
+
+        <p><code>{{ response.url }}</code></p>
+
+        <p><code>{{ response.headers }}</code></p>
+
+        {{ response.text }}
+
+    {% endif %}
+
+{% endfor %}
+
+{% endblock content %}

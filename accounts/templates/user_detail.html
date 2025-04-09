@@ -1,0 +1,57 @@
+{% extends 'page.html' %}
+
+{% block title %}User {{ object.id }} – bustimes.org{% endblock %}
+
+{% block canonical %}<meta name="robots" content="noindex,noarchive">{% endblock %}
+
+{% block bodyclass %}narrow{% endblock %}
+
+{% block content %}
+
+    <h1>
+        {% if object.trusted is False %}<del>{% endif %}
+        User {{ object }}
+        {% if object.trusted is False %}</del>{% endif %}
+    </h1>
+
+    {% if request.user.is_superuser %}
+        <p><a href="{% url 'admin:accounts_user_change' object.id %}">✎</a></p>
+    {% endif %}
+
+    {% if object == user %}
+        <p>That's you!</p>
+    {% endif %}
+
+    <ul class="horizontal">
+        <li><a href="/vehicles/edits?user={{ object.id }}">{{ object.total_count }} edit{{ object.total_count|pluralize }}</a></li>
+        <li><a href="/vehicles/edits?user={{ object.id }}&amp;status=pending">{{ object.pending_count }} pending</a></li>
+        <li><a href="/vehicles/edits?user={{ object.id }}&amp;status=approved">{{ object.approved_count }} approved</a></li>
+        <li><a href="/vehicles/edits?user={{ object.id }}&amp;status=disapproved">{{ object.disapproved_count }} disapproved</a></li>
+    </ul>
+
+    {% if form %}
+        <form method="POST" autocomplete="off">
+            <p>
+                Email address<br>
+                {{ object.email }}
+            </p>
+
+            {{ form.as_p }}
+            {% csrf_token %}
+            <input type="submit" value="Save changes">
+        </form>
+
+        <h2>Delete your account?</h2>
+
+        <form method="POST" autocomplete="off">
+            {% csrf_token %}
+            {{ delete_form.as_p }}
+            <input type="submit" value="☠️ Delete my account!">
+        </form>
+    {% endif %}
+
+    {% for ou in object.operatoruser_set.all %}
+        <p>{{ ou.operator }}</p>
+    {% endfor %}
+
+{% endblock content %}

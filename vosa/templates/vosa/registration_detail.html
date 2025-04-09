@@ -1,0 +1,81 @@
+{% extends 'page.html' %}
+
+{% block title %}{{ object.registration_number }} – bustimes.org{% endblock %}
+
+{% block bodyclass %}narrow{% endblock %}
+
+{% block content %}
+
+<h1>{{ object }}</h1>
+
+<div class="asides">
+    <div class="aside">
+        <dl>
+            <dt>Registration number</dt>
+            <dd>{{ object.registration_number }}</dd>
+
+            <dt>Type</dt>
+            <dd>{{ object.service_type_description|linebreaksbr }}</dd>
+
+            <dt>Supported by subsidy?</dt>
+            <dd>{{ object.subsidies_description }}{% if object.subsidies_details %}<br>
+                    {{ object.subsidies_details|linebreaksbr }}
+                {% endif %}
+            </dd>
+
+            <dt>Authorities</dt>
+            <dd>{{ object.authority_description|linebreaksbr }}</dd>
+        </dl>
+    </div>
+
+    {% if services %}
+        <div class="aside">
+            <h2>Timetables</h2>
+
+            {% include 'service_list.html' with services=services class="has-smalls" %}
+        </div>
+    {% endif %}
+</div>
+
+<h2>Variation history</h2>
+
+<ol class="history">
+    {% for variation in variations %}
+        <li value="{{ variation.variation_number }}">
+        {% if variation.registration_status == "Withdrawn" or variation.registration_status == "Expired" %}<del>{% endif %}
+            <ul>
+                {% if variation.date_received %}<li>
+                    <strong>Received</strong>
+                    {{ variation.date_received|date:"j M y" }}
+                </li>{% endif %}
+
+                {% if variation.effective_date %}<li>
+                    <strong>Effective</strong>
+                    {{ variation.effective_date|date:"j M y" }}
+                </li>{% endif %}
+
+                {% if variation.end_date %}<li>
+                    <strong>End</strong>
+                    {{ variation.end_date|date:"j M y" }}
+                </li>{% endif %}
+
+                <li>
+                    {{ variation.registration_status }}
+                </li>
+
+                {% if variation.short_notice == 'Yes' %}<li>
+                    Short notice
+                </li>{% endif %}
+            </ul>
+
+            {{ variation.service_type_other_details|linebreaks }}
+
+            {{ variation.publication_text|linebreaks }}
+        </li>
+        {% if variation.registration_status == "Withdrawn" or variation.registration_status == "Expired" %}</del>{% endif %}
+    {% endfor %}
+</ol>
+
+<p class="credit">Powered by <a href="https://www.data.gov.uk/dataset/9ea90ed8-de54-4274-92c6-272edd518bfb/traffic-commissioners-local-bus-service-registration">Traffic Commissioners’ local bus service registration data</a></p>
+
+{% endblock content %}

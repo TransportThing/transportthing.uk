@@ -1,0 +1,23 @@
+.DS_Store
+.metadata_never_index
+*.pyc
+/data
+/data/TNDS
+*.zip
+/node_modules/
+/staticfiles/
+/.kamal/secrets
+/.env
+/.coverage
+/slim-bustimes.sql
+/.idea
+/busstops/static/dist/
+/manage.sh
+*.sql
+/credentials.sh
+
+# Sentry Auth Token
+.env.sentry-build-plugin
+
+/.parcel-cache/
+/.vscode/

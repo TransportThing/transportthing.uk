@@ -1,0 +1,12 @@
+node_modules/
+staticfiles/
+data/
+config/deploy.yml
+.git/
+*.sql
+fly.toml
+dist
+busstops/management/tests/fixtures/
+bustimes/management/tests/fixtures/
+fares/data/
+fixtures/vcr/

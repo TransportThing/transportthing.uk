@@ -1,0 +1,69 @@
+# relocate stops from The Street to Dereham Road - buses don't run through Briningham village
+# see https://www.flickr.com/photos/55355638@N05/9821099604/
+2900B482:
+    common_name: green
+    landmark: village sign
+    street: Dereham Road
+    crossing: The Street
+    bearing: SW
+    latlong: POINT(1.0241 52.8685)
+2900B484:
+    common_name: green
+    landmark: village sign
+    street: Dereham Road
+    crossing: The Street
+    bearing: NE
+    latlong: POINT(1.0239 52.8685)
+
+# clarify that "Walmer Castle" is a pub, not a castle (it's quite near Deal Castle)
+'2400A033500A':
+    landmark: the Walmer Castle pub
+'2400108582':
+    landmark: the Walmer Castle pub
+
+3500B267100:
+    common_name: Cross Street
+    indicator: ''
+
+# nearer the surgery than the college
+4200F177501:
+    common_name: Atherstone Surgery
+4200F177502:
+    common_name: Atherstone Surgery
+
+# clarify that the church isn't the main church in Wells-next-the-Sea
+2900W5712:
+    landmark: Congregational church
+
+5710WDB48472:
+    common_name: Wyndham Arcade Stop JJ
+
+# in Oswestry, not Morda
+3500B067500:
+    locality_id: E0050657
+3500B212200:
+    locality_id: E0050657
+3500B212201:
+    locality_id: E0050657
+3500B254400:
+    locality_id: E0050657
+3500B254401:
+    locality_id: E0050657
+
+# not in Whittlesey
+0500FWHIY900:
+    locality_id: E0040542
+0500FWHIY901:
+    locality_id: E0040542
+
+# Inverness Airport
+'6700713414':
+    latlong: POINT(-4.064315804540854 57.54041278738674)
+
+#Oadby Coppice Hall
+'260016604':
+    latlong: POINT(-1.086786 52.609883)
+
+#Durham Bus Station
+'13005528L':
+    latlong: POINT(-1.581721 54.777160)

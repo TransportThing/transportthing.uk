@@ -1,0 +1,105 @@
+{% extends 'page.html' %}
+
+{% block title %}Debug – {{ object }} – bustimes.org{% endblock %}
+
+{% block canonical %}<meta name="robots" content="noindex,noarchive">{% endblock %}
+
+{% block bodyclass %}{% endblock %}
+
+{% block content %}
+
+<h1>{{ object }}</h1>
+
+<ul class="tabs">
+    <li><a href="{{ object.get_absolute_url }}">Timetable</a></li>
+    <li><a href="{{ object.get_absolute_url }}/vehicles">Vehicles</a></li>
+    <li>Debug</li>
+    <li><a href="{% url 'admin:busstops_service_change' object.pk %}">Edit</a></li>
+</ul>
+
+<pre>{{ object.yaml }}</pre>
+
+{% if service.servicecode_set.all %}
+    <h2>Service codes</h2>
+
+    <table>
+        <thead>
+            <tr><th>Scheme</th><th>Code</th>
+        </thead>
+        <tbody>
+            {% for code in service.servicecode_set.all %}
+                <tr><td>{{ code.scheme }}</td><td>{{ code.code }}</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+<h2>Routes</h2>
+
+{% for route in routes %}
+
+<details{% if forloop.first and forloop.last %} open{% endif %}>
+    <summary>
+        <a href="{{ route.source.get_absolute_url }}">{{ route.source }}</a>/<a href="{{ route.get_absolute_url }}">{{ route.code }}</a>
+        <br>ServiceCode: {{ route.service_code }}
+        <br>RevisionNumber: {{ route.revision_number }}
+        <br>OperatingPeriod: {{ route.start_date }}–{{ route.end_date }}
+        <br>{{ route.description }}
+        <br>{{ route.origin }} to {{ route.destination }} via {{ route.via }}
+
+        <br><a href="{% url 'admin:bustimes_route_change' route.id %}">Edit</a>
+    </summary>
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Block</th>
+            <th scope="col">Code</th>
+            <th scope="col">Direction</th>
+            <th scope="col">Start</th>
+            <th scope="col">End</th>
+            <th scope="col">Dates</th>
+            <th scope="col">Days</th>
+            <th scope="col">Bank Holidays</th>
+            <th scope="col">Dates</th>
+            <th scope="col">Garage</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for trip in route.trip_set.all %}
+<tr style="vertical-align:top">
+    <td>{% if trip.sequence %}{{ trip.sequence }}{% endif %}</td>
+    <td class="link">{% if trip.block %}<a href="{{ trip.get_absolute_url }}/block">{{ trip.block }}</a>{% endif %}</td>
+    <td>{% firstof trip.ticket_machine_code trip.vehicle_journey_code %}</td>
+    <td>{% if trip.inbound %}in{% else %}out{% endif %}</td>
+    <td class="link"><a href="{{ trip.get_absolute_url }}">{{ trip.start }}</a></td>
+    <td>{{ trip.end }}</td>
+    {% if trip.rowspan and trip.calendar %}
+        <td rowspan="{{ trip.rowspan }}">{{ trip.calendar.start_date }}–<br>{{ trip.calendar.end_date }}</td>
+        <td rowspan="{{ trip.rowspan }}" class="link"><a href="{% url 'admin:bustimes_calendar_change' trip.calendar.id %}">{{ trip.calendar }}</a></td>
+        <td rowspan="{{ trip.rowspan }}">
+            {% for bank_holiday in trip.calendar.calendarbankholiday_set.all %}
+                {{ bank_holiday }}<br>
+            {% endfor %}
+        </td>
+        <td rowspan="{{ trip.rowspan }}" class="link">
+            {% for calendar_date in trip.calendar.calendardate_set.all %}
+                <a href="{% url 'admin:bustimes_calendardate_change' calendar_date.id %}">{{ calendar_date }}</a>
+            {% endfor %}
+        </td>
+    {% endif %}
+    <td>{% if trip.garage %}{{ trip.garage }}{% endif %}</td>
+    <td class="link">
+        <a href="{% url 'admin:bustimes_trip_change' trip.pk %}">✎</a>
+    </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</details>
+{% endfor %}
+
+{% include 'route.html' %}
+
+{% endblock content %}

@@ -1,0 +1,165 @@
+{% extends 'page.html' %}
+
+{% block title %}{{ object }} – {% if operators %}{{ operators.0 }} – {% endif %}Bus Times{% endblock %}
+
+{% block head %}
+    <meta property="og:title" content="{{ object }}">
+    <meta property="og:description" content="{{ operators.0 }}">
+    <link rel="stylesheet" href="{{ static('dist/js/app.css') }}">
+
+    {% if object.colour %}
+    <style>
+        .colour-{{ object.colour_id }} {
+            background: {{ object.colour.background }};
+            border-color: {{ object.colour.foreground }};
+            color: {{ object.colour.foreground }};
+        }
+    </style>
+    {% endif %}
+{% endblock head %}
+
+{% block bodyclass %}{% endblock %}
+
+{% block content %}
+
+<h1 class="service-header">
+    {% for line_name in object.get_line_names() %}
+        {% if line_name and line_name not in object.line_brand %}
+            {% if ' ' not in line_name or line_name not in object.description %}
+                <strong class="name is-short{% if object.colour_id %} colour colour-{{ object.colour_id }}{% endif %}">
+                    {{ line_name }}
+                </strong>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+    {% if object.line_brand %}
+        <strong class="name{% if object.colour_id %} colour colour-{{ object.colour_id }}{% endif %}">{{ object.line_brand }}</strong>
+    {% endif %}
+    <span class="description">{{ object.description }}</span>
+</h1>
+
+<p>
+    {% if operators %}
+        {% if object.mode %}
+            {{ object.get_a_mode() }} service operated by
+        {% else %}
+            Operated by
+        {% endif %}
+        {% for operator in operators %}{% if not loop.first %}{% if loop.last %} and {% else %}, {% endif %}{% endif %}<a href="{{ operator.get_absolute_url() }}">{{ operator }}</a>{% endfor %}
+    {% endif %}
+</p>
+
+{% if object.public_use is false %}
+    <p>🧑‍🎓 This may be a “closed-door” school or works service, not open to the public</p>
+{% endif %}
+
+{% include 'situations.html' %}
+
+<div class="ad-wrapper">
+    <div id="AFM_inContentTop_ad"></div>
+</div>
+
+{% if object.geometry %}
+    <div id="map"><div class="service-map"><a href="#" class="map-button">Close map</a></div></div>
+
+    <ul class="tabs">
+        <li>Timetable</li>
+        <li id="map-link"><a href="#map">Map</a></li>
+        {% if tickets_link %}
+            <li><a href="{{ tickets_link }}">Tickets</a></li>
+        {% endif %}
+    </ul>
+{% endif %}
+
+<div id="timetable">
+    {% include 'timetable.html' %}
+</div>
+
+{% if registrations or vehicles %}
+    <ul class="horizontal">
+        {% for registration in registrations %}
+            <li><a href="{{ registration.get_absolute_url() }}">{{ registration.registration_number }}</a>
+        {% endfor %}
+        {% if vehicles %}
+            <li><a href="{{ object.get_absolute_url() }}/vehicles">Vehicles</a>
+        {% endif %}
+    </ul>
+{% endif %}
+
+{% if fare_tables %}
+    <h2 id="fares"><label for="fare-tables">Fare tables</label></h2>
+
+    <p>
+        <select id="fare-tables">
+            <option></option>
+            {% for table in fare_tables %}
+                <option  value="{{ table.id }}">{{ table.tariff }}</option>
+            {% endfor %}
+        </select>
+        <noscript><input type="submit" value="Show fare table"></noscript>
+    </p>
+
+    <div id="fare-table"></div>
+{% endif %}
+
+{% if related %}
+    <h2>Possibly similar services</h2>
+    {% set services = related %}{% set class_name = "has-smalls" %}{% include 'service_list.html' %}
+{% endif %}
+
+{% if links %}
+    <h2>More information</h2>
+    <ul>
+    {% for link in links %}
+       <li><a href="{{ link.url }}"{% if 'traveline' in link.url %} rel="nofollow"{% endif %}>{{ link.text }}</a></li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
+{% for operator in operators %}
+    {% include 'operator-contact-details.html' %}
+{% endfor %}
+
+{% if object.public_use is not false and payment_methods %}
+    <p>
+        {% for method in payment_methods %}
+            {% if not loop.first %}{% if loop.last %} or {% else %}, {% endif %}{% endif %}{% if method.url %}<a href="{{ method.url }}">{% endif %}
+            {% if loop.first %}{{ method.name.capitalize() }}{% else %}{{ method }}{% endif %}{% if method.url %}</a>{% endif %}
+        {% endfor %} accepted
+    </p>
+{% endif %}
+
+{% if app %}
+    <p>Mobile tickets and live bus tracking available on <a href="{{ app.url }}">the {{ app.name }}</a></p>
+{% endif %}
+
+{% endblock content %}
+
+{% block foot %}
+    {% if object.geometry %}
+    <script>
+        SERVICE_ID = {{ object.id }};
+        EXTENT = [{{ object.geometry.extent|join(",") }}];
+        LIVERIES_CSS_URL  = "/liveries.{{ liveries_css_version() }}.css";
+    {% if related %}
+        SERVICES = [
+            {"id": {{ object.id }}, "line_names": {{ object.line_names|tojson }}},
+        {% for service in related %}
+            {"id": {{ service.id }}, "line_names": {{ service.line_names|tojson }}},
+        {% endfor %}
+        ];
+    {% endif %}
+    </script>
+    <script async src="{{ static('dist/js/app.js') }}"></script>
+    {% else %}
+    <script>
+        SERVICE_ID = {{ object.id }};
+    </script>
+    {% endif %}
+
+    <script src="{{ static('js/reqwest.min.js') }}"></script>
+    <script async src="{{ static('js/timetable.js') }}"></script>
+    {% if fare_tables %}
+        <script async src="{{ static('js/fares.js') }}"></script>
+    {% endif %}
+{% endblock foot %}

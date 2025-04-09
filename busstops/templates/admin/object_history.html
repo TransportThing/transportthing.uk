@@ -1,0 +1,34 @@
+{% extends "admin/object_history.html" %}
+{% load admin_urls i18n %}
+
+{% block content %}
+<div id="content-main">
+<div class="module">
+
+{% if action_list %}
+    <table id="change-history">
+        <thead>
+        <tr>
+            <th scope="col">{% translate 'Date/time' %}</th>
+            <th scope="col">{% translate 'User' %}</th>
+            <th scope="col">{% translate 'Action' %}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for action in action_list %}
+        <tr>
+            <th scope="row">{{ action.action_time|date:"DATETIME_FORMAT" }}</th>
+            <td>{% if user.is_superuser %}
+                <a href="{% url 'admin:accounts_user_change' action.user_id %}">{{ action.user.username }}</a>
+            {% else %}{{ action.user }}{% endif %}</td>
+            <td>{{ action.get_change_message }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>{% translate 'This object doesn’t have a change history. It probably wasn’t added via this admin site.' %}</p>
+{% endif %}
+</div>
+</div>
+{% endblock content %}

@@ -1,0 +1,52 @@
+@use "sass:meta";
+@use 'base';
+
+@media (min-width: 30em) {
+    @include meta.load-css('30em');
+}
+
+@media (min-width: 48em) {
+    @include meta.load-css('48em');
+}
+
+@media (min-width: 62.5em) {
+    @include meta.load-css('62em');
+}
+
+@media print {
+    @include meta.load-css('print');
+}
+
+@media (min-width: 970px) {
+    .narrow .ad-wrapper {
+        margin: 1em -121px 10px; // 970px
+    }
+}
+
+@media (min-width: 1200px) {
+    .narrow .ad-wrapper {
+        margin: 1em -236px 10px; // 1200
+    }
+
+    .wide .ad-wrapper {
+        margin: 1em -116px 10px;  // 1200px
+    }
+}
+
+.dark-mode {
+    #closeBox circle {
+        fill: #fff!important;
+    }
+
+    #closeBox path {
+        fill: #000!important;
+    }
+
+    #AFM_stickyFooter_ad.drawBorder {
+        border-color: #000;
+    }
+
+    body #AFM_inContentTop_ad iframe {
+        box-shadow: none;
+    }
+}

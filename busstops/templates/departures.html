@@ -1,0 +1,85 @@
+{% if when or departures %}
+<div class="aside" id="departures">
+    {% if when %}
+        <form autocomplete="off">
+            <input type="date" name="date" min="{{ today.isoformat }}" value="{{ when.date.isoformat }}" required>
+            <input type="time" name="time" value="{{ when.time|time:'H:i' }}">
+            {% if has_live or when == now %}
+                <input type="submit" value="↻" aria-label="Reload" title="Reload">
+            {% else %}
+                <input type="submit" value="Go">
+            {% endif %}
+        </form>
+    {% else %}
+        <h2>Next departures</h2>
+    {% endif %}
+    {% for item in departures %}
+        {% ifchanged item.time.date %}
+            {% if forloop.first or item.time.date and item.time and item.time.date != today %}
+                {% if not forloop.first %}
+                    </tbody>
+                    </table>
+                {% endif %}
+                {% if item.time and item.time.date != today %}
+                    <h3>{{ item.time|date:"l j F" }}</h3>
+                {% endif %}
+                <table>
+                <tbody>
+                    {% if has_live or has_scheduled %}
+                        <tr>
+                            <td></td>
+                            <th scope="col">To</th>
+                            {% if has_scheduled %}<th scope="col">Sched&shy;uled</th>{% endif %}
+                            {% if has_live %}<th scope="col">Ex&shy;pected</th>{% endif %}
+                            {% if indicator_prefix %}
+                                <th scope="col">{{ indicator_prefix }}</th>
+                            {% endif %}
+                        </tr>
+                    {% endif %}
+            {% endif %}
+        {% endifchanged %}
+        <tr>
+            <td{% if item.route.line_name and item.route.line_name|length <= 5 %} class="nowrap"{% endif %}>
+            {% if item.service.id %}
+                <a href="{{ item.service.get_absolute_url }}{% if item.date and item.date != today %}?date={{ item.date.isoformat }}{% endif %}">{% firstof item.route.line_name item.service.line_name item.service %}</a>
+            {% elif item.service %}{{ item.service }}{% endif %}
+            </td>
+            <td>
+                {{ item.destination }}
+                {% if item.vehicle %}<div class="vehicle">{{ item.vehicle }}</div>{% endif %}
+            </td>
+            {% if has_scheduled %}
+                <td>{% if item.link %}<a href="{{ item.link }}">{% endif %}
+                    {% if item.cancelled %}<del>{% endif %}
+                        {{ item.time|time:"H:i" }}
+                    {% if item.cancelled %}</del>{% endif %}
+                    {% if item.link %}</a>{% endif %}
+                </td>
+            {% endif %}
+            {% if has_live %}
+                <td>{% if item.live %}
+                    {% if item.link %}<a href="{{ item.link }}">{% endif %}
+                    {{ item.live|time:"H:i" }}
+                    {% if item.link %}</a>{% endif %}
+                {% endif %}</td>
+            {% endif %}
+            {% if object is stoparea %}
+                <td>{{ item.stop_time.stop.get_icon|default:"" }}</td>
+            {% endif %}
+        </tr>
+        {% if forloop.last %}
+            </tbody>
+            </table>
+        {% endif %}
+    {% endfor %}
+
+    {% if when %}
+        {% if next_page %}
+            <p class="next"><a href="{% querystring date=next_page.date time=next_page.time %}">{% if when.date < next_page.date %}{{ next_page.date|date:"l j F" }}{% else %}Later{% endif %} &darr;</a></p>
+        {% endif %}
+        {% if when != now %}
+            <p><a href="{{ object.get_absolute_url }}">&uarr; Now</a></p>
+        {% endif %}
+    {% endif %}
+</div>
+{% endif %}

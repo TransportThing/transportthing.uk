@@ -1,0 +1,48 @@
+services:
+
+  web:
+    build: .
+    entrypoint: sh -c "poetry install --with dev --with test; DEBUG=1 exec ./manage.py runserver 0.0.0.0:8000"
+    container_name: django_web
+    environment:
+      - SECRET_KEY=FuckThisShit
+      - DATABASE_URL=${DATABASE_URL-postgis://postgres:postgres@postgres/tb-data}
+      - REDIS_URL=${REDIS_URL-redis://redis:6379}
+      - NTA_API_KEY=8216da3faa184ab599c8386d7b60cf21
+      - AWS_ACCESS_KEY_ID=0d8274658b955d1ae50158dde128277b
+      - AWS_SECRET_ACCESS_KEY=5aa846013d811ecc0a421259843d9846e09ea3e56e1c2c0f597264b16d934251
+      - PYTHONWARNINGS=all
+      - EMAIL_HOST=mail.privateemail.com
+      - EMAIL_HOST_USER=noreply@totl.sh
+      - EMAIL_HOST_PASSWORD=R0sebr1dge24!
+      - TFL_APP_ID=Timesbus
+      - TFL_APP_KEY=95365fd48f2846a382d09050193ed345
+      - NEW_VEHICLE_WEBHOOK_URL=https://discord.com/api/webhooks/1337069419058171995/A044rf3-lHCSxOjdbtZVUShfQ9d1QyuUfB7r978ezcDaat3tIB5b8H2NQdGRVxwyIm5l
+      - TURNSTILE_SITEKEY=0x4AAAAAAAHdIGBOdFTJX6x3
+      - TURNSTILE_SECRET=0x4AAAAAAAHdIPENasqBg1FlHwZSflpt4m8
+    volumes:
+      - .:/app
+    ports:
+      - "9000:8000"
+      - "35729:35729"
+    restart: always
+
+  postgres:
+    shm_size: '4gb'
+    image: postgis/postgis
+    tmpfs:
+      - "/var/lib/postgresql/data/"
+    # # sloppy non-durable settings, which allegedly make the tests run faster
+    # # not to be used in production!
+    # command: --autovacuum=off --fsync=off --synchronous_commit=off --full_page_writes=off --work_mem=12MB --max-connections=10 --max_wal_senders=0
+    environment:
+      - PGUSER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=tb-data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  redis:
+    image: redis

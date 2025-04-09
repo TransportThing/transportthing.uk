@@ -1,0 +1,11 @@
+{% extends 'page.html' %}
+
+{% block content %}
+
+<h1>{{ district }}</h1>
+
+<h2>Places in {{ district }}</h2>
+
+{% include 'list.html' with list=localities %}
+
+{% endblock content %}

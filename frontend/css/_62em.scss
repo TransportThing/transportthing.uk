@@ -1,0 +1,70 @@
+// 1000px
+
+.site-header {
+    div {
+        padding: 0 1em;
+    }
+}
+
+main {
+    padding: 0 2em;
+}
+
+.table-wrapper {
+    margin: 0 -2em;
+
+    table {
+        padding: 0 2rem;
+    }
+}
+
+.breadcrumb {
+    margin: 0 -2em;
+    padding-left: 1.5em;
+}
+
+.ad-wrapper {
+    margin: 1em -2em 10px;
+}
+
+.wide {
+    .site-header {
+        div {
+            width: 62.5em;
+        }
+    }
+
+    main {
+        max-width: 60.5em;
+    }
+}
+
+.timetable-wrapper {
+    margin-right: -2.28em;
+}
+
+.timetable {
+    padding-right: 2.28em;
+}
+
+.long {
+    column-count: 3;
+}
+
+.long.wide {
+    column-count: 2;
+}
+
+.fleet {
+    .livery-cell {
+        max-width: none;
+    }
+}
+
+.has-sidebar {
+    left: 30%;
+}
+
+.map-sidebar {
+    width: 30%;
+}

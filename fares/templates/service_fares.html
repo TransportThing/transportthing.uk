@@ -1,0 +1,33 @@
+{% extends 'page.html' %}
+
+{% block title %}Fares – {{ service }} – bustimes.org{% endblock %}
+
+{% load date_range %}
+
+{% block content %}
+
+{% for tariff in tariffs %}
+    <p><a href="{{ tariff.get_absolute_url }}">{{ tariff }}{% if tariff.user_profile_id %} ({{ tariff.user_profile }} {{ tariff.trip_type }}){% endif %}</a></p>
+
+    <p>{{ tariff.valid_between|date_range }}</p>
+
+    {% for table in tariff.faretable_set.all %}
+
+        {% ifchanged table.name %}<h2>{{ table }}</h2>{% endifchanged %}
+
+        {% if table.preassigned_fare_product %}
+             <p>{{ table.preassigned_fare_product.name }}</p>
+        {% endif %}
+        <p>
+        {% if table.user_profile %}
+            {{ table.user_profile|capfirst }} {{ table.sales_offer_package|lower }}
+        {% elif table.sales_offer_package %}
+            {{ table.sales_offer_package }}
+        {% endif %}</p>
+
+        {% include "fares/faretable_detail.html" with object=table %}
+    {% endfor %}
+
+{% endfor %}
+
+{% endblock content %}

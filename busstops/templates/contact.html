@@ -1,0 +1,58 @@
+{% extends 'page.html' %}
+
+{% block title %}Contact timesbus.org{% endblock %}
+
+{% block canonical %}
+    <link rel="canonical" href="https://timesbus.org/contact">
+{% endblock canonical %}
+
+{% block bodyclass %}narrow{% endblock %}
+
+{% block content %}
+
+{% if submitted %}
+
+    <h1>Thank you</h1>
+
+    <p>Your message has been sent.</p>
+
+{% else %}
+
+    <h1>Contact timesbus.org</h1>
+
+    <p>Here you can contact <strong>timesbus.org</strong>, which is <strong>just a website</strong> and not an operator of bus services.</p>
+
+    <p>What would you like to contact us about?</p>
+
+    <details>
+        <summary>Lost property 👜 🧸</summary>
+
+        <p>Sorry, we can’t help you find items you’ve left on a bus.
+        Contact the company that operates your bus – they should be able to help.</p>
+    </details>
+
+    <details>
+        <summary>Enquiry or complaint about a bus service</summary>
+
+        <p>Sorry, we can’t help you with these. Please contact the company that operates the bus service.</p>
+    </details>
+
+    <details{% if form.is_bound or form.initial.message %} open{% endif %}>
+        <summary>This website, timesbus.org</summary>
+
+        {% load email_obfuscator %}
+
+        <p>For matters pertaining to <strong>this website</strong>,
+        you can email {{ 'contact@timesbus.org'|obfuscate_mailto }}
+        or use this form:</p>
+
+        <form action="/contact" method="post">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <input type="submit" value="Send message">
+        </form>
+    </details>
+
+{% endif %}
+
+{% endblock content %}

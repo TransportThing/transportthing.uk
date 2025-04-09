@@ -1,0 +1,49 @@
+{% extends 'page.html' %}
+
+{% block content %}
+
+<h1>{{ locality.get_qualified_name }}</h1>
+
+{% if localities %}
+    <h2>Places in {{ locality }}</h2>
+
+    {% include 'list.html' with list=localities %}
+{% endif %}
+
+<div class="ad-wrapper">
+    <div id="AFM_inContentTop_ad"></div>
+</div>
+
+{% if stops %}
+    <section>
+        <header>
+            <h2>Stops in {{ locality }}</h2>
+
+            {% if object.latlong %}
+                <a href="/map#16/{{ object.latlong.y|floatformat:4 }}/{{ object.latlong.x|floatformat:4 }}">Map</a>
+            {% endif %}
+        </header>
+
+        {% include 'stops.html' with stops=stops class=' long' %}
+    </section>
+{% endif %}
+
+{% if services %}
+    <h2>{% include 'modes.html' with modes=modes noun='services' %}</h2>
+
+    {% include 'service_list.html' with services=services class="long wide has-smalls" %}
+{% endif %}
+
+{% if adjacent %}
+    <h2>Near {{ locality }}</h2>
+
+    <ul>
+        {% for locality in adjacent %}
+            <li>
+                <a href="{{ locality.get_absolute_url }}">{{ locality }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% endblock content %}

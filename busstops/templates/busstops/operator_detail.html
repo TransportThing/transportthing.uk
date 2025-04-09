@@ -1,0 +1,52 @@
+{% extends 'page.html' %}
+
+{% block head %}
+    <meta property="og:title" content="{{ object }}">
+{% endblock head %}
+
+{% block bodyclass %}{% endblock %}
+
+{% block content %}
+
+<h1>{{ object }}</h1>
+
+<p>{{ object.get_a_mode }} operator
+    {% if operator.regions.all %}
+        in
+        {% for region in operator.regions.all %}{% if not forloop.first %}{% if forloop.last %} and {% else %}, {% endif %}{% endif %}
+        <a href="{{ region.get_absolute_url }}">{{ region.the }}</a>{% endfor %}
+    {% elif operator.region %}in <a href="{{ object.region.get_absolute_url }}">{{ object.region.the }}</a>{% endif %}
+</p>
+
+{% for note in notes %}
+    <p class="message">{{ note|safe }}</p>
+{% endfor %}
+
+<div class="ad-wrapper">
+    <div id="AFM_inContentTop_ad"></div>
+</div>
+
+<ul class="tabs">
+    {% if services %}
+        <li>{{ services|length }} route{{ services|length|pluralize }}</li>
+    {% endif %}
+    {% if map %}
+        <li><a href="{{ object.get_absolute_url }}/map">Map</a></li>
+    {% endif %}
+    {% if tickets_link %}
+        <li><a href="{{ tickets_link }}">Tickets</a></li>
+    {% endif %}
+    {% if vehicles %}
+        <li><a href="{{ object.get_absolute_url }}/vehicles">Vehicles</a></li>
+    {% endif %}
+</ul>
+
+{% include 'services.html' with services=services %}
+
+{% include 'operator-contact-details.html' with licences=operator.licences.all %}
+
+{% if request.user.is_superuser %}
+    <p><a href="{% url 'admin:busstops_operator_change' object.noc %}">✎</a></p>
+{% endif %}
+
+{% endblock content %}

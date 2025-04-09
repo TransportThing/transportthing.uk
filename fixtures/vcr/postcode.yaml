@@ -1,0 +1,158 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://api.postcodes.io/postcodes/W1A1AA
+  response:
+    body:
+      string: '{"status":200,"result":{"postcode":"W1A 1AA","quality":1,"eastings":528887,"northings":181593,"country":"England","nhs_ha":"London","longitude":-0.143799,"latitude":51.518561,"european_electoral_region":"London","primary_care_trust":"Westminster","region":"London","lsoa":"Westminster
+        013D","msoa":"Westminster 013","incode":"1AA","outcode":"W1A","parliamentary_constituency":"Cities
+        of London and Westminster","admin_district":"Westminster","parish":"Westminster,
+        unparished area","admin_county":null,"date_of_introduction":"199002","admin_ward":"West
+        End","ced":null,"ccg":"NHS North West London","nuts":"Westminster","pfa":"Metropolitan
+        Police","codes":{"admin_district":"E09000033","admin_county":"E99999999","admin_ward":"E05013808","parish":"E43000236","parliamentary_constituency":"E14000639","ccg":"E38000256","ccg_id":"W2U3Z","ced":"E99999999","nuts":"TLI32","lsoa":"E01004765","msoa":"E02000972","lau2":"E09000033","pfa":"E23000001"}}}'
+    headers:
+      Age:
+      - '99346'
+      CF-Cache-Status:
+      - HIT
+      CF-RAY:
+      - 81f21f357aa46323-LHR
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 01 Nov 2023 06:36:10 GMT
+      NEL:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=QcCCAi3pJC3V58kV5msBl1fOY08n3ett%2FRXH2oCjjmqqqP3w06UGSY6NkMAT8jBP%2FQl6rfJw8o5w9Qc29A0Ef%2B8pjCc380pzupWVhtGD9epSFIvSISE%2FEDhjBy1WaD%2BGrGq9IlfEsLWT4OQv6eU%3D"}],"group":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      access-control-allow-origin:
+      - '*'
+      content-length:
+      - '945'
+      etag:
+      - W/"3b1-YoiaZRpRYWak5ZxxE0E+NYsSNzw"
+      x-gnu:
+      - Michael J Blanchard
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://api.postcodes.io/outcodes/NR1
+  response:
+    body:
+      string: '{"status":200,"result":{"outcode":"NR1","longitude":1.3067441578354,"latitude":52.6264808917699,"northings":308325,"eastings":623898,"admin_district":["Broadland","South
+        Norfolk","Norwich"],"parish":["Caistor St Edmund and Bixley","Thorpe St. Andrew","Norwich,
+        unparished area","Sprowston"],"admin_county":["Norfolk"],"admin_ward":["Mancroft","Catton
+        Grove","Sewell","Town Close","Crome","Poringland, Framinghams & Trowse","Thorpe
+        St Andrew South East","Sprowston East","Thorpe Hamlet","Lakenham"],"country":["England"],"parliamentary_constituency":["Norwich
+        South","South Norfolk","Norwich North"]}}'
+    headers:
+      CF-Cache-Status:
+      - HIT
+      CF-RAY:
+      - 81f21f362fca413b-LHR
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 01 Nov 2023 06:36:10 GMT
+      NEL:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=GrXvXEVOr97E8R1zY7e9jUS03UAvqRKo78UyN4Pvjhr0qhojUNqTjugSY7Hs2%2FlBKsS5L%2FTI0sJw0yrVXgU63Br%2FkYMbdNbU0kSBZwaB2znKNOmH75mG3egDq5DdXHOYngVwC2y2CLJ2m%2B1EaiY%3D"}],"group":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Accept-Encoding
+      access-control-allow-origin:
+      - '*'
+      content-length:
+      - '600'
+      etag:
+      - W/"258-J0xM9VjMQguHI4uVMjGbpuczCxA"
+      x-gnu:
+      - Michael J Blanchard
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.31.0
+    method: GET
+    uri: https://api.postcodes.io/postcodes/W1A1AJ
+  response:
+    body:
+      string: '{"status":404,"error":"Postcode not found"}'
+    headers:
+      Age:
+      - '58'
+      CF-Cache-Status:
+      - HIT
+      CF-RAY:
+      - 81f21f36a82c637f-LHR
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '43'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 01 Nov 2023 06:36:10 GMT
+      NEL:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=n3R9HmTWxWUvSvST01beAMhXSDj1Y2Ju%2FBgnyD2%2Fry%2FQlKDu45qBON3t3fOWG7R0buz2Ecos9pUoYrZL0WD0kpSY%2Bxkvw8RMxGXOWXI9L%2F2XHtDo%2BWqVCygGFnjJcll0LvgTjU0kfZAXhDrcOh4%3D"}],"group":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      access-control-allow-origin:
+      - '*'
+      etag:
+      - W/"2b-60dCBHUxbddknotWwisUCk6O8SA"
+      x-gnu:
+      - Michael J Blanchard
+    status:
+      code: 404
+      message: Not Found
+version: 1

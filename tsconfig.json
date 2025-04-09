@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "lib": ["es6", "dom"],
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "strict": true,
+  },
+  "files": [
+    "frontend/js/app.d.ts",
+    "frontend/js/app.tsx",
+  ],
+  "include": [
+    "frontend/js/__tests__/",
+  ]
+}

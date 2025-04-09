@@ -1,0 +1,19 @@
+{% extends 'page.html' %}
+
+{% block content %}
+
+<h1>{{ object }}</h1>
+
+{% if places %}
+    <h2>Places in {{ object }}</h2>
+
+    {% include 'list.html' with list=places %}
+{% endif %}
+
+{% if stops %}
+    <h2>Stops in {{ object }}</h2>
+
+    {% include 'list.html' with list=stops %}
+{% endif %}
+
+{% endblock content %}

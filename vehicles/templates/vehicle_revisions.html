@@ -1,0 +1,9 @@
+{% load static %}
+
+<script src="{% static 'js/htmx.org/htmx.min.js' %}"></script>
+
+<ul class="revisions-list" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+    {% for revision in revisions %}
+        {% include "vehicle_revision.html" %}
+    {% endfor %}
+</ul>

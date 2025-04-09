@@ -1,0 +1,63 @@
+{% extends 'page.html' %}
+
+{% block bodyclass %}{% endblock %}
+
+{% load date_range %}
+
+{% block content %}
+
+    <h1>{{ object }}</h1>
+
+    <p>{{ object.filename }}</p>
+
+    <p>{{ object.code }}</p>
+
+    <p>{{ object.valid_between|date_range }}</p>
+
+    {% for service in object.services.all %}
+        <p><a href="{{ service.get_absolute_url }}/fares">{{ service }}</a></p>
+    {% endfor %}
+
+    {% if form.fields.origin.choices %}
+        <form autocomplete="off">
+            {{ form.as_p }}
+
+            <input type="submit" value="Find fare">
+        </form>
+
+        {% for result in results %}
+            {% ifchanged result.start_zone %}<h3>{{ result.start_zone }} to {{ result.end_zone }}</h3>{% endifchanged %}
+            <p>{{ result.html }}</p>
+        {% endfor %}
+    {% endif %}
+
+    {% for price in object.price_set.all %}
+
+        <p>{{ price.sales_offer_package }}:<br>{{ price.time_interval.name }} ({{ price.time_interval }}):<br>£{{ price.amount }}</p>
+
+    {% endfor %}
+
+    {% for zone in object.access_zones.all %}
+        <p>{{ zone }}</p>
+        <p>{{ zone.stops.all }}</p>
+    {% endfor %}
+
+    {% for table in object.faretable_set.all %}
+
+        {% ifchanged table.name %}<h2>{{ table }}</h2>{% endifchanged %}
+
+        <p>{% if table.preassigned_fare_product %}
+            {{ table.preassigned_fare_product.name }}
+        {% elif table.user_profile %}
+            {{ table.user_profile|capfirst }} {{ table.sales_offer_package|lower }}
+        {% elif table.sales_offer_package %}
+            {{ table.sales_offer_package }}
+        {% endif %}</p>
+
+
+        {% include "fares/faretable_detail.html" with object=table %}
+    {% endfor %}
+
+    {{ object.source.credit }}
+
+{% endblock content %}

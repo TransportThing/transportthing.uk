@@ -1,0 +1,61 @@
+{% if vehicle.notes %}
+    <p>{{ vehicle.notes }}</p>
+{% endif %}
+
+<dl class="contact-details">
+    {% if vehicle.colours or vehicle.livery %}
+        <div class="livery" style="background:{{ vehicle.get_livery }}"{% if vehicle.livery.name %} title="{{ vehicle.livery.name }}"{% endif %}></div>
+    {% endif %}
+
+    {% if vehicle.vehicle_type %}
+        <div>
+            <dt>Type</dt>
+            <dd>
+                {{ vehicle.vehicle_type }}
+                {% if vehicle.vehicle_type.fuel == "electric" %}
+                    ⚡
+                {% endif %}
+            </dd>
+        </div>
+    {% endif %}
+    {% if vehicle.name %}
+        <div>
+            <dt>Name</dt>
+            <dd>{{ vehicle.name }}</dd>
+        </div>
+    {% endif %}
+
+    {% for key, value in vehicle.data_get %}
+        {% if value %}
+            <div>
+                <dt>{{ key }}</dt>
+                <dd>{{ value }}</dd>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    {% if vehicle.features.all %}
+        <div>
+            <dt>Features</dt>
+            <dd>{{ vehicle.features.all|join:", " }}</dd>
+        </div>
+    {% endif %}
+</dl>
+
+{% with flickr_link=vehicle.get_flickr_link %}
+    <ul class="horizontal">
+        {% if vehicle.is_editable %}
+            <li><a href="{{ vehicle.get_edit_url }}">Edit</a></li>
+        {% endif %}
+
+        <li><a href="/vehicles/edits?vehicle={{ vehicle.id }}&status=approved">History</a></li>
+
+        {% if flickr_link %}
+            <li>{{ flickr_link }}</li>
+        {% endif %}
+
+        {% if request.user.is_superuser %}
+            <li><a href="{% url 'admin:vehicles_vehicle_change' vehicle.pk %}">✎</a></li>
+        {% endif %}
+    </ul>
+{% endwith %}

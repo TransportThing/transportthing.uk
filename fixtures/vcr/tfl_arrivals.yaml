@@ -1,0 +1,100 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.10.0]
+    method: GET
+    uri: http://api.tfl.gov.uk/StopPoint/490014721F/arrivals
+  response:
+    body: {string: ''}
+    headers:
+      accept-ranges: [bytes]
+      age: ['0']
+      connection: [keep-alive]
+      date: ['Tue, 26 Jul 2016 17:21:03 GMT']
+      location: ['https://api.tfl.gov.uk/StopPoint/490014721F/arrivals']
+      server: [Varnish]
+      via: [1.1 varnish]
+      x-banning: ['']
+      x-cache: [MISS]
+      x-varnish: ['2339922473']
+    status: {code: 302, message: 'https://api.tfl.gov.uk/StopPoint/490014721F/arrivals'}
+- request:
+    body: null
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      User-Agent: [python-requests/2.10.0]
+    method: GET
+    uri: https://api.tfl.gov.uk/StopPoint/490014721F/arrivals
+  response:
+    body:
+      string: '[{"$type":"Tfl.Api.Presentation.Entities.Prediction, Tfl.Api.Presentation.Entities","id":"-1658364304","operationType":1,"vehicleId":"PF52TFX","naptanId":"490014721F",
+      "stationName":"Wilmot Street","lineId":"388","lineName":"388","platformName":"F","direction":"inbound","bearing":"79","destinationNaptanId":"","destinationName":"Stratford City",
+      "timestamp":"2016-07-26T17:21:04Z","timeToStation":1403,"currentLocation":"","towards":"Hackney or Old Ford","expectedArrival":"2016-07-26T17:44:27.795969Z",
+      "timeToLive":"2016-07-26T17:44:57.795969Z","modeName":"bus"},
+      {"$type":"Tfl.Api.Presentation.Entities.Prediction, Tfl.Api.Presentation.Entities","id":"-1656638183","operationType":1,"vehicleId":"YR59NPF","naptanId":"490014721F",
+      "stationName":"Wilmot Street","lineId":"388","lineName":"388","platformName":"F","direction":"inbound","bearing":"79","destinationNaptanId":"","destinationName":"Stratford City",
+      "timestamp":"2016-07-26T17:21:04Z","timeToStation":331,"currentLocation":"","towards":"Hackney or Old Ford","expectedArrival":"2016-07-26T17:26:35.795969Z",
+      "timeToLive":"2016-07-26T17:27:05.795969Z","modeName":"bus"},{"$type":"Tfl.Api.Presentation.Entities.Prediction, Tfl.Api.Presentation.Entities","id":"-1447600035",
+      "operationType":1,"vehicleId":"LTZ1243","naptanId":"490014721F","stationName":"Wilmot Street","lineId":"8","lineName":"8","platformName":"F","direction":"inbound",
+      "bearing":"79","destinationNaptanId":"","destinationName":"Bow Church","timestamp":"2016-07-26T17:21:04Z","timeToStation":315,"currentLocation":"",
+      "towards":"Hackney or Old Ford","expectedArrival":"2016-07-26T17:26:19.795969Z","timeToLive":"2016-07-26T17:26:49.795969Z","modeName":"bus"},
+      {"$type":"Tfl.Api.Presentation.Entities.Prediction, Tfl.Api.Presentation.Entities","id":"1174664779","operationType":1,"vehicleId":"LTZ1269","naptanId":"490014721F",
+      "stationName":"Wilmot Street","lineId":"8","lineName":"8","platformName":"F","direction":"inbound","bearing":"79","destinationNaptanId":"","destinationName":"Bow Church",
+      "timestamp":"2016-07-26T17:21:04Z","timeToStation":1432,"currentLocation":"","towards":"Hackney or Old Ford","expectedArrival":"2016-07-26T17:44:56.795969Z",
+      "timeToLive":"2016-07-26T17:45:26.795969Z","modeName":"bus"},{"$type":"Tfl.Api.Presentation.Entities.Prediction, Tfl.Api.Presentation.Entities","id":"-1447272356",
+      "operationType":1,"vehicleId":"LTZ1393","naptanId":"490014721F","stationName":"Wilmot Street","lineId":"8","lineName":"8","platformName":"F","direction":"inbound",
+      "bearing":"79","destinationNaptanId":"","destinationName":"Bow Church","timestamp":"2016-07-26T17:21:04Z","timeToStation":1722,"currentLocation":"",
+      "towards":"Hackney or Old Ford","expectedArrival":"2016-07-26T17:49:46.795969Z","timeToLive":"2016-07-26T17:50:16.795969Z","modeName":"bus"},
+      {"$type":"Tfl.Api.Presentation.Entities.Prediction, Tfl.Api.Presentation.Entities","id":"370488039","operationType":1,"vehicleId":"LTZ1407","naptanId":"490014721F",
+      "stationName":"Wilmot Street","lineId":"8","lineName":"8","platformName":"F","direction":"inbound","bearing":"79","destinationNaptanId":"","destinationName":"Bow Church",
+      "timestamp":"2016-07-26T17:21:04Z","timeToStation":754,"currentLocation":"","towards":"Hackney or Old Ford","expectedArrival":"2016-07-26T17:33:38.795969Z",
+      "timeToLive":"2016-07-26T17:34:08.795969Z","modeName":"bus"},{"$type":"Tfl.Api.Presentation.Entities.Prediction, Tfl.Api.Presentation.Entities","id":"236821812","operationType":1,
+      "vehicleId":"LTZ1412","naptanId":"490014721F","stationName":"Wilmot Street","lineId":"8","lineName":"8","platformName":"F","direction":"inbound","bearing":"79","destinationNaptanId":"",
+      "destinationName":"Bow Church","timestamp":"2016-07-26T17:21:04Z","timeToStation":956,"currentLocation":"","towards":"Hackney or Old Ford","expectedArrival":"2016-07-26T17:37:00.795969Z",
+      "timeToLive":"2016-07-26T17:37:30.795969Z","modeName":"bus"},
+      {"$type":"Tfl.Api.Presentation.Entities.Prediction, Tfl.Api.Presentation.Entities","id":"1040732310","operationType":1,"vehicleId":"LTZ1414","naptanId":"490014721F",
+      "stationName":"Wilmot Street","lineId":"8","lineName":"8","platformName":"F","direction":"inbound","bearing":"79","destinationNaptanId":"","destinationName":"Bow Church",
+      "timestamp":"2016-07-26T17:21:04Z","timeToStation":104,"currentLocation":"","towards":"Hackney or Old Ford","expectedArrival":"2016-07-26T17:22:48.795969Z",
+      "timeToLive":"2016-07-26T17:23:18.795969Z","modeName":"bus"},{"$type":"Tfl.Api.Presentation.Entities.Prediction, Tfl.Api.Presentation.Entities","id":"553350375",
+      "operationType":1,"vehicleId":"LX59AOA","naptanId":"490014721F","stationName":"Wilmot Street","lineId":"d3","lineName":"D3","platformName":"F","direction":"inbound",
+      "bearing":"79","destinationNaptanId":"","destinationName":"Bethnal Green, Chest Hospital","timestamp":"2016-07-26T17:21:04Z","timeToStation":1431,"currentLocation":"",
+      "towards":"Hackney or Old Ford","expectedArrival":"2016-07-26T17:44:55.795969Z","timeToLive":"2016-07-26T17:45:25.795969Z","modeName":"bus"},
+      {"$type":"Tfl.Api.Presentation.Entities.Prediction, Tfl.Api.Presentation.Entities","id":"1430138366","operationType":1,"vehicleId":"LX59AOL","naptanId":"490014721F",
+      "stationName":"Wilmot Street","lineId":"d3","lineName":"D3","platformName":"F","direction":"inbound","bearing":"79","destinationNaptanId":"",
+      "destinationName":"Bethnal Green, Chest Hospital","timestamp":"2016-07-26T17:21:04Z","timeToStation":773,"currentLocation":"","towards":"Hackney or Old Ford",
+      "expectedArrival":"2016-07-26T17:33:57.795969Z","timeToLive":"2016-07-26T17:34:27.795969Z","modeName":"bus"},
+      {"$type":"Tfl.Api.Presentation.Entities.Prediction, Tfl.Api.Presentation.Entities","id":"-1168549229","operationType":1,"vehicleId":"LX59AOM","naptanId":"490014721F",
+      "stationName":"Wilmot Street","lineId":"d3","lineName":"D3","platformName":"F","direction":"inbound","bearing":"79","destinationNaptanId":"",
+      "destinationName":"Bethnal Green, Chest Hospital","timestamp":"2016-07-26T17:21:04Z","timeToStation":173,"currentLocation":"","towards":"Hackney or Old Ford",
+      "expectedArrival":"2016-07-26T17:23:57.795969Z","timeToLive":"2016-07-26T17:24:27.795969Z","modeName":"bus"}]'
+    headers:
+      access-control-allow-headers: [Content-Type]
+      access-control-allow-methods: ['GET,POST,PUT,DELETE,OPTIONS']
+      access-control-allow-origin: ['*']
+      age: ['0']
+      api-entity-payload: [Prediction]
+      cache-control: ['public, max-age=10']
+      connection: [keep-alive]
+      content-encoding: [gzip]
+      content-type: [application/json; charset=utf-8]
+      date: ['Tue, 26 Jul 2016 17:21:04 GMT']
+      server: [Microsoft-IIS/8.5]
+      via: [1.1 varnish]
+      x-aspnet-version: [4.0.30319]
+      x-backend: [api]
+      x-backend-url: [/StopPoint/490014721F/arrivals]
+      x-banning: ['']
+      x-cache: [MISS]
+      x-cacheable: [Yes. Cacheable]
+      x-hash-url: [/stoppoint/490014721f/arrivals]
+      x-ttl: ['10.000']
+      x-ttl-rule: ['765']
+      x-varnish: [10.73.2.250, '2339922568']
+    status: {code: 200, message: OK}
+version: 1

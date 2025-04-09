@@ -1,0 +1,63 @@
+// 480px
+
+.site-header {
+    ul {
+        a {
+            padding-left: 1em;
+        }
+    }
+
+    .search {
+        padding-right: 1em;
+        position: relative;
+        top: .7em;
+
+        label {
+            float: left;
+            padding: 0;
+            position: relative;
+            width: 8em;
+        }
+
+        input[type='search'] {
+            border: 1px solid var(--brand-color-darker);
+            border-bottom-left-radius: .5em;
+            border-top-left-radius: .5em;
+            left: 0;
+            top: 0;
+            width: 100%;
+
+            &:focus {
+                border-width: 1px;
+            }
+
+        }
+
+        input[type='submit'] {
+            background: var(--brand-color-darker);
+            border: 1px solid var(--brand-color-darker);
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 0;
+            display: block;
+            float: right; // work around transient Chrome bug?
+            margin: 0;
+            top: 0;
+        }
+    }
+
+    ul + .search {
+        padding-right: .5em;
+    }
+}
+
+#hugemap .map-link {
+    padding-left: 1em;
+}
+
+.long {
+    column-count: 2;
+}
+
+.long.wide {
+    column-count: 1;
+}

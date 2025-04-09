@@ -1,0 +1,236 @@
+{% extends 'page.html' %}
+
+{% block title %}Site status – bustimes.org{% endblock %}
+
+{% block content %}
+
+<h1>Site stat(u)s</h1>
+
+<table>
+    <tbody>
+        {% for source in sources %}
+        <tr>
+            <th scope="row">{{ source.name }}</th>
+            <td>{{ source.datetime }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<h2>Vehicle journeys</h2>
+
+<svg id="journeys" width="792" height="400"></svg>
+
+<h2><a href="/vehicles/edits?status=pending">Pending vehicle edits</a></h2>
+
+<svg id="edits" width="792" height="400"></svg>
+
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script>
+    fetch("/stats.json").then(response => response.json()).then(data => {
+        var journeys = d3.select("#journeys");
+        var edits = d3.select("#edits");
+
+        data = data.map(item => {
+            item.datetime = new Date(item.datetime);
+            return item;
+        });
+
+        var datetimes = data.map(item => item.datetime);
+
+        var xScale = d3.scaleTime().domain([
+            datetimes.reduce((a, b) => Math.min(a, b)),
+            datetimes.reduce((a, b) => Math.max(a, b)),
+        ]).range([0, 700]);
+
+        var editsScale = d3.scaleLinear().domain([
+            0,
+            data.map(item => item.pending_vehicle_edits).reduce((a, b) => Math.max(a, b))
+        ]).range([350, 0]);
+        var journeysScale = d3.scaleLinear().domain([
+            0,
+            data.map(item => item.vehicle_journeys).reduce((a, b) => Math.max(a, b))
+        ]).range([350, 0]);
+
+        var xAxis = d3.axisBottom(xScale);
+        var editsAxis = d3.axisLeft(editsScale);
+        var journeysAxis = d3.axisLeft(journeysScale);
+
+        journeys.append("g").attr("transform", "translate(50, 360)").call(xAxis);
+        edits.append("g").attr("transform", "translate(50, 360)").call(xAxis);
+
+        journeys.append("g").attr("transform", "translate(50, 10)").call(journeysAxis);
+        edits.append("g").attr("transform", "translate(50, 10)").call(editsAxis);
+
+        var line = d3.line().x(item => xScale(item.datetime)).y(item => editsScale(item.pending_vehicle_edits));
+        edits.append('path').attr('transform', 'translate(50, 10)').attr('fill', 'none').attr('stroke', '#000').attr("stroke-width", 2).datum(data).attr('d', line)
+        .append("title").text(d => {
+            return d.key;
+        });
+
+        line = d3.line().x(item => xScale(item.datetime)).y(item => journeysScale(item.vehicle_journeys));
+        journeys.append('path').attr('transform', 'translate(50, 10)').attr('fill', 'none').attr('stroke', 'red').attr("stroke-width", 2).datum(data).attr('d', line)
+        .append("title").text("journeys");
+
+        line = d3.line().x(item => xScale(item.datetime)).y(item => journeysScale(item.service_vehicle_journeys));
+        journeys.append('path').attr('transform', 'translate(50, 10)').attr('fill', 'none').attr('stroke', 'blue').attr("stroke-width", 2).datum(data).attr('d', line)
+        .append("title").text("journeys matched to services");
+
+        line = d3.line().x(item => xScale(item.datetime)).y(item => journeysScale(item.trip_vehicle_journeys));
+        journeys.append('path').attr('transform', 'translate(50, 10)').attr('fill', 'none').attr('stroke', 'green').attr("stroke-width", 2).datum(data).attr('d', line)
+        .append("title").text("journeys matched to timetables");
+
+    });
+</script>
+
+<h2>AVL</h2>
+
+{% for key, items in bod_avl_status.items %}
+<details>
+<summary>{{ key }}</summary>
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Fetched</th>
+            <th scope="col">Timestamp</th>
+            <th scope="col">Age</th>
+            <th scope="col">Items</th>
+            <th scope="col">Changed items</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+            <tr>
+                <td>{{ item.fetched|date:'H:i:s' }}</td>
+                <td>{{ item.timestamp|date:'H:i:s' }}</td>
+                <td>{{ item.age.total_seconds }}</td>
+                <td>{{ item.items }}</td>
+                <td>{{ item.changed }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</details>
+{% endfor %}
+
+{% for name, status in statuses %}<details>
+    <summary>{{ name }}</summary>
+
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Fetched</th>
+                <th scope="col">Time taken</th>
+                <th scope="col">Items</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in status %}
+                <tr>
+                    <td>{{ item.0|date:'H:i:s' }}</td>
+                    <td>{{ item.1 }}</td>
+                    <td>{{ item.2 }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</details>{% endfor %}
+
+<h2>Timetables</h2>
+
+<svg id="timetables" width="792" height="800"></svg>
+
+<script>
+    fetch("/timetable-source-stats.json").then(response => response.json()).then(data => {
+        var timetables = d3.select("#timetables");
+
+        data = data.map(item => {
+            item.datetime = new Date(item.datetime);
+            return item;
+        });
+
+        var datetimes = data.map(item => item.datetime);
+
+        var xScale = d3.scaleTime().domain([
+            datetimes.reduce((a, b) => Math.min(a, b)),
+            datetimes.reduce((a, b) => Math.max(a, b)),
+        ]).range([0, 700]);
+
+        var totals = data.map(item => Object.values(item.sources).reduce((a, b) => a + b));
+        var maxTotal = totals.reduce((a, b) => Math.max(a, b));
+        var servicesScale = d3.scaleLinear().domain([0, maxTotal]).range([780, 0]);
+
+        var xAxis = d3.axisBottom(xScale);
+        var yAxis = d3.axisLeft(servicesScale);
+
+        timetables.append("g").attr("transform", "translate(50, 780)").call(xAxis);
+
+        timetables.append("g").attr("transform", "translate(50, 0)").call(yAxis);
+
+        var sources = {};
+        data.forEach(item => {
+            Object.keys(item.sources).forEach(source => {
+                if (!sources[source]) {
+                    sources[source] = true;
+                }
+            })
+        });
+
+        // stack generator
+        var stack = d3.stack()
+        .keys(Object.keys(sources))
+        .value((obj, key) => {
+            return obj[key] || 0;
+        });
+
+        // use the generator to generate
+        var series = stack(data.map(item => {
+            var object = {
+                datetime: item.datetime
+            };
+            return Object.assign({
+                datetime: item.datetime
+            }, item.sources)
+        }));
+
+        // area generator
+        var area = d3.area()
+        .x((d, i, data) => {
+            return xScale(d.data.datetime);
+        })
+        .y0(function(d, i, data) {
+            return servicesScale(d[0]);
+        })
+        .y1(function(d, i, data) {
+            return servicesScale(d[1]);
+        });
+
+        var accent = d3.scaleOrdinal(d3.schemeAccent);
+        timetables.append("g")
+        .attr("transform", "translate(50, 0)")
+        .selectAll("path")
+        .data(series)
+        .join("path")
+        .attr("d", area)
+        .style("fill", d => {
+            return accent(d.key);
+        })
+        .on("mousemove", handleMouseMove);
+
+        var mouser = timetables.append('text').style('stroke', 'white').style('paint-order', 'stroke').style('stroke-width', '5px');
+
+        function handleMouseMove(event, data) {
+            var pointer = d3.pointer(event, this);
+            mouser.text(data.key).attr('x', pointer[0]).attr('y', pointer[1]);
+        }
+
+    });
+</script>
+
+<h2>TNDS</h2>
+
+<p>See <a href="/sources">timetable data sources</a></p>
+
+{% endblock content %}

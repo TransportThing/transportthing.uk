@@ -1,0 +1,20 @@
+{% extends 'map.html' %}
+
+{% block title %}{{ object.route.line_name }} – {{ object.operator }} – bustimes.org{% endblock %}
+
+{% block canonical %}<meta name="robots" content="noindex,noarchive">{% endblock %}
+
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'dist/js/app.css' %}">
+    <link rel="stylesheet" media="print" href="/liveries.{{ liveries_css_version }}.css" onload="this.onload=null;this.removeAttribute('media')">
+{% endblock head %}
+
+{% block footer %}
+    <script id="trip-data" type="application/json">{{ stops_json }}</script>
+    {% if object.route.service.tracking %}
+        <script>window.TRIP_ID = {{ object.id }};</script>
+    {% endif %}
+    <script src="{% static 'dist/js/app.js' %}"></script>
+{% endblock footer %}

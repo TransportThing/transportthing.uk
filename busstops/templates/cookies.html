@@ -1,0 +1,85 @@
+{% extends 'page.html' %}
+
+{% block title %}Privacy policy – timesbus.org{% endblock %}
+
+{% block canonical %}
+<link rel="canonical" href="https://timesbus.org/privacy">
+{% endblock canonical %}
+
+{% block fuse %}
+{% load static %}
+<script src="{% static 'js/consent.js' %}"></script>
+{% endblock fuse %}
+
+{% block bodyclass %}narrow{% endblock %}
+
+{% block content %}
+
+<h1>Privacy policy</h1>
+
+<p class="credit">
+    Last updated: 9 April 2025
+
+<p>
+timesbus.org (“this website”) is owned and operated by TimesBus (“we”).
+<p>
+You can use most of this website freely without sharing any personal details. But:
+<p>
+Using the “edit vehicle information” feature requires an email address, to facilitate logging in, and so that we can contact you if necessary. If you create an account and log in, we may also record your IP address, to help identify and prevent abuse and vandalism.
+<p>
+If you <a href="/contact">email us</a>, we ask for your name and email address, so that we can reply. we may forward your message to e.g. a bus operating company or transport authority, if they are better placed to help you, unless you ask us not to.
+<p>
+If you <a href="/contact">ask us</a> to, we can delete and/or provide you with a copy of your user account and/or any emails you‘ve sent us.
+<p>
+This website uses some content from third parties:
+<ul class="bulleted">
+<li>
+The main bulk of this site runs on code written by <a href="https://github.com/jclgoodwin">JG</a> for their site <a href="https://bustimes.org">bustimes.org</a>.
+<li>
+map tiles from <a href="https://stadiamaps.com/privacy/">Stadia Maps</a>
+<li>
+analytics code from Google Analytics</a>
+<li>
+programmatic advertisements under the auspices of Google, and their partners
+</ul>
+
+<p>You can control how advertisers use cookies and personal information:</p>
+
+<p><button type="button" class="button" onclick="window.__tcfapi('displayConsentUi', 2, function() {} );">Privacy settings</button></p>
+
+<p>This website contains links to other websites. we am not responsible for the content of other websites.</p>
+
+<h2>Cookies</h2>
+
+<p>‘Cookies’ are small text files stored on your computer when you use some websites, including this one.</p>
+
+<p>We use some cookies for the functionality of this website:</p>
+
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Type</th>
+            <th scope="col">Purpose</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>vehicleMap</td>
+            <td>local storage</td>
+            <td>Last viewed location on <a href="/map">the map</a></td>
+        </tr>
+        <tr>
+            <td>hideStops</td>
+            <td>local storage</td>
+            <td>Whether to show bus stops on <a href="/map">the map</a></td>
+        </tr>
+        <tr>
+            <td>sessionid</td>
+            <td>cookie</td>
+            <td>Remember if you have logged in</td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock content %}

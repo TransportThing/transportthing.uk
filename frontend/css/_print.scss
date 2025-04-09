@@ -1,0 +1,60 @@
+header,
+.breadcrumb,
+.tabs,
+input,
+label,
+.ad-wrapper,
+.qc-cmp2-container,
+footer {
+    display: none;
+}
+
+body #stickyAdContainer {
+    display: none!important;
+}
+
+body,
+a {
+    color: #000;
+}
+
+main {
+    margin: 0;
+    padding: 0;
+    width: auto;
+}
+
+h1 {
+    font-size: 1.75em;
+    margin-top: 0;
+}
+
+.timetable-date {
+    select {
+        border: 0;
+        height: auto;
+        padding: 0;
+    }
+
+    &:after {
+        display: none;
+    }
+}
+
+.timetable-wrapper {
+    margin-top: 0;
+}
+
+
+.table-wrapper,
+.timetable-wrapper {
+    overflow: visible;
+}
+
+.timetable {
+    thead td,
+    td,
+    th {
+        border-color: #eee;
+    }
+}

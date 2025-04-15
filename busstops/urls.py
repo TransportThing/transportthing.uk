@@ -28,16 +28,10 @@ urlpatterns = [
     ),
     path("version", views.version),
     path("contact", views.contact, name="contact"),
-    path(
-        "cookies",
-        cdn_cache_control(1800)(TemplateView.as_view(template_name="cookies.html")),
-    ),
-    path(
-        "privacy",
-        cdn_cache_control(1800)(TemplateView.as_view(template_name="cookies.html")),
-    ),
+    path("cookies", cdn_cache_control(1800)(TemplateView.as_view(template_name="cookies.html"))),
+    #path("privacy", cdn_cache_control(1800)(TemplateView.as_view(template_name="cookies.html"))),
     path("503", TemplateView.as_view(template_name="503.html")),
-    path("data", TemplateView.as_view(template_name="data.html")),
+    #path("data", TemplateView.as_view(template_name="data.html")),
     path("status", views.status),
     path("timetable-source-stats.json", views.timetable_source_stats),
     path("stats.json", views.stats),
@@ -45,7 +39,7 @@ urlpatterns = [
         "ads.txt",
         cache_control(max_age=1800)(
             RedirectView.as_view(
-                url="https://cdn.adfirst.media/adstxt/bustimes-ads.txt"
+                url="https://assets.timesbus.org/ads.txt"
             )
         ),
     ),

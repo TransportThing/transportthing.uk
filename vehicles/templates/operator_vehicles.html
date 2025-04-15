@@ -61,9 +61,12 @@ ticket machines, a byproduct of the live bus tracking.</p>
 <table class="fleet compact">
     <thead>
         <tr>
-            <th scope="col" colspan="2"></th>
+            <th scope="col">ID</th>
+            <th scope="col">Reg</th>
             {% if not parent %}<th scope="col" colspan="2">Last tracked</th>{% endif %}
             <th scope="col">Livery</th>
+            <th scope="col" class="trivia">Livery Name</th>
+            <th scope="col" class="trivia">Branding</th>
             <th scope="col">Type</th>
             {% if name_column %}<th scope="col" class="trivia">Name</th>{% endif %}
             {% if notes_column %}<th scope="col" class="trivia">Notes</th>{% endif %}
@@ -104,8 +107,16 @@ ticket machines, a byproduct of the live bus tracking.</p>
                         {{ vehicle.last_seen.when|date:"j M Y" }}
                     {% endif %}
                 </td>{% endif %}
+
+
                 <td{% if vehicle.colours or vehicle.livery_id %} class="livery-cell"{% endif %}>
-                    {% if vehicle.colours or vehicle.livery_id %}<div class="livery{% if vehicle.livery_id %} livery-{{ vehicle.livery_id }}{% else %}" style="background:{{ vehicle.get_livery }}{% endif %}"{% if vehicle.livery_name %} title="{{ vehicle.livery_name }}"{% endif %}></div>{% endif %}
+                    {% if vehicle.colours or vehicle.livery_id %}<div class="livery{% if vehicle.livery_id %} livery-{{ vehicle.livery_id }}{% else %}" style="background:{{ vehicle.get_livery }}{% endif %}" {% if vehicle.livery_name %} title="{{ vehicle.livery_name|default:" " }}"{% endif %}></div>{% endif %}
+                </td>
+                <td class="trivia">
+                        {% if vehicle.colours or vehicle.livery_id %} {{ vehicle.livery.name }}{% endif %}
+                </td>
+                <td class="trivia">
+                        {% if vehicle.branding %}{{ vehicle.branding|default:" " }}{% endif %}
                 </td>
                 <td>{% if vehicle.is_spare_ticket_machine %}{{ vehicle.notes }}{% else %}{{ vehicle.vehicle_type_name|default:"" }}{% endif %}</td>
                 {% if name_column %}<td class="trivia">{{ vehicle.name }}</td>{% endif %}

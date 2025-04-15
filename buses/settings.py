@@ -15,16 +15,16 @@ from sentry_sdk.integrations.redis import RedisIntegration
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ["SECRET_KEY"]
 ALLOWED_HOSTS = os.environ.get(
-    "ALLOWED_HOSTS", "[::1] 127.0.0.1 localhost 16.local timesbus.org 51.38.84.109 timesbus.gay new.timesbus.org"
+    "ALLOWED_HOSTS", "[::1] 127.0.0.1 localhost 16.local timesbus.org 51.38.84.109 new.timesbus.org"
 ).split()
 
 CSRF_TRUSTED_ORIGINS = os.environ.get(
     "CSRF_TRUSTED_ORIGINS",
-    "https://timesbus.org https://timesbus.gay https://new.timesbus.org"
+    "https://timesbus.org https://new.timesbus.org"
 ).split()
 
 TEST = "test" in sys.argv or "pytest" in sys.argv[0]
-DEBUG = bool(os.environ.get("DEBUG", False))
+DEBUG = False
 
 DEFAULT_FROM_EMAIL = '"TimesBus" <noreply@totl.sh>'
 

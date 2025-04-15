@@ -8,7 +8,7 @@
 :root{
     --brand-color:#164450;
     --brand-color-darker:#133c46;
-    --viewed-color: #877f7f;
+    --viewed-color: #8cd6ea;
     --brand-color-darker-darker:#0d2930;
     --border-color:var(--brand-color-darker);
     --border-color-darker:var(--brand-color-darker-darker);
@@ -863,7 +863,7 @@ table {
     }
 
     tr:target {
-        background: var(--brand-color);
+        background: var(--viewed-color);
     }
 }
 

@@ -1,11 +1,14 @@
 {
     "icons": [
         {
-            "src": "/apple-touch-icon.png",
-            "sizes": "180x180",
-            "type": "image/png"
+            "src": "https://assets.timesbus.org/tb_small_favicon_nobg.svg",
+            "type": "image/svg+xml"
+        },
+        {
+            "src": "https://assets.timesbus.org/timesbus.svg",
+            "type": "image/svg+xml"
         }
     ],
-    "background_color": "#fff",
-    "theme_color": "#ffff9e"
+    "background_color": "#333333",
+    "theme_color": "#164450"
 }

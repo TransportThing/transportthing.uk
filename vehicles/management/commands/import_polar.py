@@ -33,7 +33,7 @@ class Command(ImportLiveVehiclesCommand):
         operator = item["_embedded"]["transmodel:line"]["href"].split("/")[3]
 
         # Allowed operator codes
-        allowed_operators = {"McG", "MBLB", "CB", "WCM", "ARGT", "CSVC", "MCLS", "WRHU", "HIGH", "SHI", "GLHD", "JMT", "MOFF", "ISLY", "SBAY", "EDWC", "DPCE", "FSRV", "CLNB", "SFGC", "WCMO", "MESC", "TLCT", "S27", "CSVC", "MSOT", "NCTP", "RWSW", "BNCM", "SWCC", "WHIP", "TRDU"}
+        allowed_operators = {"McG", "MBLB", "CB", "WCM", "ARGT", "CSVC", "MCLS", "WRHU", "HIGH", "SHI", "GLHD", "JMT", "MOFF", "ISLY", "SBAY", "EDWC", "DPCE", "FSRV", "CLNB", "SFGC", "WCMO", "MESC", "TLCT", "S27", "CSVC", "MSOT", "NCTP", "RWSW", "BNCM", "SWCC", "WHIP", "TRDU", "NT0", "NWPT"}
 
         # Skip processing if the operator is not in the allowed list
         if operator not in allowed_operators:
@@ -43,6 +43,8 @@ class Command(ImportLiveVehiclesCommand):
         # Ensure McG is mapped to MCGL
         if operator == "McG":
             operator = "MCGL"
+        if operator == "NT0" or operator == "NTO":
+            operator == "NWPT"
         if operator == "CB":
             operator = "CBUS"
         if operator == "SHI":

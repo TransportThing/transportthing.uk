@@ -34,6 +34,8 @@
             <p>
                 Email address<br>
                 {{ object.email }}
+                <br/>
+                {% if object.first_name|length > 0 %}Name <br/>{{ object.first_name }} {% endif %}{% if object.last_name|length > 0 %} {{ object.last_name }} {% endif %}
             </p>
 
             {{ form.as_p }}

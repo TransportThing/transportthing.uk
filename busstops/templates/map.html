@@ -10,12 +10,12 @@
 
 {% block header %}
    <header class="site-header">
-        <a href="/" class="site-name{% if object.mode == 'ferry' %} ferry{% endif %}">
-                {% if object.mode == 'ferry' %}<img src="https://files.totl.sh/timesferry.svg" height="28px" />{% endif %}
-                {% if object.mode == 'taxi' %}<img src="https://files.totl.sh/timestaxi.svg" height="28px" />{% endif %}
-                {% if object.mode == 'bus' %}<img src="https://files.totl.sh/timesbus.svg" height="28px" />{% endif %}
-                {% if object.mode == 'tram' %}<img src="https://files.totl.sh/timestram.svg" height="28px" />{% endif %}
-                {% if not object.mode %}<img src="https://files.totl.sh/timesbus.svg" height="28px" />{% endif %}
+        <a href="/" class="site-name">
+                {% if object.mode == 'ferry' %}<img src="https://assets.timesbus.org/timesferry.svg" height="28px" />{% endif %}
+                {% if object.mode == 'taxi' %}<img src="https://assets.timesbus.org/timestaxi.svg" height="28px" />{% endif %}
+                {% if object.mode == 'bus' %}<img src="https://assets.timesbus.org/timesbus.svg" height="28px" />{% endif %}
+                {% if object.mode == 'tram' %}<img src="https://assets.timesbus.org/timestram.svg" height="28px" />{% endif %}
+                {% if not object.mode %}<img src="https://assets.timesbus.org/logo.svg" height="28px" />{% endif %}
         </a>
         <ul>
             <li><a href="/map{% if object.latlong %}#16/{{ object.latlong.y|floatformat:4 }}/{{ object.latlong.x|floatformat:4 }}{% endif %}">Map</a></li>

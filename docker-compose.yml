@@ -1,8 +1,7 @@
 services:
-
   web:
     build: .
-    entrypoint: sh -c "poetry install --with dev --with test; DEBUG=1 exec ./manage.py runserver 0.0.0.0:8000"
+    entrypoint: sh -c "poetry install --with dev --with test; DEBUG=1 exec ./manage.py runserver 0.0.0.0:9000"
     container_name: django_web
     environment:
       - SECRET_KEY=FuckThisShit
@@ -23,7 +22,7 @@ services:
     volumes:
       - .:/app
     ports:
-      - "9000:8000"
+      - "9000:9000"
       - "35729:35729"
     restart: always
 

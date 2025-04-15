@@ -4,17 +4,16 @@
 <meta charset="utf-8">
 <title>{% block title %}{% if object %}{{ object.get_long_name or object.get_qualified_name or object }} – {% endif %}Timesbus{% endblock %}</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#ffff9e" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#afdee9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#164450" media="(prefers-color-scheme: dark)">
 <meta name="color-scheme" content="dark light">
 {% block canonical %}
     {% if object.get_absolute_url %}
-        <link rel="canonical" href="https://bustimes.org{{ object.get_absolute_url() }}">
+        <link rel="canonical" href="https://timesbus.org{{ object.get_absolute_url() }}">
     {% endif %}
 {% endblock canonical %}
 <script type="application/ld+json">{"@context":"http://schema.org","@type":"WebSite","url":"https://timesbus.org","name":"timesbus.org","potentialAction":{"@type":"SearchAction","target":"https://timesbus.org/search?q={q}","query-input":"required name=q"}}</script>
-<link rel="icon" sizes="48x48" type="image/png" href="/favicon.ico">
-<link rel="icon" sizes="any" type="image/svg+xml" href="{{ static('svg/bimi.svg') }}">
+<link rel="icon" sizes="48x48" type="image/png" href="https://assets.timesbus.org/favicon.svg">
 <link rel="manifest" href="{{ static('manifest.webmanifest') }}">
 <link rel="stylesheet" href="{{ static('dist/css/style.css') }}">
 
@@ -25,8 +24,6 @@
 
 {% block fuse %}
 {% if ad %}
-<script src="{{ static('consent.js') }}"></script>
-<script>if(typeof Array.prototype.includes!=="undefined"){s=document.getElementsByTagName('script')[0];var sc=document.createElement('script');sc.type='text/javascript';sc.async=true;sc.src='https://cdn.adfirst.media/hb/bustimes.js?v'+Math.floor(new Date().getTime()/600000);s.parentNode.insertBefore(sc,s);}</script>
 {% endif %}
 {% endblock fuse %}
 
@@ -39,7 +36,7 @@
 {% block header %}
 <header class="site-header">
     <div>
-        <a href="/" class="site-name{% if object.mode == 'ferry' %} ferry{% endif %}"><img src="//assets.timesbus.org/timesbus.svg" height="28px"/></a>
+        <a href="/" class="site-name"><img src="//assets.timesbus.org/timesbus.svg" height="28px"/></a>
         <ul>
             <li><a href="/map{% if object.latlong %}#16/{{ object.latlong.y }}/{{ object.latlong.x }}{% endif %}">Map</a></li>
         </ul>

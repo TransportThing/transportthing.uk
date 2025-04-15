@@ -259,7 +259,7 @@ function loadVehicles(onMoveEnd) {
     params += "&trip=" + clickedTrip;
   }
   lastVehiclesReq = reqwest({
-    url: "https://api.timesbus.org/v1/main/vehicles" + params,
+    url: "/vehicles.json" + params,
     crossOrigin: true,
     success: function (data) {
       if (data) {

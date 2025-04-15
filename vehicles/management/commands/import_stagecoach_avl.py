@@ -146,6 +146,7 @@ class Command(ImportLiveVehiclesCommand):
             code=vehicle_code,
             fleet_code=vehicle_code,
         )
+        self.stdout.write(f"processed vehicle: {vehicle}")
         return vehicle, True
 
     def get_journey(self, item, vehicle):

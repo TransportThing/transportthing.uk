@@ -253,7 +253,8 @@ class DataSource(models.Model):
             url = f"https://www.transportforireland.ie/transitData/PT_Data.html#:~:text={self.name}"
             text = "National Transport Authority"
         elif self.url.startswith("https://opendata.ticketer.com/uk/"):
-            text = self.url
+            url = self.url
+            text = self.get_nice_name()
         elif self.name == "MET" or self.name == "ULB":
             url = self.url
             text = "Translink open data"

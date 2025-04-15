@@ -223,7 +223,7 @@ function Stops({
 }
 
 function fetchJson(url: string) {
-  return fetch("https://timesbus.org" + url).then(
+  return fetch("https://new.timesbus.org" + url).then(
     (response) => {
       if (response.ok) {
         return response.json();
@@ -527,7 +527,7 @@ export default function BigMap(
   const loadStops = React.useCallback(() => {
     const _bounds = boundsRef.current as LngLatBounds;
 
-    fetchJson(`https://api.timesbus.org/v1/main/stops${getBoundsQueryString(_bounds)}`).then((items) => {
+    fetchJson(`/stops.json${getBoundsQueryString(_bounds)}`).then((items) => {
       stopsHighWaterMark.current = _bounds;
       setLoadingStops(false);
       setStops(items);
@@ -587,7 +587,7 @@ export default function BigMap(
 
       vehiclesAbortController.current = new AbortController();
 
-      return fetch(`https://api.timesbus.org/v1/main/vehicles${url}`, {
+      return fetch(`/vehicles.json${url}`, {
         signal: vehiclesAbortController.current.signal,
       })
         .then(

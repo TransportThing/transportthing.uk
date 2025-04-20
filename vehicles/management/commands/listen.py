@@ -29,8 +29,8 @@ class Command(BaseCommand):
             NOCs = ["BNML", "BNSM", "BNDB", "BNGN", "BNVB", "BNFM", "ANTR", "SPCT", "HULS"]
             for notify in gen:
                 if notify.payload[:4].upper() in NOCs:
-                    content = f"<@1064999993842335854> https://timesbus.org/vehicles/{notify.payload}"
-                    allowed_mentions = {"users": ["1064999993842335854"]}
+                    content = f"BEE NETWORK https://timesbus.org/vehicles/{notify.payload}"
+                    allowed_mentions = {"parse": []}
                 else:
                     content = f"https://timesbus.org/vehicles/{notify.payload}"
                     allowed_mentions = {"parse": []}  # Prevent accidental pings

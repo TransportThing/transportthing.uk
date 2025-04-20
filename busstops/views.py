@@ -169,7 +169,7 @@ def error(request):
 def robots_txt(request):
     "robots.txt"
 
-    if request.get_host() == "bustimes.org":  # live site
+    if request.get_host() == "timesbus.org":  # live site
         content = """User-agent: *
 Disallow: /trips/
 Disallow: /api/
@@ -220,14 +220,14 @@ def contact(request):
                 request.headers.get("user-agent", ""),
             ]
             if request.user.is_authenticated:
-                body.append(f"https://bustimes.org{request.user.get_absolute_url()}")
+                body.append(f"https://timesbus.org{request.user.get_absolute_url()}")
             body = "\n\n".join(body)
 
             message = EmailMessage(
                 subject,
                 body,
-                '"{}" <contactform@bustimes.org>'.format(form.cleaned_data["name"]),
-                ["contact@bustimes.org"],
+                '"{}" <contactform@timesbus.org>'.format(form.cleaned_data["name"]),
+                ["contact@timesbus.org"],
                 reply_to=[form.cleaned_data["email"]],
             )
             message.send()

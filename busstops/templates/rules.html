@@ -3,7 +3,7 @@
 {% block title %}Rules & FAQ{% endblock %}
 
 {% block canonical %}
-    <link rel="canonical" href="https://timesbus.org/rules">
+    <link rel="canonical" href="https://bustimes.org/rules">
 {% endblock canonical %}
 
 {% block bodyclass %}narrow{% endblock %}
@@ -16,23 +16,16 @@
     If you want to get involved, great! But please follow these rules, so you don’t waste your time and others’:</p>
 
 <ol class="rules">
-    <li>If a vehicle’s <strong>tracking as the wrong vehicle</strong>
-        (i.e. the “ticket machine code” is wrong), please
-        <strong>don’t try to correct it</strong> on timesbus.org
-        – instead, wait for the operator to correct their data.
-    </li>
-    <li>Don’t “remove from list” just because a vehicle’s been advertised for sale, was involved in an accident, or hasn’t tracked for a while.</li>
-    <li>Don’t update a vehicle’s livery until it’s finished being repainted and you can share some evidence.</li>
-    <li><p>Do use the “summary” field to link to some evidence, such as a picture you’ve <a href="https://imgur.com/upload">uploaded to Imgur</a>.
-    But please don’t link to private Facebook groups – private means we can’t see them.</p>
-    </li>
-    <li>Edit sparingly – you don’t need to “tidy up” up or make everything “consistent”.</li>
+        <li>If a vehicle is <strong>tracking on the wrong entry</strong>, please <strong>don't try to correct it</strong> on timesbus.org. Our entries come from tracking data, and will need to be corrected by operators.</li>
+        <li>Do not remove vehicles from our list using the "remove from list" feature because they havent tracked (in a while), because they are on sale (or advertised for), or just because they were in an accident.
+        <li>Do not change a vehicles livery because its sanded down or is "being painted", please share a picture of the painted vehicle to update it.</li>
+        <li>You should supply evidence, such as a picture you've <a href="https://imgur.com/upload">uploaded to Imgur</a> or a link to your evidence. However, please dont share evidence on <strong>private facebook groups</strong> as we cant see them, provide a picture of the post instead.</p></li>
+        <li>Do not send edits to leave messages, please contact us on our <a href="https://timesbus.org/discord">discord</a> instead.
+        <li>Give people the benefit of the doubt – if they have a track record of being reliable, it's OK if they haven't provided evidence. Don't undo/decline someone else's changes unless you're sure they're wrong.</li>
 </ol>
-<p>Users can <a href="/discord">report content to us in the discord</a> which they believe to be harmful, illegal, or or otherwise unsuitable.
- 
 
+<p>Users can <a href="/contact">report content</a> which they believe to be harmful, illegal, or or otherwise unsuitable.
     If we deem your content to be harmful, illegal, or otherwise unsuitable, we will permanently delete that content, and may ban your account from adding or editing content.</p>
-
 
 {% if form %}
     <form method="POST">
@@ -44,17 +37,21 @@
 
 <h2>FAQ</h2>
 
-<h3>How do I add a vehicle?</h3>
-
-<p>You can request vehicles be added in our <a href="https://timesbus.org/discord">Discord</a>, however when requesting, please note: they're done as and when we can.</p>
-
-<h3>Can I use this data?</h3>
-
-<p>Yes, it’s available <a href="https://timesbus.org/api/">in the API</a>.
-
-<h3>I have a different question, or maybe a comment</h3>
-
-<p>Ask us in the <a href="https://timesbus.org/discord">Discord</a> server.</p>
+<h3>Why was my edit disapproved?</h3>
+	    <p>To limit chaos, some users can approve/disapprove others' contributions. (This doesn't make them special or "admins" – there's no such thing!)
+	        I know some of the rules above are onerous, and they aren't written in stone, but if your edit was disapproved it probably broke one of them.</p>
+	    
+	    <h3>How do I add a vehicle?</h3>
+	    
+	    <p>Simply join our <a href="https://timesbus.org/discord">discord</a> and request in the <a href="https://discord.com/channels/1337054349267959898/1359292719092072598">brute add requests</a> channel, and our team will add them when they are free.</p>
+	    
+	    <h3>How do I add or edit a livery?</h3>
+	    
+	    <p>Sorry, only a few users can do that, you can request them in our <a href="https://timesbus.org/discord">discord</a>.</p>
+	    
+	    <h3>I have a different question, or maybe a comment</h3>
+	
+	    <p><a href="/contact">Ask our team by email</a> or <a href="https://timesbus.org/discord">the Discord server</a>.</p>
 
 {% endif %}
 

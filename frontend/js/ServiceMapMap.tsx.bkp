@@ -25,7 +25,7 @@ declare global {
 type ServiceMapMapProps = {
   vehicles?: Vehicle[];
   geometry?: MapGeoJSONFeature;
-  stops?: { type: "FeatureCollection"; features: MapGeoJSONFeature[] };
+  stops?: MapGeoJSONFeature[];
 };
 
 function Geometry({ geometry }: { geometry: MapGeoJSONFeature }) {
@@ -48,7 +48,7 @@ function Geometry({ geometry }: { geometry: MapGeoJSONFeature }) {
   );
 }
 
-function Stops({ stops }: { stops?: ServiceMapMapProps["stops"] }) {
+function Stops({ stops }: { stops?: MapGeoJSONFeature[] }) {
   const theme = React.useContext(ThemeContext);
   const darkMode =
     theme === "alidade_smooth_dark" || theme === "alidade_satellite";

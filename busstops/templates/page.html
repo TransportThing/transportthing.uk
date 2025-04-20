@@ -26,7 +26,7 @@
 
 {% block fuse %}
 {% if ad %}
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9397955120227940" crossorigin="anonymous"></script>
+<!--<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9397955120227940" crossorigin="anonymous"></script>-->
 {% endif %}
 {% endblock fuse %}
 </head>
@@ -65,14 +65,12 @@
     {% if user.is_authenticated %}
         <form action="{% url 'logout' %}" method="POST">
             <ul class="user">
-                <li><a href="/accounts/users/{{ user.id }}">user {{ user.id }}</a></li>
-{% if user.is_authenticated %}
+                <li><a href="/accounts/users/{{ user.id }}">User: {{ user.id }} | {{ user.username|default:'' }}</a></li>
         {% if user.trusted %}
                 <li><a href="/vehicles/edits?operator=&vehicle=&user=&status=pending" title="Requires Trusted status to view">Pending Edits</a></li>
         {% else %}
-                <li><a href="/vehicles/edits?operator=&vehicle=&user=&status=approved" title="Approved Edits">Approved Edits</a></li>
+                <li><a href="/vehicles/edits?operator=&vehicle=&user={{ user.id }}&status=approved" title="Approved Edits">Your Edits</a></li>
         {% endif %}
-{% endif %}
                 <li>
                     {% csrf_token %}
                     <button type="submit" class="button">Log out</button>

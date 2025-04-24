@@ -416,7 +416,7 @@ class Vehicle(models.Model):
     def get_flickr_link(self):
         if url := self.get_flickr_url():
             return format_html(
-                '<a href="{}" target="_blank" rel="noopener">Flickr</a>', url
+                '<a href="{}" target="_blank" rel="noopener"><img src="https://www.flickrhelp.com/hc/article_attachments/4419907628308/unnamed__1_.png" alt="Flickr" style="height: 14px"/></a>', url
             )
         return ""
 

@@ -45,7 +45,7 @@ class Command(ImportLiveVehiclesCommand):
         if self.source.settings and "OperatorRef" in self.source.settings:
             item["OperatorRef"] = self.source.settings["OperatorRef"]
         else:
-            item["OperatorRef"] = [item["OperatorRef"]]
+            item["OperatorRef"] = item["OperatorRef"]
 
         operators = item["OperatorRef"]
         defaults = {

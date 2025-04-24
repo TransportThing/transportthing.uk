@@ -1,0 +1,33 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    function fetchRandomQuote() {
+        $.getJSON("https://api.timesbus.org/v1/quotes", function (quotes) {
+            if (quotes.length === 0) {
+                $("#motd-text").text(" ")
+                return;
+            }
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)]
+            $("#motd-text").html(randomQuote.author + " : " + randomQuote.msg)
+        }).fail(function () {
+            $("#motd-text").text("API : There would be a quote here but I'm not responding, apparently :3")
+        })
+    }
+    function fetchQuote() {
+        $.getJSON("https://api.timesbus.org/v1/quotes/2bb95f6a-84fe-4cfb-9479-2147713e76f3", function(data){
+            $("#motd-text").html(data.author + " : " + data.msg);
+        }).fail(function(){
+            $("#motd-text").text("API : There would be a quote here but I'm not responding, apparently :3")
+        })
+    }
+    $(document).ready(function () {
+            let today = new Date();
+            if (today.getDate() === 1 && today.getMonth() === 3) { // April is month index 3 (0-based)
+                fetchQuote()
+            } else {
+                fetchRandomQuote()
+        }
+    })
+</script>
+<div class="motd">
+    <span id="motd-text">fetching from api..</span><br/>
+</div>

@@ -27,7 +27,7 @@ if (process.env.NODE_ENV === "production") {
       "Event `Event` (type=error) captured as promise rejection",
       "this.kdmw is not a function",
       "WKWebView API client did not respond to this postMessage",
-      "Origin https://bustimes.org is not allowed by Access-Control-Allow-Origin.",
+      "Origin https://timesbus.org is not allowed by Access-Control-Allow-Origin.",
       "Failed to execute 'send' on 'XMLHttpRequest': Failed to load 'https://t.richaudience.com/",
       "undefined is not an object (evaluating 'navigator.connection.effectiveType')",
     ],

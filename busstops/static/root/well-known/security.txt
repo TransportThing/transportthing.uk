@@ -1,4 +1,4 @@
-Contact: mailto:security@bustimes.org
-Contact: https://bustimes.org/contact
+Contact: mailto:security@timesbus.org
+Contact: https://timesbus.org/contact
 Expires: 2026-04-01T11:00:00.000Z
 Preferred-Languages: en

@@ -35,7 +35,7 @@ def clean_up(timetable_data_source, sources, incomplete=False):
         ~Q(source__in=sources),
         Q(source__source=timetable_data_source)
         | Q(
-            ~Q(source__name__in=("L", "bustimes.org")),
+            ~Q(source__name__in=("L", "timesbus.org")),
             Exists(service_operators.filter(operator__in=operators)),
             ~Exists(
                 service_operators.filter(~Q(operator__in=operators))
@@ -51,7 +51,7 @@ def clean_up(timetable_data_source, sources, incomplete=False):
     routes.update(service=None)
     # routes.delete()
     Service.objects.filter(
-        ~Q(source__name="bustimes.org"),
+        ~Q(source__name="timesbus.org"),
         operator__in=operators,
         current=True,
         route=None,
@@ -271,7 +271,7 @@ def bus_open_data(api_key, specific_operator):
         ).exists():
             logger.warning(
                 f"""{operators} has no current data
-https://bustimes.org/admin/busstops/service/?operator__noc__in={",".join(operators)}"""
+https://timesbus.org/admin/busstops/service/?operator__noc__in={",".join(operators)}"""
             )
 
         command.service_ids = service_ids

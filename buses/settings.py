@@ -24,13 +24,13 @@ CSRF_TRUSTED_ORIGINS = os.environ.get(
 ).split()
 
 TEST = "test" in sys.argv or "pytest" in sys.argv[0]
-DEBUG = True
+DEBUG = False
 
-DEFAULT_FROM_EMAIL = '"TimesBus" <noreply@totl.sh>'
+DEFAULT_FROM_EMAIL = '"Timesbus Accounts" <hellofromus@timesbus.org>'
 
-EMAIL_HOST = os.environ.get("EMAIL_HOST", "")
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_HOST_USER = "apikey"
+EMAIL_HOST_PASSWORD = "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"
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_TIMEOUT = 10

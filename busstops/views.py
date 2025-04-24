@@ -80,7 +80,7 @@ def get_colours(services):
 def version(request):
     if commit_hash := os.environ.get("COMMIT_HASH"):
         return HttpResponse(
-            f"""<a href="https://github.com/jclgoodwin/bustimes.org/commit/{commit_hash}">{commit_hash}</a>""",
+            f"""<a href="https://github.com/jclgoodwin/timesbus.org/commit/{commit_hash}">{commit_hash}</a>""",
         )
     return HttpResponse(
         os.environ.get("KAMAL_CONTAINER_NAME"), content_type="text/plain"

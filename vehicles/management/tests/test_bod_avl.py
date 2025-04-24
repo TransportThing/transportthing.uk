@@ -1210,7 +1210,7 @@ class BusOpenDataVehicleLocationsTest(TestCase):
             items = command.get_items()
         self.assertIsNone(items)
 
-        self.source.url = "https://bustimes.org/404"
+        self.source.url = "https://timesbus.org/404"
         with use_cassette(str(self.vcr_path / "bod_avl_error.yaml")):
             items = command.get_items()
             self.assertEqual(items, [])

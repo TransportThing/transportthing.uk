@@ -19,7 +19,7 @@ def get_hash(text):
 
 def tfl_disruptions():
     session = requests.Session()
-    session.headers.update({"User-Agent": "bustimes.org"})
+    session.headers.update({"User-Agent": "timesbus.org"})
 
     source = DataSource.objects.get_or_create(name="TfL")[0]
 

@@ -1,9 +1,9 @@
 {% extends 'page.html' %}
 
-{% block title %}Fleet list – {% firstof parent object %} – timesbus{% endblock %}
+{% block title %}Fleet list – {% firstof parent object %} – timesbus.org{% endblock %}
 
 {% block canonical %}
-    <link rel="canonical" href="https://bustimes.org{{ object.get_absolute_url }}/vehicles">
+    <link rel="canonical" href="https://timesbus.org{{ object.get_absolute_url }}/vehicles">
 {% endblock canonical %}
 
 {% block head %}
@@ -102,7 +102,7 @@
                     {% endif %}
                 </td>{% endif %}
                 <td{% if vehicle.colours or vehicle.livery_id %} class="livery-cell"{% endif %}>
-                    {% if vehicle.colours or vehicle.livery_id %}<div class="livery{% if vehicle.livery_id %} livery-{{ vehicle.livery_id }}{% else %}" style="background:{{ vehicle.get_livery }}{% endif %}"{% if vehicle.livery_name %} title="{{ vehicle.livery_name }}"{% endif %}></div><span style="margin-left: 2.25rem;">{{ vehicle.livery }}</span>{% endif %}
+                    {% if vehicle.colours or vehicle.livery_id %}<div class="livery{% if vehicle.livery_id %} livery-{{ vehicle.livery_id }}{% else %}" style="background:{{ vehicle.get_livery }}{% endif %}"{% if vehicle.livery_name %} title="{{ vehicle.livery_name }}"{% endif %}></div><span style="margin-left: 2.25rem;">{{ vehicle.livery|default:"" }}</span>{% endif %}
                 </td>
 		<td class="trivia">{% if vehicle.branding %}{{ vehicle.branding|default:"" }}{% endif %}</td>
                 <td>{% if vehicle.is_spare_ticket_machine %}{{ vehicle.notes }}{% else %}{{ vehicle.vehicle_type_name|default:"" }}{% endif %}</td>
@@ -114,7 +114,7 @@
                 {% if parent %}<td>{{ vehicle.operator }}</td>{% endif %}
                 <td>{{ vehicle.get_flickr_link }}</td>
                 {% if vehicle.is_editable %}
-                    <td><a href="{{ vehicle.get_edit_url }}">Edit{% if vehicle.pending_edits %}<abbr title="pending edits">*</abbr>{% endif %}</a></td>
+                    <td><a href="{{ vehicle.get_edit_url }}">✎  Edit{% if vehicle.pending_edits %}<abbr title="pending edits">*</abbr>{% endif %}</a></td>
                 {% endif %}
             </tr>
         {% endfor %}

@@ -17,7 +17,7 @@ class Situation(models.Model):
         models.CASCADE,
         limit_choices_to={
             "name__in": (
-                "bustimes.org",
+                "timesbus.org",
                 "TfL",
                 "Bus Open Data",
             )

@@ -438,9 +438,9 @@ class Command(BaseCommand):
             import boto3
 
             client = boto3.client(
-                "s3", endpoint_url="https://ams3.digitaloceanspaces.com"
+                "s3", endpoint_url="https://af0f6a75593ef78088ace99b1b164934.r2.cloudflarestorage.com"
             )
-            client.upload_file(archive_path, "bustimes-data", "TNDS/" + basename)
+            client.upload_file(archive_path, "tb-assets", "TNDS/" + basename)
 
     def finish_services(self):
         """update/create StopUsages, search_vector and geometry fields"""

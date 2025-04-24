@@ -52,7 +52,7 @@ interactions:
       - AWSALB=YZ10M6B+i6fycmMs1hFJfxQHYjkOI3uhRgdcJ7IrbEs0ObXthCwMGIGbyq7CtC8iEUmLSyWyqg/6QP4mmOnu0aQDmzYaxc1btF9i2Hko57/880NBMMdHTuUAp234;
         AWSALBCORS=YZ10M6B+i6fycmMs1hFJfxQHYjkOI3uhRgdcJ7IrbEs0ObXthCwMGIGbyq7CtC8iEUmLSyWyqg/6QP4mmOnu0aQDmzYaxc1btF9i2Hko57/880NBMMdHTuUAp234
       User-Agent:
-      - bustimes.org
+      - timesbus.org
       if-modified-since:
       - Tue, 14 Mar 2023 12:04:50 GMT
     method: GET
@@ -130,7 +130,7 @@ interactions:
       - AWSALB=3eyi0QUh2PNEloDK7y6UOfZmIHwLN9g8zLD5vgyCXfNI8+ptuH085aYkJ9uerhcOTDqUPzTuvDXxnsQeFEN5pOqhREuamFLema/5VQ36D+C18wMvN2zxMF8w3O6C;
         AWSALBCORS=3eyi0QUh2PNEloDK7y6UOfZmIHwLN9g8zLD5vgyCXfNI8+ptuH085aYkJ9uerhcOTDqUPzTuvDXxnsQeFEN5pOqhREuamFLema/5VQ36D+C18wMvN2zxMF8w3O6C
       User-Agent:
-      - bustimes.org
+      - timesbus.org
       if-modified-since:
       - Tue, 14 Mar 2023 12:04:50 GMT
     method: GET
@@ -180,7 +180,7 @@ interactions:
       Connection:
       - keep-alive
       User-Agent:
-      - bustimes.org
+      - timesbus.org
       if-modified-since:
       - Tue, 14 Mar 2023 12:04:50 GMT
     method: GET

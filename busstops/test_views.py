@@ -64,9 +64,9 @@ class ContactTests(TestCase):
         message = mail.outbox[0]
         self.assertEqual(message.subject, "Dear John,")
         self.assertEqual(
-            message.from_email, '"Rufus "Red" Herring" <contactform@bustimes.org>'
+            message.from_email, '"Rufus "Red" Herring" <contactform@timesbus.org>'
         )
-        self.assertEqual(message.to, ["contact@bustimes.org"])
+        self.assertEqual(message.to, ["contact@timesbus.org"])
         self.assertIn("https://www.yahoo.com", message.body)
         self.assertIn(f"/accounts/users/{self.user.id}/", message.body)
 
@@ -177,8 +177,8 @@ class ViewsTests(TestCase):
         response = self.client.get("/robots.txt")
         self.assertContains(response, "\n\nUser-agent: *\nDisallow: /\n")
 
-        with override_settings(ALLOWED_HOSTS=["bustimes.org"]):
-            response = self.client.get("/robots.txt", headers={"host": "bustimes.org"})
+        with override_settings(ALLOWED_HOSTS=["timesbus.org"]):
+            response = self.client.get("/robots.txt", headers={"host": "timesbus.org"})
         self.assertContains(response, "User-agent: *\nDisallow:")
 
     def test_not_found(self):
@@ -219,7 +219,7 @@ class ViewsTests(TestCase):
     def test_lowercase_region(self):
         response = self.client.get("/regions/n")
         self.assertContains(
-            response, '<link rel="canonical" href="https://bustimes.org/regions/N">'
+            response, '<link rel="canonical" href="https://timesbus.org/regions/N">'
         )
         self.assertEqual(response.status_code, 200)
 
@@ -533,7 +533,7 @@ class ViewsTests(TestCase):
             response = self.client.get("/version")
         self.assertEqual(
             response.content,
-            b"<a href=\"https://github.com/jclgoodwin/bustimes.org/commit/i've had a ploughman's\">"
+            b"<a href=\"https://github.com/jclgoodwin/timesbus.org/commit/i've had a ploughman's\">"
             b"i've had a ploughman's</a>",
         )
 

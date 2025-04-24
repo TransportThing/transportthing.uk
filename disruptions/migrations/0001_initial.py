@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('created', models.DateTimeField()),
                 ('publication_window', django.contrib.postgres.fields.ranges.DateTimeRangeField()),
                 ('current', models.BooleanField(default=True)),
-                ('source', models.ForeignKey(limit_choices_to={'name__in': ('Ito World', 'TfE', 'TfL', 'Transport for the North', 'Transport for West Midlands', 'bustimes.org')}, on_delete=django.db.models.deletion.CASCADE, to='busstops.datasource')),
+                ('source', models.ForeignKey(limit_choices_to={'name__in': ('Ito World', 'TfE', 'TfL', 'Transport for the North', 'Transport for West Midlands', 'timesbus.org')}, on_delete=django.db.models.deletion.CASCADE, to='busstops.datasource')),
             ],
             options={
                 'unique_together': {('source', 'situation_number')},

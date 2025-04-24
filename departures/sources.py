@@ -166,7 +166,7 @@ class TflDepartures(RemoteDepartures):
         return f"https://api.tfl.gov.uk/StopPoint/{self.stop.pk}/arrivals"
 
     def get_request_headers(self):
-        return {"User-Agent": "bustimes.org"}
+        return {"User-Agent": "timesbus.org"}
 
     def get_row(self, item):
         if item["modeName"] == "tube":

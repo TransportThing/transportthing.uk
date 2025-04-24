@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='situation',
             name='source',
-            field=models.ForeignKey(limit_choices_to={'name__in': ('bustimes.org', 'Bus Open Data Service', 'Ito World', 'TfL', 'Transport for the North')}, on_delete=django.db.models.deletion.CASCADE, to='busstops.datasource'),
+            field=models.ForeignKey(limit_choices_to={'name__in': ('timesbus.org', 'Bus Open Data Service', 'Ito World', 'TfL', 'Transport for the North')}, on_delete=django.db.models.deletion.CASCADE, to='busstops.datasource'),
         ),
         migrations.AddIndex(
             model_name='situation',

@@ -1,5 +1,5 @@
 (function() {
-    var host = 'bustimes.org';
+    var host = 'timesbus.org';
     var element = document.createElement('script');
     var firstScript = document.getElementsByTagName('script')[0];
     var url = 'https://cmp.inmobi.com'

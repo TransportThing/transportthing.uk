@@ -19,7 +19,7 @@ def download(path, url, session=None):
 
 
 def download_if_modified(path, source, session=None):
-    headers = {"User-Agent": "bustimes.org"}
+    headers = {"User-Agent": "timesbus.org"}
     if source.last_modified:
         headers["if-modified-since"] = http_date(source.last_modified.timestamp())
     if source.etag:

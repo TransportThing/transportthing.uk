@@ -217,10 +217,10 @@ class Command(BaseCommand):
                         f"{stop.stop_name} {stop.stop_code} {stop.stop_timezone} {stop.platform_code}"
                     )
                     logger.info(
-                        f"https://bustimes.org/map#16/{stop.stop_lat}/{stop.stop_lon}"
+                        f"https://timesbus.org/map#16/{stop.stop_lat}/{stop.stop_lon}"
                     )
                     logger.info(
-                        f"https://bustimes.org/admin/busstops/stopcode/add/?code={row.stop_id}\n"
+                        f"https://timesbus.org/admin/busstops/stopcode/add/?code={row.stop_id}\n"
                     )
 
             trip.destination_id = stop_time.stop_id

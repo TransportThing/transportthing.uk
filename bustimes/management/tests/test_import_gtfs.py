@@ -189,7 +189,7 @@ class GTFSTest(TestCase):
 
     def test_download_if_modified(self):
         path = Path("poop.txt")
-        url = "https://bustimes.org/favicon.ico"
+        url = "https://timesbus.org/favicon.ico"
         source = DataSource.objects.create(url=url)
 
         path.unlink(missing_ok=True)

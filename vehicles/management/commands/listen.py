@@ -26,11 +26,15 @@ class Command(BaseCommand):
 
             cursor.execute("LISTEN new_vehicle")
             gen = cursor.connection.notifies()
-            NOCs = ["BNML", "BNSM", "BNDB", "BNGN", "BNVB", "BNFM", "ANTR", "SPCT", "HULS"]
+            Bee_NOCs = ["BNML", "BNSM", "BNDB", "BNGN", "BNVB", "BNFM", "ANTR", "SPCT", "HULS"]
+            NCTR_NOCs =  ["NCTR"]
             for notify in gen:
-                if notify.payload[:4].upper() in NOCs:
-                    content = f"BEE NETWORK https://timesbus.org/vehicles/{notify.payload}"
-                    allowed_mentions = {"parse": []}
+                if notify.payload[:4].upper() in Bee_NOCs:
+                    content = f"<@1064999993842335854> https://timesbus.org/vehicles/{notify.payload}"
+                    allowed_mentions = {"users": ["1064999993842335854"]}
+                elif notify.payload[:4].upper() in NCTR_NOCs:
+                    content = f"<@1238439672708075520> https://timesbus.org/vehicles/{notify.payload}"
+                    allowed_mentions = {"users": ["1238439672708075520"]}
                 else:
                     content = f"https://timesbus.org/vehicles/{notify.payload}"
                     allowed_mentions = {"parse": []}  # Prevent accidental pings

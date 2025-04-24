@@ -176,9 +176,6 @@ def operator_vehicles(request, slug=None, parent=None):
             raise Http404
         vehicles = Vehicle.objects.filter(operator__in=operators)
 
-    if "withdrawn" not in request.GET:
-        vehicles = vehicles.filter(withdrawn=False)
-
     vehicles = vehicles.order_by("fleet_number", "fleet_code", "reg", "code")
 
     if parent:
@@ -786,7 +783,7 @@ def edit_vehicle(request, **kwargs):
         and not request.user.operators.filter(noc=vehicle.operator_id).exists()
     ):
         raise PermissionDenied(
-            f'Editing {vehicle.operator} vehicles is restricted to "local experts"'
+            f'Calico is guarding {vehicle.operator}. good luck getting past her.'
         )
 
     context = {

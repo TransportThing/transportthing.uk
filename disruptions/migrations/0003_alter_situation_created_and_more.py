@@ -27,6 +27,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='situation',
             name='source',
-            field=models.ForeignKey(default=236, limit_choices_to={'name__in': ('bustimes.org', 'TfL', 'Bus Open Data')}, on_delete=django.db.models.deletion.CASCADE, to='busstops.datasource'),
+            field=models.ForeignKey(default=236, limit_choices_to={'name__in': ('timesbus.org', 'TfL', 'Bus Open Data')}, on_delete=django.db.models.deletion.CASCADE, to='busstops.datasource'),
         ),
     ]

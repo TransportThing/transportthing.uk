@@ -11,7 +11,6 @@
 {% endblock head %}
 
 {% block bodyclass %}{% endblock %}
-
 {% block content %}
 
 <h1>{% firstof parent object %}</h1>
@@ -46,11 +45,11 @@
 {% if not parent %}
     <ul class="horizontal">
         <li><a href="/vehicles/edits?operator={{ object.noc }}&status=approved">Recent changes</a></li>
-{% if request.GET.withdrawn == 'true' %}
-    <li><a href="{{ object.get_absolute_url }}/vehicles">Hide withdrawn vehicles</a></li>
-{% else %}
-    <li><a href="?withdrawn=true">View withdrawn vehicles</a></li>
-{% endif %}
+    {% if request.GET.withdrawn %}
+        <li><a href="{{ object.get_absolute_url }}/vehicles">Hide withdrawn vehicles</a></li>
+    {% else %}
+        <li><a href="?withdrawn=true">View withdrawn vehicles</a></li>
+    {% endif %}
         {% if request.user.is_superuser %}
             <li><a href="/vehicles/edits?operator={{ object.noc }}&status=pending">Pending vehicle edits</a></li>
             <li><a href="{% url 'admin:vehicles_vehicle_changelist' %}?operator={{ object.noc }}">✎</a></li>
@@ -77,10 +76,14 @@
     </thead>
     <tbody>
         {% for vehicle in vehicles %}
-            {% if vehicle.withdrawn %}
-                <strike>
-            {% endif %}
-            <tr id="{{ vehicle.slug }}">
+            <style>
+                .withdrawn {
+                    text-decoration: line-through;
+                    background: #ff7777;
+                }
+            </style>
+            <tr id="{{ vehicle.slug }}" {% if vehicle.withdrawn %}class="withdrawn"{% endif %}>
+                {% if vehicle.withdrawn == True %}<del>{% endif %}
                 <td class="tabular"{% if not vehicle.reg %} colspan="2"{% endif %}>
                   <a href="{{ vehicle.get_absolute_url }}">
                         {% if vehicle.fleet_code or vehicle.fleet_number %}
@@ -124,10 +127,8 @@
                 {% if vehicle.is_editable %}
                     <td><a href="{{ vehicle.get_edit_url }}">✎  Edit{% if vehicle.pending_edits %}<abbr title="pending edits">*</abbr>{% endif %}</a></td>
                 {% endif %}
+                {% if vehicle.withdrawn == True %}</del>{% endif %}
             </tr>
-            {% if vehicle.withdrawn %}
-                </strike>
-            {% endif %}
         {% endfor %}
     </tbody>
 </table>

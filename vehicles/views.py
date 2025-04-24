@@ -926,24 +926,18 @@ def vehicle_edits(request):
         .order_by("-id")
     )
 
+    # Apply default filtering for all users
     f = filters.VehicleRevisionFilter(
         request.GET or {"status": "approved"}, queryset=revisions
     )
-    is_anonymous = request.user.is_anonymous
-    is_trusted = request.user.trusted
-    is_superuser = request.user.is_superuser
-    is_filtering_self = request.GET.get("user") == str(request.user.id)
 
-    if not is_anonymous and not (is_trusted or is_superuser):
-        # For non-anonymous, non-trusted, non-superusers
-        # allow them to see their own pending edits
-        f.filters["status"].field.choices = [("approved", "approved"), ("pending", "pending")]
-        f.queryset = f.queryset.filter(user=request.user) #only allow them to see their own pending edits
+    # Allow all users to filter by all statuses
+    f.filters["status"].field.choices = [
+        ("approved", "Approved"),
+        ("pending", "Pending"),
+        ("disapproved", "Disapproved"),
+    ]
 
-    elif is_anonymous or not (is_trusted or is_superuser or is_filtering_self):
-        # For anonymous users or those not filtering by their own ID,
-        # restrict the status choices to "approved"
-        f.filters["status"].field.choices = [("approved", "approved")]
 
     if f.is_valid():
         paginator = Paginator(f.qs, 100)

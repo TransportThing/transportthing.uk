@@ -176,6 +176,9 @@ def operator_vehicles(request, slug=None, parent=None):
             raise Http404
         vehicles = Vehicle.objects.filter(operator__in=operators)
 
+    if "withdrawn" not in request.GET:
+        vehicles = vehicles.filter(withdrawn=False)
+
     vehicles = vehicles.order_by("fleet_number", "fleet_code", "reg", "code")
 
     if parent:
@@ -926,11 +929,20 @@ def vehicle_edits(request):
     f = filters.VehicleRevisionFilter(
         request.GET or {"status": "approved"}, queryset=revisions
     )
-    if request.user.is_anonymous or not (
-        request.user.trusted
-        or request.user.is_superuser
-        or request.GET.get("user") == str(request.user.id)
-    ):
+    is_anonymous = request.user.is_anonymous
+    is_trusted = request.user.trusted
+    is_superuser = request.user.is_superuser
+    is_filtering_self = request.GET.get("user") == str(request.user.id)
+
+    if not is_anonymous and not (is_trusted or is_superuser):
+        # For non-anonymous, non-trusted, non-superusers
+        # allow them to see their own pending edits
+        f.filters["status"].field.choices = [("approved", "approved"), ("pending", "pending")]
+        f.queryset = f.queryset.filter(user=request.user) #only allow them to see their own pending edits
+
+    elif is_anonymous or not (is_trusted or is_superuser or is_filtering_self):
+        # For anonymous users or those not filtering by their own ID,
+        # restrict the status choices to "approved"
         f.filters["status"].field.choices = [("approved", "approved")]
 
     if f.is_valid():

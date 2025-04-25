@@ -28,13 +28,17 @@ class Command(BaseCommand):
             gen = cursor.connection.notifies()
             Bee_NOCs = ["BNML", "BNSM", "BNDB", "BNGN", "BNVB", "BNFM", "ANTR", "SPCT", "HULS"]
             NCTR_NOCs =  ["NCTR"]
+            tfl_nocs = ["TFLO"]
             for notify in gen:
                 if notify.payload[:4].upper() in Bee_NOCs:
-                    content = f"<@1064999993842335854> https://timesbus.org/vehicles/{notify.payload}"
-                    allowed_mentions = {"users": ["1064999993842335854"]}
+                    content = f"<@&1365027753501659157> https://timesbus.org/vehicles/{notify.payload}"
+                    allowed_mentions = {"users": ["1365027753501659157"]}
                 elif notify.payload[:4].upper() in NCTR_NOCs:
-                    content = f"<@1238439672708075520> https://timesbus.org/vehicles/{notify.payload}"
-                    allowed_mentions = {"users": ["1238439672708075520"]}
+                    content = f"<@&1365028004216180786> https://timesbus.org/vehicles/{notify.payload}"
+                    allowed_mentions = {"users": ["1365028004216180786"]}
+                elif notify.payload[:4].upper() in tfl_nocs:
+                    content = f"<@&1365031195737329674> https://timesbus.org/vehicles/{notify.payload}"
+                    allowed_mentions = {"users": ["1365031195737329674"]}
                 else:
                     content = f"https://timesbus.org/vehicles/{notify.payload}"
                     allowed_mentions = {"parse": []}  # Prevent accidental pings

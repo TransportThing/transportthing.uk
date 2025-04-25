@@ -66,7 +66,7 @@ class Command(ImportLiveVehiclesCommand):
     def get_vehicle(self, item):
         code = item["properties"]["vehicle"]
 
-        if "tenant" in self.source.url and "_" in code:
+        if "_" in code:
             parts = code.split("_", 1)
             if parts[0].islower():
                 code = parts[1]

@@ -1,14 +1,14 @@
 {
     "icons": [
         {
-            "src": "https://assets.timesbus.org/tb_small_favicon_nobg.svg",
+            "src": "https://assets.timesbus.org/favicon.svg",
             "type": "image/svg+xml"
         },
         {
-            "src": "https://assets.timesbus.org/timesbus.svg",
+            "src": "https://assets.timesbus.org/favicon.svg",
             "type": "image/svg+xml"
         }
     ],
-    "background_color": "#333333",
+    "background_color": "#164450",
     "theme_color": "#164450"
 }

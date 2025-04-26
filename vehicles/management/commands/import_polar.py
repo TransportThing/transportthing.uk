@@ -33,7 +33,7 @@ class Command(ImportLiveVehiclesCommand):
         operator = item["_embedded"]["transmodel:line"]["href"].split("/")[3]
 
         # Allowed operator codes
-        allowed_operators = {"McG", "MBLB", "BRBU", "CB", "WCM", "ARGT", "CSVC", "MCLS", "WRHU", "HIGH", "SHI", "GLHD", "JMT", "MOFF", "ISLY", "SBAY", "EDWC", "DPCE", "FSRV", "CLNB", "SFGC", "WCMO", "MESC", "TLCT", "S27", "CSVC", "MSOT", "NCTP", "RWSW", "BNCM", "SWCC", "TRDU", "NT0", "NWPT"}
+        allowed_operators = {"McG", "MBLB", "BRBU", "CB", "WCM", "ARGT", "CSVC", "MCLS", "WRHU", "NOCT", "HIGH", "SHI", "GLHD", "JMT", "MOFF", "ISLY", "SBAY", "EDWC", "DPCE", "FSRV", "CLNB", "SFGC", "WCMO", "MESC", "TLCT", "S27", "CSVC", "MSOT", "NCTP", "RWSW", "BNCM", "SWCC", "TRDU", "NT0", "NWPT"}
 
         # Skip processing if the operator is not in the allowed list
         if operator not in allowed_operators:

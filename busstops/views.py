@@ -76,11 +76,20 @@ def get_colours(services):
     if colours:
         return ServiceColour.objects.filter(id__in=colours)
 
+def announcements(request):
+    try:
+        response = requests.get('https://api.timesbus.org/v1/alerts', timeout=5)
+        response.raise_for_status()
+        alerts = response.json()  # Assuming your API returns a JSON list
+    except requests.RequestException:
+        alerts = []
+
+    return render(request, 'announcements.html', {'alerts': alerts})
 
 def version(request):
     if commit_hash := os.environ.get("COMMIT_HASH"):
         return HttpResponse(
-            f"""<a href="https://github.com/jclgoodwin/timesbus.org/commit/{commit_hash}">{commit_hash}</a>""",
+            f"""<a href="https://github.com/TimesBus/timesbus.org/commit/{commit_hash}">{commit_hash}</a>""",
         )
     return HttpResponse(
         os.environ.get("KAMAL_CONTAINER_NAME"), content_type="text/plain"
@@ -226,8 +235,8 @@ def contact(request):
             message = EmailMessage(
                 subject,
                 body,
-                '"{}" <contactform@timesbus.org>'.format(form.cleaned_data["name"]),
-                ["contact@timesbus.org"],
+                '"{}" <hellofromus@timesbus.org>'.format(form.cleaned_data["name"]),
+                ["hellofromus@timesbus.org"],
                 reply_to=[form.cleaned_data["email"]],
             )
             message.send()

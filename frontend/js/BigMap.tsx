@@ -223,7 +223,7 @@ function Stops({
 }
 
 function fetchJson(url: string) {
-  return fetch("https://new.timesbus.org" + url).then(
+  return fetch("https://timesbus.org" + url).then(
     (response) => {
       if (response.ok) {
         return response.json();

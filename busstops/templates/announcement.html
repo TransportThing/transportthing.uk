@@ -1,0 +1,14 @@
+{% if alerts %}
+<div class="announcements-container">
+  <h2 class="announcements-title">🚍 Announcements</h2>
+
+  {% for alert in alerts %}
+    <div class="announcement {% if alert.priority == 'high' %}emergency{% endif %}">
+      <p><strong>{{ alert.title }}</strong> {{ alert.message }}</p>
+      {% if alert.link %}
+        <a href="{{ alert.link }}" class="announcement-link" target="_blank" rel="noopener">More info →</a>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+{% endif %}

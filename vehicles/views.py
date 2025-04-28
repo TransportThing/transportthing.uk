@@ -723,17 +723,20 @@ def check_user(request):
             Sorry for the inconvenience.
             Don’t worry, you can still enjoy all of the main features of the website."""
         )
-
+    NEW_USER_TIME_LIMIT = datetime.timedelta(hours=1)
+    NEW_USER_REVISION_LIMIT = 20
     if request.user.trusted is False:
         raise PermissionDenied
 
     if (
         not request.user.trusted
-        and timezone.now() - request.user.date_joined < datetime.timedelta(hours=1)
-        and request.user.vehiclerevision_set.count() > 4
+        and timezone.now() - request.user.date_joined < NEW_USER_TIME_LIMIT
+        and request.user.vehiclerevision_set.count() > NEW_USER_REVISION_LIMIT
     ):
+        unlock_time = request.user.date_joined + NEW_USER_TIME_LIMIT
+        unlock_time_str = timezone.localtime(unlock_time).strftime("%Y-%m-%d %H:%M:%S")
         raise PermissionDenied(
-            "As your account is so new, please wait a bit before editing any more vehicles"
+                f"As your account is under an hour old, please wait until {unlock_time_str} before editing any more vehicles. any attempt to bypass this limit will result in a ban."
         )
 
 
@@ -786,7 +789,7 @@ def edit_vehicle(request, **kwargs):
         and not request.user.operators.filter(noc=vehicle.operator_id).exists()
     ):
         raise PermissionDenied(
-            f'Calico is guarding {vehicle.operator}. good luck getting past her.'
+            f'Calico is currently guarding {vehicle.operator}. good luck getting past her.'
         )
 
     context = {

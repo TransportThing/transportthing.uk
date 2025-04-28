@@ -43,6 +43,7 @@ urlpatterns = [
             )
         ),
     ),
+    path("discord", RedirectView.as_view(url="https://discord.gg/JAjNUJWdVD")),
     path("robots.txt", views.robots_txt),
     path("stops.json", views.stops_json),
     path(

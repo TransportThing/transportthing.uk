@@ -60,6 +60,9 @@
     </div>
 </header>
 {% endblock header %}
+{% block announcements %}
+	{% include "announcement.html" %}
+{% endblock %}
 <main>
     {% block breadcrumb %}{% include 'breadcrumb.html' %}{% endblock %}
     <div id="content">
@@ -82,18 +85,21 @@
                     {% csrf_token %}
                     <button type="submit" class="button">Log out</button>
                 </li>
-                <li><a href="/rules">Rules & FAQ</a></li>
-                <li><a href="https://timesbus.org/discord">Discord</a></li>
-                <li><a href="/contact">Contact</a></li>
             </ul>
         </form>
     {% endif %}
     <ul>
-        <li><a href="/data">Data sources</a></li>
-        <li><a href="/privacy">Privacy policy</a></li>
+	<li><a href="/rules">Rules & FAQ</a></li>
+        <li><a href="https://timesbus.org/discord">Discord</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <!--<li><a href="/data">Data sources</a></li>
+	<li><a href="/privacy">Privacy policy</a></li>-->
     </ul>
-{% include "motd_partial.html" %}
-<script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Support us on Ko-fi', '#164450', 'W7W21AYHUU');kofiwidget2.draw();</script>
+    <div class="motd" style="margin-bottom: 20px; border-radius: 10px; border: 1px solid #afdee9; padding: 20px; box-sizing: border-box;">
+    	{% include "motd_partial.html" %}
+    </div>
+<script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script>
+<script type='text/javascript'>kofiwidget2.init('Support us on Ko-fi', '#164450', 'W7W21AYHUU');kofiwidget2.draw();</script>
 </footer>
 {% endblock footer %}
 

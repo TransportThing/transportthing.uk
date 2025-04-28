@@ -45,7 +45,6 @@ class Command(ImportLiveVehiclesCommand):
         items = []
         vehicle_codes = []
 
-        # build list of vehicles that have moved
         for item in feed.entity:
             key = item.vehicle.vehicle.id
             value = (
@@ -78,7 +77,6 @@ class Command(ImportLiveVehiclesCommand):
         return vehicle, True
 
     def get_journey(self, item, vehicle):
-        # GTFS spec for working out datetimes:
         start_date = datetime.strptime(
             f"{item.vehicle.trip.start_date} 12:00:00",
             "%Y%m%d %H:%M:%S",
@@ -88,78 +86,61 @@ class Command(ImportLiveVehiclesCommand):
             tzinfo=self.tzinfo
         )
 
-        # assert not (datetime.fromtimestamp(item.vehicle.timestamp) - start_date_time > timedelta(hours=12))
-
         journey = VehicleJourney(code=item.vehicle.trip.trip_id)
 
-        if (
-            latest_journey := vehicle.latest_journey
-        ) and latest_journey.code == journey.code:
+        if (latest_journey := vehicle.latest_journey) and latest_journey.code == journey.code:
             return latest_journey
 
         journey.datetime = start_date_time
 
+        trip_id = item.vehicle.trip.trip_id
+        route_id = item.vehicle.trip.route_id
+
         service = None
+
+        # Try matching Service where route code is exactly the route_id
         services = Service.objects.filter(
             current=True,
             route__source=self.source,
-            route__code=item.vehicle.trip.route_id,
-        ).distinct()
-        if not services:
+            route__code=route_id,
+        )
+
+        if not services.exists():
+            # fallback: match service_code
             services = Service.objects.filter(
                 current=True,
-                route__source=self.source,
-                route__trip__ticket_machine_code=journey.code,
-            ).distinct()
+                source=self.source,
+                service_code__icontains=route_id,
+            )
 
-        if services:
-            service = services[0]
-
-        trips = Trip.objects.filter(ticket_machine_code=journey.code)
-        if service:
-            trips = trips.filter(route__service=service)
-        else:
-            trips = trips.filter(route__source=self.source)
+        if services.exists():
+            service = services.first()
 
         trip = None
+        trips = Trip.objects.filter(ticket_machine_code=trip_id)
 
-        if not (trips or service) and "_" in journey.code:
-            route_suffix = item.vehicle.trip.route_id
-            if "_" in route_suffix:
-                route_suffix = route_suffix.split("_", 1)[1]
-            try:
-                service = Service.objects.filter(
-                    route__source=self.source,
-                    route__code__endswith=f"_{route_suffix}",
-                ).get()
-            except (Service.MultipleObjectsReturned, Service.DoesNotExist):
-                pass
+        if service:
+            trips = trips.filter(route__service=service)
 
-            code_suffix = journey.code.split("_", 1)[1]
-            trips = Trip.objects.filter(
-                route__source=self.source,
-                start=start_time,
-                inbound=item.vehicle.trip.direction_id == 1
-            )
-            if service:
-                trips = trips.filter(route__service=service)
+        if not trips.exists():
+            # fallback: try to find trip ignoring service
+            trips = Trip.objects.filter(ticket_machine_code=trip_id)
 
-        if trips:
-            if len(trips) > 1:
+        if trips.exists():
+            if trips.count() > 1:
                 calendar_ids = [trip.calendar_id for trip in trips]
                 calendars = get_calendars(start_date, calendar_ids)
                 trips = trips.filter(calendar__in=calendars)
-                trip = trips.first()
-            else:
-                trip = trips[0]
+            trip = trips.first()
 
+        # Now link them properly
         if service:
             journey.service = service
 
         if trip:
-            if not journey.service:
-                journey.service = trip.route.service
             journey.trip = trip
+            if not journey.service and trip.route.service:
+                journey.service = trip.route.service
 
             if trip.destination:
                 journey.destination = str(trip.destination.locality or trip.destination)

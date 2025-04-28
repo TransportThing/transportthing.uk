@@ -41,13 +41,13 @@ def parseVehicleTypes():
     con.commit()
     print(f"did: {count} vehicle types")
 
-def parseLiverys():
-    liverys = parsed["results"]
+def parseLiveries():
+    liveries = parsed["results"]
     count = 0
 
-    for livery in liverys:
+    for livery in liveries:
         con.run(
-            "INSERT INTO vehicles_livery (name, left_css, right_css, white_text, text_colour, stroke_colour, published, show_name, colour, colours, horizontal) VALUES (:name, :left_css, :right_css, :white_text, :text_colour, :stroke_colour, true, true, '', '', false) ON CONFLICT DO NOTHING",
+            "INSERT INTO vehicles_livery (name, left_css, right_css, white_text, text_colour, stroke_colour, published, show_name, colour, colours, horizontal) VALUES (:name, :left_css, :right_css, :white_text, :text_colour, :stroke_colour, true, true, '#cecece', '', false) ON CONFLICT DO NOTHING",
             name = livery["name"],
             left_css = livery["left_css"],
             right_css = livery["right_css"],
@@ -58,8 +58,8 @@ def parseLiverys():
         count = count + 1
 
     con.commit()
-    print(f"did: {count} liverys")
+    print(f"\r\ndid: {count} liveries\r\n")
 
 if __name__ == "__main__":
     #parseVehicleTypes()
-    parseLiverys()
+    parseLiveries()

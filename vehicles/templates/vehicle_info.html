@@ -1,10 +1,14 @@
 {% if vehicle.notes %}
-    <p>{{ vehicle.notes }}</p>
+    <p><b>notes:</b> {{ vehicle.notes }}</p>
 {% endif %}
 
 <dl class="contact-details">
     {% if vehicle.colours or vehicle.livery %}
         <div class="livery" style="background:{{ vehicle.get_livery }}"{% if vehicle.livery.name %} title="{{ vehicle.livery.name }}"{% endif %}></div>
+         <div> 
+           <dt>Livery Name</dt>
+           <dd>{{ vehicle.livery.name|default:"Hex Code" }}</dd>
+         </div>
     {% endif %}
 
     {% if vehicle.vehicle_type %}

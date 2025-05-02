@@ -365,7 +365,7 @@ function JourneyVehicle({
     let current = true;
 
     const loadVehicle = () => {
-      fetch(`https://api.timesbus.org/v1/main/vehicles?id=${vehicleId}`).then((response) => {
+      fetch(`/vehicles.json?id=${vehicleId}`).then((response) => {
         response.json().then((data: Vehicle[]) => {
           if (current && data && data.length) {
             setVehicle(data[0]);
@@ -409,7 +409,7 @@ export default function JourneyMap({
 }) {
   const [cursor, setCursor] = React.useState<string>();
 
-  const hoveredLocation = React.useRef<number>();
+  const hoveredLocation = React.useRef<number | null>(null);
 
   const onMouseEnter = React.useCallback((e: MapLayerMouseEvent) => {
     const vehicleId = getClickedVehicleMarkerId(e);
@@ -506,7 +506,7 @@ export default function JourneyMap({
     }
   }, []);
 
-  const mapRef = React.useRef<MapGL>();
+  const mapRef = React.useRef<MapGL | null>(null);
 
   const bounds = React.useMemo(() => {
     if (journey) {

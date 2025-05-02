@@ -35,7 +35,7 @@ import { getBounds } from "./utils";
 
 import { decodeTimeAwarePolyline } from "./time-aware-polyline";
 
-const apiRoot = "https://timesbus.org";
+const apiRoot = process.env.API_ROOT;
 
 declare global {
   interface Window {
@@ -73,7 +73,7 @@ function getBoundsQueryString(bounds: LngLatBounds): string {
 }
 
 function containsBounds(
-  a: LngLatBounds | undefined,
+  a: LngLatBounds | null,
   b: LngLatBounds,
 ): boolean | undefined {
   // console.log(a, b);
@@ -148,6 +148,7 @@ function Stops({
   setClickedStop,
 }: {
   stops?: {
+    type: "FeatureCollection";
     features: Stop[];
   };
   times?: Trip["times"];
@@ -223,7 +224,7 @@ function Stops({
 }
 
 function fetchJson(url: string) {
-  return fetch("https://timesbus.org" + url).then(
+  return fetch(apiRoot + url).then(
     (response) => {
       if (response.ok) {
         return response.json();
@@ -259,14 +260,14 @@ const Vehicles = memo(function Vehicles({
       return null;
     }
     return {
-      type: "FeatureCollection",
+      type: "FeatureCollection" as const,
       features: vehicles
         ? vehicles.map((vehicle) => {
             return {
-              type: "Feature",
+              type: "Feature" as const,
               id: vehicle.id,
               geometry: {
-                type: "Point",
+                type: "Point" as const,
                 coordinates: vehicle.coordinates,
               },
               properties: {
@@ -464,7 +465,7 @@ export default function BigMap(
       }
   ),
 ) {
-  const mapRef = React.useRef<MapGL>();
+  const mapRef = React.useRef<MapGL | null>(null);
 
   const [trip, setTrip] = React.useState<Trip | undefined>(props.trip);
 
@@ -516,18 +517,18 @@ export default function BigMap(
   }, [bounds]);
 
   // slippy map stuff
-  const boundsRef = React.useRef<LngLatBounds>();
-  const stopsHighWaterMark = React.useRef<LngLatBounds>();
-  const stopsTimeout = React.useRef<number>();
-  const vehiclesHighWaterMark = React.useRef<LngLatBounds>();
-  const vehiclesTimeout = React.useRef<number>();
-  const vehiclesAbortController = React.useRef<AbortController>();
+  const boundsRef = React.useRef<LngLatBounds | null>(null);
+  const stopsHighWaterMark = React.useRef<LngLatBounds | null>(null);
+  const stopsTimeout = React.useRef<number | null>(null);
+  const vehiclesHighWaterMark = React.useRef<LngLatBounds | null>(null);
+  const vehiclesTimeout = React.useRef<number | null>(null);
+  const vehiclesAbortController = React.useRef<AbortController | null>(null);
   const vehiclesLength = React.useRef<number>(0);
 
   const loadStops = React.useCallback(() => {
     const _bounds = boundsRef.current as LngLatBounds;
 
-    fetchJson(`/stops.json${getBoundsQueryString(_bounds)}`).then((items) => {
+    fetchJson(`stops.json${getBoundsQueryString(_bounds)}`).then((items) => {
       stopsHighWaterMark.current = _bounds;
       setLoadingStops(false);
       setStops(items);
@@ -542,14 +543,16 @@ export default function BigMap(
       if (!first && document.hidden) {
         return;
       }
-      clearTimeout(vehiclesTimeout.current);
+      if (vehiclesTimeout.current) {
+        clearTimeout(vehiclesTimeout.current);
+      }
 
       if (vehiclesAbortController.current) {
         vehiclesAbortController.current.abort();
-        vehiclesAbortController.current = undefined;
+        vehiclesAbortController.current = null;
       }
 
-      let _bounds: LngLatBounds | undefined;
+      let _bounds: LngLatBounds;
       let url: string | undefined;
       switch (props.mode) {
         case MapMode.Slippy:
@@ -587,7 +590,7 @@ export default function BigMap(
 
       vehiclesAbortController.current = new AbortController();
 
-      return fetch(`/vehicles.json${url}`, {
+      return fetch(`${apiRoot}vehicles.json${url}`, {
         signal: vehiclesAbortController.current.signal,
       })
         .then(
@@ -655,11 +658,11 @@ export default function BigMap(
       // trip mode
       if (trip?.id?.toString() === props.tripId) {
         loadVehicles(true);
-        document.title = `${trip.service?.line_name} \u2013 ${trip.operator?.name} \u2013 timesbus.org`;
+        document.title = `${trip.service?.line_name} \u2013 ${trip.operator?.name} \u2013 bustimes.org`;
       } else {
         setJourney(undefined);
         setTrip(undefined);
-        fetch(`https://timesbus.org/api/trips/${props.tripId}/`).then((response) => {
+        fetch(`${apiRoot}api/trips/${props.tripId}/`).then((response) => {
           if (response.ok) {
             response.json().then(setTrip);
           }
@@ -670,7 +673,7 @@ export default function BigMap(
       setTrip(undefined);
       // operator mode
       if (props.noc === trip?.operator?.noc) {
-        document.title = `Bus tracker map \u2013 ${trip.operator.name} \u2013 timesbus.org`;
+        document.title = `Bus tracker map \u2013 ${trip.operator.name} \u2013 bustimes.org`;
       }
       loadVehicles(true);
     } else if (props.journeyId) {
@@ -682,7 +685,7 @@ export default function BigMap(
       } else {
         setJourney(undefined);
         setTrip(undefined);
-        fetch(`https://timesbus.org/journeys/${props.journeyId}.json`).then((response) => {
+        fetch(`${apiRoot}journeys/${props.journeyId}.json`).then((response) => {
           if (response.ok) {
             response.json().then((journey: VehicleJourney) => {
               setJourney({ ...journey, id: props.journeyId });
@@ -694,7 +697,7 @@ export default function BigMap(
       setJourney(undefined);
       setTrip(undefined);
       // slippy mode
-      document.title = "Map \u2013 timesbus.org";
+      document.title = "Map \u2013 bustimes.org";
     } else {
       loadVehicles();
     }
@@ -823,7 +826,7 @@ export default function BigMap(
 
   const [cursor, setCursor] = React.useState<string>();
 
-  const hoveredLocation = React.useRef<number>();
+  const hoveredLocation = React.useRef<number | null>(null);
 
   const onMouseEnter = React.useCallback((e: MapLayerMouseEvent) => {
     const vehicleId = getClickedVehicleMarkerId(e);
@@ -836,7 +839,7 @@ export default function BigMap(
       // journey map
       for (const feature of e.features) {
         if (feature.layer.id === "locations") {
-          if (hoveredLocation.current !== undefined) {
+          if (hoveredLocation.current) {
             e.target.setFeatureState(
               { source: "locations", id: hoveredLocation.current },
               { hover: false },

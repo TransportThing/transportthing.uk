@@ -259,7 +259,7 @@ function loadVehicles(onMoveEnd) {
     params += "&trip=" + clickedTrip;
   }
   lastVehiclesReq = reqwest({
-    url: "/vehicles.json" + params,
+    url: "https://bustimes.org/vehicles.json" + params,
     crossOrigin: true,
     success: function (data) {
       if (data) {

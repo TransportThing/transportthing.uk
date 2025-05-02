@@ -27,18 +27,22 @@ class Command(BaseCommand):
             cursor.execute("LISTEN new_vehicle")
             gen = cursor.connection.notifies()
             Bee_NOCs = ["BNML", "BNSM", "BNDB", "BNGN", "BNVB", "BNFM", "ANTR", "SPCT", "HULS"]
-            NCTR_NOCs =  ["NCTR"]
-            tfl_nocs = ["TFLO"]
+            NCTR_NOCs =  ["NCTR", "TBTN"]
+            tfl_nocs = ["TFLO", "LGEN"]
+            tfi_nocs = ["ULB", "FY-", "GLE", "MET", "ACAH", "IE-"]
             for notify in gen:
                 if notify.payload[:4].upper() in Bee_NOCs:
                     content = f"<@&1365027753501659157> https://timesbus.org/vehicles/{notify.payload}"
-                    allowed_mentions = {"users": ["1365027753501659157"]}
+                    allowed_mentions = {"roles": ["1365027753501659157"]}
                 elif notify.payload[:4].upper() in NCTR_NOCs:
                     content = f"<@&1365028004216180786> https://timesbus.org/vehicles/{notify.payload}"
-                    allowed_mentions = {"users": ["1365028004216180786"]}
+                    allowed_mentions = {"roles": ["1365028004216180786"]}
                 elif notify.payload[:4].upper() in tfl_nocs:
                     content = f"<@&1365031195737329674> https://timesbus.org/vehicles/{notify.payload}"
-                    allowed_mentions = {"users": ["1365031195737329674"]}
+                    allowed_mentions = {"roles": ["1365031195737329674"]}
+                elif notify.payload[:3].upper() in tfi_nocs:
+                    content = f"<@&1367127895696216104> https://timesbus.org/vehicles/{notify.payload}"
+                    allowed_mentions = {"roles": ["1367127895696216104"]}
                 else:
                     content = f"https://timesbus.org/vehicles/{notify.payload}"
                     allowed_mentions = {"parse": []}  # Prevent accidental pings

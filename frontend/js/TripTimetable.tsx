@@ -113,7 +113,7 @@ function Row({
       if (vehicle.progress.progress > 0.1) {
         actualRowSpan = (actualRowSpan || 1) + 1;
       }
-    } else {
+    } else if (!vehicle?.progress || vehicle.progress.id > stop.id) {
       actual = stop.actual_departure_time; // vehicle history
     }
     if (actual) {
@@ -165,7 +165,7 @@ export const tripFromJourney = (journey: VehicleJourney): Trip | undefined => {
     return {
       times: journey.stops.map((stop, i: number) => {
         return {
-          id: i,
+          id: stop.id,
           stop: {
             atco_code: stop.atco_code,
             name: stop.name,
@@ -233,7 +233,7 @@ const TripTimetable = React.memo(function TripTimetable({
       <table>
         <thead>
           <tr>
-            <th />
+            <th className="stop-name" />
             {aimedColumn ? <th>Sched&shy;uled</th> : null}
             {actualColumn ? <th>Actual</th> : null}
           </tr>

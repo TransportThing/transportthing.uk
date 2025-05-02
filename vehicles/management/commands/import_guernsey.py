@@ -1,107 +1,110 @@
-import requests
-import logging
-from datetime import datetime
-from django.core.management.base import BaseCommand
-from django.contrib.gis.geos import GEOSGeometry
-from django.utils.dateparse import parse_datetime
-
-from busstops.models import Operator, Service
-from ...models import Vehicle, VehicleJourney, VehicleLocation, DataSource
+import datetime
+from django.contrib.gis.geos import Point
 from ..import_live_vehicles import ImportLiveVehiclesCommand
-
-logger = logging.getLogger(__name__)
-
+from ...models import VehicleLocation, VehicleJourney
+import requests # Make sure to import requests
 
 class Command(ImportLiveVehiclesCommand):
-    help = "Import live vehicle data for Guernsey from remote JSON API"
+    source_name = "guernsey"
+    operator = "TBTEST"
+    url = "https://api.timesbus.org/v2/guernsey/vehicles"
 
-    API_URL = "https://ticketless-app.api.urbanthings.cloud/api/2/vehiclepositions"
-    headers = {
-        "x-api-key": "",
-        "x-ut-app": "",
-    }
+    @staticmethod
+    def get_datetime(item):
+        # The new API provides a datetime string in ISO 8601 format in the 'reported' field
+        # Use the 'reported' field for the vehicle location time
+        reported_time_str = item.get("reported")
+        if reported_time_str:
+             # datetime.fromisoformat can handle this
+            return datetime.datetime.fromisoformat(reported_time_str.replace('Z', '+00:00'))
+        # Fallback to 'received' if 'reported' is not available
+        received_time_str = item.get("received")
+        if received_time_str:
+             # datetime.fromisoformat can handle this
+            return datetime.datetime.fromisoformat(received_time_str.replace('Z', '+00:00'))
+        return datetime.datetime.now(datetime.timezone.utc) # Fallback to now if neither is available
 
-    def handle(self, *args, **kwargs):
-        source = DataSource.objects.get(name="Guernsey Buses (UrbanThings)")
+
+    def get_vehicle(self, item):
+        # The new API has both "vehicleId" (a UUID) and "vehicleRef" (the number)
+        # Let's use "vehicleRef" as the code, similar to the original script's logic
+        vehicle_code = item.get("vehicleRef")
+        if not vehicle_code:
+            # Fallback to vehicleId if vehicleRef is missing, though vehicleRef seems more suitable
+            vehicle_code = item["vehicleId"]
+
+        defaults = {
+            "operator_id": self.operator,
+        }
+        # We can use vehicleRef as the vehicleRef if it's present and suitable
+        if item.get("vehicleRef"):
+             defaults["fleet_number"] = item["vehicleRef"]
+        # We'll use the vehicleId (UUID) as the source_id for uniqueness from the API
+        defaults["source_id"] = item["vehicleRef"]
+
+        # Use vehicle_code for the code field in the get_or_create
+        return self.vehicles.get_or_create(
+            defaults, source=self.source, code=str(vehicle_code)
+        )
+
+    def get_items(self):
+        """
+        Fetches data from the API, handles the dictionary response structure,
+        and returns the list of vehicle items.
+        """
         try:
-            response = requests.get(self.API_URL, timeout=10, headers=self.headers)
-            response.raise_for_status()
+            response = requests.get(self.url)
+            response.raise_for_status()  # Raise an exception for bad status codes
+
             data = response.json()
-        except requests.RequestException as e:
-            self.stderr.write(f"Failed to fetch data from API: {e}")
-            logger.error(f"Failed to fetch data from API: {e}")
-            return
 
-        operator = Operator.objects.filter(noc="GUERNSEY").first()
-        if not operator:
-            self.stderr.write("Operator not found.")
-            logger.error("Operator not found.")
-            return
+            # The API returns a dictionary with an "items" key containing the list of vehicles
+            vehicle_items = data.get("items", [])
+            return vehicle_items
 
-        for vehicle_data in data.get("items", []):
-            vehicle_code = vehicle_data.get("vehicleRef")
-            reported_time = parse_datetime(vehicle_data.get("reported"))
+        except requests.exceptions.RequestException as e:
+            # Use self.stderr.write for error messages in management commands
+            self.stderr.write(self.style.ERROR(f"Error fetching data from API: {e}"))
+            return [] # Return an empty list on error
+        except ValueError as e:
+            # Use self.stderr.write for error messages
+            self.stderr.write(self.style.ERROR(f"Error decoding JSON from API: {e}"))
+            return [] # Return an empty list on error
 
-            if not vehicle_code or not reported_time:
-                logger.warning(
-                    f"Skipping entry with missing vehicle_code or reported_time: {vehicle_data}"
-                )
-                continue
+    def get_journey(self, item, vehicle):
+        # Journey details are now at the top level of the item
+        route_name = item.get("routeName")
+        direction = item.get("direction")
 
-            try:
-                vehicle, created = Vehicle.objects.get_or_create(
-                    code=vehicle_code,
-                    defaults={"operator": operator, "source": source},
-                )
-            except Vehicle.MultipleObjectsReturned:
-                vehicle = Vehicle.objects.filter(code=vehicle_code).first()
-                created = False
-                logger.warning(
-                    f"Multiple vehicles found with code {vehicle_code}. Using the first one."
-                )
+        if not route_name or not direction:
+            return None  # No journey data available
 
-            if created:
-                self.stdout.write(f"Created new vehicle: {vehicle_code}")
-                logger.info(f"Created new vehicle: {vehicle_code}")
+        journey = VehicleJourney()
+        journey.route_name = route_name
+        # Truncate direction if necessary
+        journey.direction = direction[:8]
 
-            journey_time = parse_datetime(vehicle_data.get("scheduledTripStartTime"))
-            if journey_time:
-                journey, _ = VehicleJourney.objects.get_or_create(
-                    vehicle=vehicle,
-                    datetime=journey_time,
-                    defaults={
-                        "destination": vehicle_data.get("destination", ""),
-                        "route_name": vehicle_data.get("routeName", ""),
-                        "code": vehicle_data.get("tripId", ""),
-                        "service": Service.objects.filter(
-                            current=True,
-                            operator=operator,
-                            line_name__iexact=vehicle_data.get("routeName", "")
-                        ).first(),
-                        "source": source,
-                    },
-                )
+        # You could also capture routeId, tripId, etc. if needed
+        # journey.source_id = item.get("tripId") # Example
 
-        self.stdout.write(f"Updated vehicle {vehicle_code} at {reported_time}")
+        return journey
+
 
     def create_vehicle_location(self, item):
-        try:
-            longitude = item["position"]["longitude"]
-            latitude = item["position"]["latitude"]
-            bearing = item["position"].get("bearing")
+        # Position data is nested under a 'position' key
+        position_data = item.get("position")
+        if not position_data:
+            return None # No position data available
 
-            if not (-180 <= longitude <= 180 and -90 <= latitude <= 90):
-                logger.warning(
-                    f"Invalid longitude or latitude in vehicle data: {item}"
-                )
-                return None
+        latitude = position_data.get("latitude")
+        longitude = position_data.get("longitude")
+        bearing = position_data.get("bearing")
 
-        except KeyError as e:
-            logger.error(f"Missing 'longitude' or 'latitude' in vehicle data: {item}")
-            return None
+        if latitude is None or longitude is None:
+             return None # Need valid coordinates
 
         return VehicleLocation(
-            latlong=GEOSGeometry(f"POINT({longitude} {latitude})"),
-            heading=bearing or None,
+            latlong=Point(longitude, latitude), # Corrected order for Point
+            heading=bearing, # Use .get() as bearing might be optional
         )
 

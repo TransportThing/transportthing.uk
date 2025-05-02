@@ -15,22 +15,22 @@ from sentry_sdk.integrations.redis import RedisIntegration
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ["SECRET_KEY"]
 ALLOWED_HOSTS = os.environ.get(
-    "ALLOWED_HOSTS", "[::1] 127.0.0.1 localhost 16.local timesbus.org 51.38.84.109 dev.timesbus.org new.timesbus.org"
+    "ALLOWED_HOSTS", "[::1] 127.0.0.1 localhost 16.local timesbus.org 51.38.86.12 dev.timesbus.org new.timesbus.org"
 ).split()
 
 CSRF_TRUSTED_ORIGINS = os.environ.get(
     "CSRF_TRUSTED_ORIGINS",
-    "https://timesbus.org https://dev.timesbus.org https://new.timebus.org"
+    "https://timesbus.org https://dev.timesbus.org https://new.timebus.org http://51.38.86.12:9000"
 ).split()
 
 TEST = "test" in sys.argv or "pytest" in sys.argv[0]
 DEBUG = False
 
-DEFAULT_FROM_EMAIL = '"Timesbus Accounts" <hellofromus@timesbus.org>'
+DEFAULT_FROM_EMAIL = '"Timesbus Accounts" <noreply@totl.sh>'
 
-EMAIL_HOST = "smtp.sendgrid.net"
-EMAIL_HOST_USER = "apikey"
-EMAIL_HOST_PASSWORD = "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"
+EMAIL_HOST = "mail.privateemail.com"
+EMAIL_HOST_USER = "noreply@totl.sh"
+EMAIL_HOST_PASSWORD = "R0sebr1dge24!"
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_TIMEOUT = 10

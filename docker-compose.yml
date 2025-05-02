@@ -1,8 +1,8 @@
 services:
   web:
     build: .
-    entrypoint: sh -c "poetry install --with dev --with test; DEBUG=1 exec gunicorn buses.wsgi:application --bind 0.0.0.0:9000 --workers 3 --timeout 30"
-#    entrypoint: sh -c "poetry install --with dev --with test; DEBUG=1 exec ./manage.py runserver 0.0.0.0:9000"
+#    entrypoint: sh -c "poetry install --with dev --with test; DEBUG=1 exec gunicorn buses.wsgi:application --bind 0.0.0.0:9000 --workers 3 --timeout 30"
+    entrypoint: sh -c "poetry install --with dev --with test; DEBUG=1 exec ./manage.py runserver 0.0.0.0:9000"
     container_name: django_web
     environment:
       - SECRET_KEY=FuckThisShit
@@ -26,7 +26,11 @@ services:
       - "9000:9000"
       - "35729:35729"
     restart: always
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
   postgres:
     shm_size: '4gb'
     image: postgis/postgis
@@ -44,5 +48,15 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
   redis:
     image: redis
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

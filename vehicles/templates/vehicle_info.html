@@ -6,8 +6,8 @@
     {% if vehicle.colours or vehicle.livery %}
         <div class="livery" style="background:{{ vehicle.get_livery }}"{% if vehicle.livery.name %} title="{{ vehicle.livery.name }}"{% endif %}></div>
          <div> 
-           <dt>Livery Name</dt>
-           <dd>{{ vehicle.livery.name|default:"Hex Code" }}</dd>
+           <dt>Livery Name{% if vehicle.branding %} / Branding{% endif %}</dt>
+           <dd>{{ vehicle.livery.name|default:"Hex Code" }}{% if vehicle.branding %} / {{ vehicle.branding }}{% endif %}</dd>
          </div>
     {% endif %}
 

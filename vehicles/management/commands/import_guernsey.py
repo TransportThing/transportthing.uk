@@ -6,8 +6,8 @@ import requests # Make sure to import requests
 
 class Command(ImportLiveVehiclesCommand):
     source_name = "guernsey"
-    operator = "TBTEST"
-    url = "https://api.timesbus.org/v2/guernsey/vehicles"
+    operator = "SGUE"
+    url = "https://api.timesbus.org/v2/guernsey/vehicles?api_key=bgg-timesbus-vm"
 
     @staticmethod
     def get_datetime(item):
@@ -40,7 +40,7 @@ class Command(ImportLiveVehiclesCommand):
         if item.get("vehicleRef"):
              defaults["fleet_number"] = item["vehicleRef"]
         # We'll use the vehicleId (UUID) as the source_id for uniqueness from the API
-        defaults["source_id"] = item["vehicleRef"]
+        #defaults["source_id"] = item["vehicleRef"]
 
         # Use vehicle_code for the code field in the get_or_create
         return self.vehicles.get_or_create(
@@ -75,7 +75,7 @@ class Command(ImportLiveVehiclesCommand):
         # Journey details are now at the top level of the item
         route_name = item.get("routeName")
         direction = item.get("direction")
-
+        destination = item.get("destination", "")
         if not route_name or not direction:
             return None  # No journey data available
 
@@ -83,7 +83,7 @@ class Command(ImportLiveVehiclesCommand):
         journey.route_name = route_name
         # Truncate direction if necessary
         journey.direction = direction[:8]
-
+        journey.destination = destination
         # You could also capture routeId, tripId, etc. if needed
         # journey.source_id = item.get("tripId") # Example
 

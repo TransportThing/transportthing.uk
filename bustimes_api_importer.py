@@ -16,12 +16,11 @@ stdIn = sys.stdin
 stdOut = sys.stdout
 
 parsed = json.loads(stdIn.read())
-
 con = pg8000.connect(
-    host = "postgres",
+    host = "51.210.255.250",
     database = "tb-data",
-    user = "postgres",
-    password = "postgres",
+    user = "timesbus",
+    password = "a62ea9c995d021b713a870a31e3111eb",
     port = 5432
 )
 

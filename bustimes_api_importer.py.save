@@ -1,0 +1,67 @@
+#!/opt/poetry/bin/python
+
+"""
+    Shitty bustimes.org API importer lol.
+
+    https://github.com/J0w03L | https://j0w03l.me
+"""
+
+import sys
+import pg8000
+import os
+import json
+import argparse
+
+stdIn = sys.stdin
+stdOut = sys.stdout
+
+parsed = json.loads(stdIn.read())
+
+timesbus:a62ea9c995d021b713a870a31e3111eb@51.210.255.250/tb-data
+
+con = pg8000.connect(
+    host = "51.210.255.250",
+    database = "tb-data",
+    user = "timesbu",
+    password = "a62ea9c995d021b713a870a31e3111eb",
+    port = 5432
+)
+
+def parseVehicleTypes():
+    types = parsed["results"]
+    count = 0
+
+    for vehicleType in types:
+        con.run(
+            "INSERT INTO vehicles_vehicletype (name, style, fuel) VALUES (:name, :style, :fuel) ON CONFLICT DO NOTHING",
+            name = vehicleType["name"],
+            style = vehicleType["style"],
+            fuel = vehicleType["fuel"]
+        )
+        count = count + 1
+
+    con.commit()
+    print(f"did: {count} vehicle types")
+
+def parseLiveries():
+    liveries = parsed["results"]
+    count = 0
+
+    for livery in liveries:
+        con.run(
+            "INSERT INTO vehicles_livery (name, left_css, right_css, white_text, text_colour, stroke_colour, published, show_name, colour, colours, horizontal) VALUES (:name, :left_css, :right_css, :white_text, :text_colour, :stroke_colour, true, true, '#cecece', '', false) ON CONFLICT DO NOTHING",
+            name = livery["name"],
+            left_css = livery["left_css"],
+            right_css = livery["right_css"],
+            white_text = livery["white_text"],
+            text_colour = livery["text_colour"],
+            stroke_colour = livery["stroke_colour"]
+        )
+        count = count + 1
+
+    con.commit()
+    print(f"\r\ndid: {count} liveries\r\n")
+
+if __name__ == "__main__":
+    #parseVehicleTypes()
+    parseLiveries()

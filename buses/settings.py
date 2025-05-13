@@ -311,7 +311,9 @@ ALLOW_VEHICLE_NOTES_OPERATORS = (
     "ie-526",  # Irish Citylink
     "ie-1178",  # Dublin Express
     "FLIX",
-    "PRES"
+    "PRES",
+    "ie-7778017",
+    "ie-7778000"
 )
 
 NEW_VEHICLE_WEBHOOK_URL = os.environ.get("NEW_VEHICLE_WEBHOOK_URL")

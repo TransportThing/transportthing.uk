@@ -1,12 +1,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     function fetchRandomQuote() {
-        $.getJSON("https://api.snubs.dev/v2/quotes/random?api_key=tvm-quotes", function (quotes) {
+        $.getJSON("https://api.snubs.dev/quotes/random?tags=timesbus&published=true", function (quotes) {
             if (quotes.length === 0) {
                 $("#motd-text").text(" ")
                 return;
             }
-            $("#motd-text").html(quotes.author + " : " + quotes.msg)
+            $("#motd-text").html(quotes.author + " : " + quotes.text)
         }).fail(function () {
             $("#motd-text").text("API : There would be a quote here but I'm not responding, apparently :3")
         })

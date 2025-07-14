@@ -101,9 +101,9 @@
             <ul class="user">
                 <li><a href="/accounts/users/{{ user.id }}">User: {{ user.id }} | {{ user.username|default:'' }}</a></li>
         {% if user.trusted %}
-                <li><a href="/vehicles/edits?operator=&vehicle=&user=&status=pending" title="Requires Trusted status to view">Pending Edits</a></li>
+                <li><a href="/vehicles/edits?status=pending" title="Requires Trusted status to view">Pending Edits</a></li>
         {% else %}
-                <li><a href="/vehicles/edits?operator=&vehicle=&user={{ user.id }}&status=approved" title="Approved Edits">Your Edits</a></li>
+                <li><a href="/vehicles/edits?user={{ user.id }}&status=approved" title="Approved Edits">Your Edits</a></li>
         {% endif %}
                 <li>
                     {% csrf_token %}

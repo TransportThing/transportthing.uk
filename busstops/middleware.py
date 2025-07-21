@@ -7,7 +7,8 @@ from .models import featureToggle
 from django.shortcuts import render, redirect
 # from multidb.pinning import pin_this_thread, unpin_this_thread
 from whitenoise.middleware import WhiteNoiseMiddleware
-
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 class WhiteNoiseWithFallbackMiddleware(WhiteNoiseMiddleware):
     def immutable_file_test(self, path, url):

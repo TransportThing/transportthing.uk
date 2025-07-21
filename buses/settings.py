@@ -70,12 +70,12 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "busstops.middleware.GZipIfNotStreamingMiddleware",
     "busstops.middleware.WhiteNoiseWithFallbackMiddleware",
-    "busstops.middleware.SiteLockMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "busstops.middleware.SiteLockMiddleware",
 ]
 
 # Stadia Maps tiles require we send at least the origin in cross-origin requests.

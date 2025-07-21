@@ -67,7 +67,11 @@ class SiteLockMiddleware:
             feature = featureToggle.objects.get(name='admin_lockdown')
             if feature.enabled and not request.user.is_superuser:
 
-                return render(request, 'site_locked.html', status=401, hours=feature.coming_soon_percent)
+                context = {
+                    'hours': feature.coming_soon_percent,
+                }
+
+                return render(request, 'site_locked.html', context, status=401)
         except featureToggle.DoesNotExist:
             pass
 

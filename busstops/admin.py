@@ -10,10 +10,10 @@ from django.urls import reverse
 from django.utils.html import format_html
 from sql_util.utils import SubqueryCount
 
-from bustimes.models import Route, RouteLink, featureToggle
+from bustimes.models import Route, RouteLink
 
 from . import models
-
+from .models import featureToggle
 
 @admin.register(models.AdminArea)
 class AdminAreaAdmin(admin.ModelAdmin):

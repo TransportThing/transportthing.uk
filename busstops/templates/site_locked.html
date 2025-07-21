@@ -1,13 +1,146 @@
-{% extends 'page.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Site Locked | TransportThing</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(121deg, #afdee9 17%, transparent 17.05%),
+                  linear-gradient(-37deg, #afdee9 20%, transparent 20.05%),
+                  linear-gradient(23deg, #164450 46%, transparent 46.05%),
+                  linear-gradient(-187deg, #164450 49%, transparent 49.05%),
+                  linear-gradient(0deg, #164450 100%, transparent 100.05%);
+      color: #333;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      overflow: hidden;
+    }
 
-{% block title %}Sorry - transportthing.uk{% endblock %}
+    .container {
+      max-width: 650px;
+      background: #cecece;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.8s ease;
+    }
 
-{% block bodyclass %}narrow{% endblock %}
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
 
-{% block content %}
+    h1 {
+      color: #0078a0;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
 
-<h1>Sorry</h1>
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin: 10px 0;
+    }
 
-<p>This site is currently locked down.</p>
+    .loader {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #0078a0;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
 
-{% endblock content %}
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .checkmark {
+      width: 50px;
+      height: 50px;
+      margin: 20px auto;
+      display: none;
+    }
+
+    .checkmark svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .links {
+      margin-top: 20px;
+    }
+
+    .links a {
+      text-decoration: none;
+      color: #0078a0;
+      font-weight: bold;
+      margin: 0 10px;
+      transition: color 0.3s;
+    }
+
+    .links a:hover {
+      color: #005670;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="text">TransportThing is Locked</h1>
+    <div class="loader" id="loader"></div>
+    <div class="checkmark" id="checkmark">
+      <svg viewBox="0 0 52 52">
+        <path fill="none" stroke="#164450" stroke-width="6" d="M10 30 L22 42 L40 18"/>
+      </svg>
+    </div>
+    <p>The service is expected to be back online within <strong>{{ hours }} hours</strong>.</p>
+    <p>We'll send out another announcement once TransportThing is back up and running. Thank you for your patience!</p>
+    <div class="links">
+      <p>Stay updated:</p>
+      <a href="https://status.snubs.dev">📢 Status Page</a> |
+      <a href="https://transportthing.uk/discord">💬 Join us on Discord</a>
+    </div>
+  </div>
+
+  <script>
+    const targetUrl = "https://tt.snubs.dev/";
+
+    function checkSite() {
+      fetch(targetUrl)
+        .then(response => {
+          console.log("Status Code:", response.status);
+          if (response.ok || response.status === 301) {
+            return response.text();
+          } else {
+            throw new Error('Site returned an error');
+          }
+        })
+        .then(html => {
+          const titleMatch = html.match(/<title>(.*?)<\/title>/);
+          if (titleMatch && titleMatch[1]) {
+            const pageTitle = titleMatch[1];
+            if (pageTitle !== "Site Locked | TransportThing" && pageTitle !== "Maintenance | TransportThing") {
+              document.getElementById("loader").style.display = "none";
+              document.getElementById("checkmark").style.display = "block";
+              document.getElementById("text").textContent = "We're Back Online!";
+            }
+          }
+        })
+        .catch(error => {
+          console.log("Error checking site:", error);
+        });
+    }
+
+    checkSite();
+    setInterval(checkSite, 10000); // Check every 10 seconds
+  </script>
+</body>
+</html>

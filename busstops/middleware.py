@@ -51,7 +51,7 @@ class GZipIfNotStreamingMiddleware(GZipMiddleware):
 
         return super().process_response(request, response)
     
-EXEMPT_PATHS = ['/admin/', '/account/login/', '/queue/', '/ads.txt', '/robots.txt']
+EXEMPT_PATHS = ['/admin/', '/accounts/login/', '/ads.txt', '/robots.txt']
 
 class SiteLockMiddleware:
     def __init__(self, get_response):

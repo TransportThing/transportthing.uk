@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GoonThing</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .title {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .timer {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      width: 200px;
+      height: 100px;
+      font-size: 24px;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.1s ease-in-out;
+    }
+
+    .button:active {
+      transform: scale(0.95);
+    }
+
+    .start {
+      background-color: green;
+    }
+
+    .stop {
+      background-color: red;
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: white;
+      padding: 20px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .popup button {
+      margin-top: 10px;
+      padding: 8px 12px;
+    }
+
+    .import-section {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="title">My GoonThing</div>
+
+  <div class="import-section">
+    <input type="file" id="importFile" accept=".json">
+  </div>
+
+  <div class="timer" id="timerDisplay">00:00:00</div>
+  <button class="button start" id="toggleButton">Begin Gooning?</button>
+
+  <div class="popup" id="popup">
+    <div>Goon finished! Would you like to download your log?</div>
+    <button onclick="downloadLog()">Download</button>
+    <button onclick="hidePopup()">Cancel</button>
+  </div>
+
+  <script>
+    let timerInterval;
+    let seconds = 0;
+    let running = false;
+    let log = {};
+    let startTime;
+
+    function formatTime(s) {
+      const hrs = String(Math.floor(s / 3600)).padStart(2, '0');
+      const mins = String(Math.floor((s % 3600) / 60)).padStart(2, '0');
+      const secs = String(s % 60).padStart(2, '0');
+      return `${hrs}:${mins}:${secs}`;
+    }
+
+    function updateTimer() {
+      seconds++;
+      document.getElementById("timerDisplay").textContent = formatTime(seconds);
+    }
+
+    function toggleTimer() {
+      const button = document.getElementById("toggleButton");
+
+      if (!running) {
+        running = true;
+        seconds = 0;
+        document.getElementById("timerDisplay").textContent = "00:00:00";
+        button.classList.remove("start");
+        button.classList.add("stop");
+        button.textContent = "Stop";
+        startTime = new Date();
+        timerInterval = setInterval(updateTimer, 1000);
+      } else {
+        running = false;
+        clearInterval(timerInterval);
+        button.classList.remove("stop");
+        button.classList.add("start");
+        button.textContent = "Start";
+
+        const endTime = new Date();
+        const dateKey = startTime.toISOString().split('T')[0];
+        const timeKey = startTime.toTimeString().split(' ')[0];
+        const duration = formatTime(seconds);
+
+        if (!log[dateKey]) log[dateKey] = {};
+        log[dateKey][timeKey] = {
+          duration: duration,
+          start: startTime.toISOString(),
+          end: endTime.toISOString()
+        };
+
+        document.getElementById("popup").style.display = "block";
+      }
+    }
+
+    function hidePopup() {
+      document.getElementById("popup").style.display = "none";
+    }
+
+    function downloadLog() {
+      const blob = new Blob([JSON.stringify(log, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "time-log.json";
+      a.click();
+      URL.revokeObjectURL(url);
+      hidePopup();
+    }
+
+    document.getElementById("toggleButton").addEventListener("click", toggleTimer);
+    
+    document.getElementById("importFile").addEventListener("change", function(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const importedData = JSON.parse(e.target.result);
+          log = importedData;
+          alert("Log imported successfully!");
+        } catch {
+          alert("Failed to import log.");
+        }
+      };
+      reader.readAsText(file);
+    });
+  </script>
+
+</body>
+</html>
